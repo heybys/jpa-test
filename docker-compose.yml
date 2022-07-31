@@ -3,27 +3,25 @@
 version: "3.1"
 
 services:
-  mysql-primary:
-    container_name: mysql-primary
+  mysql-main:
+    container_name: mysql-main
     image: mysql:latest
-    platform: linux/x86_64
     restart: always
     volumes:
-      - ./db/primary/data:/var/lib/mysql
+      - ./db/main/data:/var/lib/mysql
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --transaction-isolation=READ-COMMITTED
     environment:
-      MYSQL_ROOT_PASSWORD: primary
+      MYSQL_ROOT_PASSWORD: main
     ports:
       - 3307:3306
-  mysql-replica:
-    container_name: mysql-replica
+  mysql-sub:
+    container_name: mysql-sub
     image: mysql:latest
-    platform: linux/x86_64
     restart: always
     volumes:
-      - ./db/replica/data:/var/lib/mysql
+      - ./db/sub/data:/var/lib/mysql
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --transaction-isolation=READ-COMMITTED
     environment:
-      MYSQL_ROOT_PASSWORD: replica
+      MYSQL_ROOT_PASSWORD: sub
     ports:
       - 3308:3306

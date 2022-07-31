@@ -1,4 +1,4 @@
-package com.heybys.jpatest.controller;
+package com.heybys.jpatest.main.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
