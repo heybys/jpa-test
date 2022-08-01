@@ -81,8 +81,8 @@ public class MainDataSourceConfig {
         Properties properties = new Properties();
         properties.setProperty("hibernate.jdbc.batch_size", jdbcBatchSize);
         properties.setProperty("hibernate.naming.physical-strategy", namingPhysicalStrategy);
-        properties.setProperty("hibernate.ddl-auto", ddlAuto);
-        properties.setProperty("hibernate.use-new-id-generator-mappings",
+        properties.setProperty("hibernate.hbm2ddl.auto", ddlAuto);
+        properties.setProperty("hibernate.id.new_generator_mappings",
             useNewIdGeneratorMappings);
         em.setJpaProperties(properties);
 

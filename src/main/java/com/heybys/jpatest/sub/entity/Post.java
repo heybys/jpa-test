@@ -18,7 +18,7 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "post_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long postId;
 
     @Column(name = "title", nullable = false)
