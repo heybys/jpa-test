@@ -36,6 +36,9 @@ public class OrderDataSourceConfig {
     @Value("${spring.jpa.generate-ddl}")
     private Boolean generateDdl;
 
+    @Value("${spring.jpa.properties.hibernate.format_sql}")
+    private String formatSql;
+
     @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
     private String jdbcBatchSize;
 
@@ -74,6 +77,7 @@ public class OrderDataSourceConfig {
         em.setJpaVendorAdapter(vendorAdapter);
 
         Properties properties = new Properties();
+        properties.setProperty("hibernate.format_sql", formatSql);
         properties.setProperty("hibernate.jdbc.batch_size", jdbcBatchSize);
         properties.setProperty("hibernate.naming.physical-strategy", namingPhysicalStrategy);
         properties.setProperty("hibernate.hbm2ddl.auto", ddlAuto);
