@@ -3,25 +3,25 @@
 version: "3.1"
 
 services:
-  mysql-main:
-    container_name: mysql-main
+  user-db:
+    container_name: user-db
     image: mysql:latest
     restart: always
     volumes:
-      - ./db/main/data:/var/lib/mysql
+      - ./db/user/data:/var/lib/mysql
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --transaction-isolation=READ-COMMITTED
     environment:
-      MYSQL_ROOT_PASSWORD: main
+      MYSQL_ROOT_PASSWORD: user
     ports:
       - 3307:3306
-  mysql-sub:
-    container_name: mysql-sub
+  order-db:
+    container_name: order-db
     image: mysql:latest
     restart: always
     volumes:
-      - ./db/sub/data:/var/lib/mysql
+      - ./db/order/data:/var/lib/mysql
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --transaction-isolation=READ-COMMITTED
     environment:
-      MYSQL_ROOT_PASSWORD: sub
+      MYSQL_ROOT_PASSWORD: order
     ports:
       - 3308:3306
