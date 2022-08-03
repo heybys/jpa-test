@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import org.hibernate.annotations.Type;
 
 @Getter
 @Entity
+@TableGenerator(name = "user_seq_generator", table = "sequence", pkColumnValue = "user_sequence", allocationSize = 50)
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
@@ -28,13 +30,15 @@ public class User {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "user_seq_generator")
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @Setter
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
     private UserType userType;

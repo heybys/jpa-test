@@ -1,8 +1,13 @@
 package com.heybys.optimusamicus.user.config;
 
+import com.p6spy.engine.common.ConnectionInformation;
+import com.p6spy.engine.event.JdbcEventListener;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import java.sql.SQLException;
 import java.util.Properties;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -40,8 +45,17 @@ public class UserDataSourceConfig {
     @Value("${spring.jpa.properties.hibernate.format_sql}")
     private String formatSql;
 
+    @Value("${spring.jpa.properties.hibernate.default_batch_fetch_size}")
+    private Integer defaultBatchFetchSize;
+
     @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
-    private String jdbcBatchSize;
+    private Integer jdbcBatchSize;
+
+    @Value("${spring.jpa.properties.hibernate.order_inserts}")
+    private Boolean orderInserts;
+
+    @Value("${spring.jpa.properties.hibernate.order_updates}")
+    private Boolean orderUpdates;
 
     @Value("${spring.jpa.hibernate.naming.physical-strategy}")
     private String namingPhysicalStrategy;
@@ -50,16 +64,16 @@ public class UserDataSourceConfig {
     private String ddlAuto;
 
     @Value("${spring.jpa.hibernate.use-new-id-generator-mappings}")
-    private String useNewIdGeneratorMappings;
+    private Boolean useNewIdGeneratorMappings;
 
-    @Bean("userHikariConfig")
+    @Bean
     @Primary
     @ConfigurationProperties(prefix = "spring.datasource.hikari.user")
     public HikariConfig userHikariConfig() {
         return new HikariConfig();
     }
 
-    @Bean("userDataSource")
+    @Bean
     @Primary
     public HikariDataSource userDataSource() {
         return new HikariDataSource(userHikariConfig());
@@ -67,9 +81,11 @@ public class UserDataSourceConfig {
 
     @Bean
     @Primary
-    public LocalContainerEntityManagerFactoryBean userEntityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean userEntityManagerFactory(
+        DataSource userDataSource) {
+
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(this.userDataSource());
+        em.setDataSource(userDataSource);
         em.setPersistenceUnitName("userEntityManager");
         em.setPackagesToScan(new String[]{"com.heybys.optimusamicus.user.entity"});
 
@@ -81,12 +97,15 @@ public class UserDataSourceConfig {
         em.setJpaVendorAdapter(vendorAdapter);
 
         Properties properties = new Properties();
-        properties.setProperty("hibernate.format_sql", formatSql);
-        properties.setProperty("hibernate.jdbc.batch_size", jdbcBatchSize);
-        properties.setProperty("hibernate.naming.physical-strategy", namingPhysicalStrategy);
-        properties.setProperty("hibernate.hbm2ddl.auto", ddlAuto);
-        properties.setProperty("hibernate.id.new_generator_mappings",
-            useNewIdGeneratorMappings);
+        properties.put("hibernate.format_sql", formatSql);
+        properties.put("hibernate.default_batch_fetch_size", defaultBatchFetchSize);
+        properties.put("hibernate.jdbc.batch_size", jdbcBatchSize);
+        properties.put("hibernate.order_inserts", orderInserts);
+        properties.put("hibernate.order_updates", orderUpdates);
+        properties.put("hibernate.batch_versioned_data", true);
+        properties.put("hibernate.naming.physical-strategy", namingPhysicalStrategy);
+        properties.put("hibernate.hbm2ddl.auto", ddlAuto);
+        properties.put("hibernate.id.new_generator_mappings", useNewIdGeneratorMappings);
         em.setJpaProperties(properties);
 
         return em;
@@ -94,11 +113,29 @@ public class UserDataSourceConfig {
 
     @Bean
     @Primary
-    public PlatformTransactionManager userTransactionManager() {
+    public PlatformTransactionManager userTransactionManager(
+        EntityManagerFactory userEntityManagerFactory) {
+
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(userEntityManagerFactory().getObject());
+        transactionManager.setEntityManagerFactory(userEntityManagerFactory);
 
         return transactionManager;
     }
 
+    @Bean
+    public JdbcEventListener myListener() {
+        return new JdbcEventListener() {
+            @Override
+            public void onAfterGetConnection(ConnectionInformation connectionInformation,
+                SQLException e) {
+                System.out.println("connection started ====================");
+            }
+
+            @Override
+            public void onAfterConnectionClose(ConnectionInformation connectionInformation,
+                SQLException e) {
+                System.out.println("connection closed ======================");
+            }
+        };
+    }
 }
