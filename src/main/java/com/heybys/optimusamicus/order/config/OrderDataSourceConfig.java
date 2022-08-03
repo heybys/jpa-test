@@ -64,7 +64,7 @@ public class OrderDataSourceConfig {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(this.orderDataSource());
         em.setPersistenceUnitName("orderEntityManager");
-        em.setPackagesToScan(new String[]{"com.heybys.jpatest.order.entity"});
+        em.setPackagesToScan(new String[]{"com.heybys.optimusamicus.order.entity"});
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setDatabase(database);

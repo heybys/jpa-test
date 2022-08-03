@@ -68,7 +68,7 @@ public class UserDataSourceConfig {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(this.userDataSource());
         em.setPersistenceUnitName("userEntityManager");
-        em.setPackagesToScan(new String[]{"com.heybys.jpatest.user.entity"});
+        em.setPackagesToScan(new String[]{"com.heybys.optimusamicus.user.entity"});
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setDatabase(database);
