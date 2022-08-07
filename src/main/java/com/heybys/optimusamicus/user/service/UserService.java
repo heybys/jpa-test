@@ -33,18 +33,36 @@ public class UserService {
 
   @Transactional
   public void createUser(UserDTO.Request request) {
-    logger.debug("======================");
+    List<User> users = cloneUsers(request, 10000);
+    long start = System.currentTimeMillis();
+
+    userRepository.saveAll(users);
+
+    long end = System.currentTimeMillis();
+
+    double workingTime = end - start;
+    logger.info("WorkingTime=[{}s]", workingTime / 1000);
+  }
+
+  public void createUserTest(UserDTO.Request request) {
+    List<User> users = cloneUsers(request, 10000);
+    long start = System.currentTimeMillis();
+
+    userRepository.saveAllTest();
+
+    long end = System.currentTimeMillis();
+
+    double workingTime = end - start;
+    logger.info("WorkingTime=[{}s]", workingTime / 1000);
+  }
+
+  private List<User> cloneUsers(UserDTO.Request request, Integer count) {
     List<User> users = new ArrayList<>();
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < count; i++) {
       User user = request.toUser();
       user.setUsername(user.getUsername() + "_" + i);
-
       users.add(user);
-
-      // entityManager.persist(user);
-      // userRepository.save(user);
     }
-    userRepository.saveAll(users);
-    logger.debug("======================");
+    return users;
   }
 }

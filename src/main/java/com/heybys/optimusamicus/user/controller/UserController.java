@@ -25,6 +25,7 @@ public class UserController {
 
   @GetMapping("")
   public ResponseEntity<CommonResponse> getAllUsers() {
+
     List<UserDTO.Response> allUsers = userService.getAllUsers();
 
     CommonResponse response = new CommonResponse(StatusCode.SUCCESS, allUsers);
@@ -33,6 +34,7 @@ public class UserController {
 
   @GetMapping("/{userId}")
   public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
+
     UserDTO.Response user = userService.getUserById(userId);
 
     CommonResponse response = new CommonResponse(StatusCode.SUCCESS, user);
@@ -41,7 +43,17 @@ public class UserController {
 
   @PostMapping("")
   public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserDTO.Request request) {
+
     userService.createUser(request);
+
+    CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
+
+  @PostMapping("/test")
+  public ResponseEntity<CommonResponse> createUserTest(@RequestBody @Valid UserDTO.Request request) {
+
+    userService.createUserTest(request);
 
     CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
     return new ResponseEntity<>(response, HttpStatus.CREATED);
