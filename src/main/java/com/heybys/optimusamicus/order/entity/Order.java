@@ -17,17 +17,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "orderId", nullable = false)
-    private Long orderId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "orderId", nullable = false)
+  private Long orderId;
 
-    @Column(name = "serial_number", nullable = false)
-    private String serialNumber;
+  @Column(name = "serial_number", nullable = false)
+  private String serialNumber;
 
-    @Builder
-    public Order(Long orderId, String serialNumber) {
-        this.orderId = orderId;
-        this.serialNumber = serialNumber;
-    }
+  @Builder
+  public Order(Long orderId, String serialNumber) {
+    this.orderId = orderId;
+    this.serialNumber = serialNumber;
+  }
 }

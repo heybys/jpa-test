@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class CommonExceptionHandler {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @ExceptionHandler(UserNotFoundException.class)
-    protected ResponseEntity<CommonResponse> handleException(UserNotFoundException ex) {
-        logger.error(ex.getMessage());
-        CommonResponse response = new CommonResponse(StatusCode.FAIL, ex.getMessage());
+  @ExceptionHandler(UserNotFoundException.class)
+  protected ResponseEntity<CommonResponse> handleException(UserNotFoundException ex) {
+    logger.error(ex.getMessage());
+    CommonResponse response = new CommonResponse(StatusCode.FAIL, ex.getMessage());
 
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
+    return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+  }
 
 }

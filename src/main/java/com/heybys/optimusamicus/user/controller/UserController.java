@@ -21,29 +21,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @GetMapping("")
-    public ResponseEntity<CommonResponse> getAllUsers() {
-        List<UserDTO.Response> allUsers = userService.getAllUsers();
+  @GetMapping("")
+  public ResponseEntity<CommonResponse> getAllUsers() {
+    List<UserDTO.Response> allUsers = userService.getAllUsers();
 
-        CommonResponse response = new CommonResponse(StatusCode.SUCCESS, allUsers);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+    CommonResponse response = new CommonResponse(StatusCode.SUCCESS, allUsers);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
-        UserDTO.Response user = userService.getUserById(userId);
+  @GetMapping("/{userId}")
+  public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
+    UserDTO.Response user = userService.getUserById(userId);
 
-        CommonResponse response = new CommonResponse(StatusCode.SUCCESS, user);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+    CommonResponse response = new CommonResponse(StatusCode.SUCCESS, user);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-    @PostMapping("")
-    public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserDTO.Request request) {
-        userService.createUser(request);
+  @PostMapping("")
+  public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserDTO.Request request) {
+    userService.createUser(request);
 
-        CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
+    CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
 }

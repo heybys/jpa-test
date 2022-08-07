@@ -12,34 +12,34 @@ import lombok.NoArgsConstructor;
 public class UserDTO {
 
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Request {
+  @Getter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Request {
 
-        @NotNull
-        private String username;
+    @NotNull
+    private String username;
 
-        public User toUser() {
-            return User.builder().userType(UserType.NORMAL).username(username).build();
-        }
+    public User toUser() {
+      return User.builder().userType(UserType.NORMAL).username(username).build();
     }
+  }
 
-    @Getter
-    @JsonInclude(Include.NON_NULL)
-    public static class Response {
+  @Getter
+  @JsonInclude(Include.NON_NULL)
+  public static class Response {
 
-        private final Long userId;
+    private final Long userId;
 
-        private final String username;
+    private final String username;
 
-        private final String userType;
+    private final String userType;
 
-        public Response(User user) {
-            this.userId = user.getUserId();
-            this.username = user.getUsername();
-            this.userType = user.getUserType().name();
-        }
+    public Response(User user) {
+      this.userId = user.getUserId();
+      this.username = user.getUsername();
+      this.userType = user.getUserType().name();
     }
+  }
 
 }

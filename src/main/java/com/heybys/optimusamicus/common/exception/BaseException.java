@@ -4,16 +4,16 @@ import com.heybys.optimusamicus.common.error.CommonError;
 
 public class BaseException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private final CommonError error;
+  private final CommonError error;
 
-    public BaseException(CommonError error) {
-        super(error.getMessage());
-        this.error = error;
-    }
+  public BaseException(CommonError error) {
+    super(error.getMessage());
+    this.error = error;
+  }
 
-    public CommonError getError() {
-        return error;
-    }
+  public CommonError getError() {
+    return error;
+  }
 }

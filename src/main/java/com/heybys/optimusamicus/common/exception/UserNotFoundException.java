@@ -4,9 +4,9 @@ import com.heybys.optimusamicus.common.error.CommonError;
 
 public class UserNotFoundException extends BaseException {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    public UserNotFoundException() {
-        super(CommonError.USER_NOT_FOUND);
-    }
+  public UserNotFoundException() {
+    super(CommonError.USER_NOT_FOUND);
+  }
 }
