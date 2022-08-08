@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface CustomUserRepository {
 
-    Page<User> findAllByUsername(String username, Pageable pageable);
+  Page<User> findAllByUsername(String username, Pageable pageable);
 
-    void saveAllTest();
+  void saveAllTest();
 }

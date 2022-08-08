@@ -8,13 +8,13 @@ import org.springframework.data.domain.Pageable;
 @RequiredArgsConstructor
 public class CustomUserRepositoryImpl implements CustomUserRepository {
 
-    @Override
-    public Page<User> findAllByUsername(String username, Pageable pageable) {
+  @Override
+  public Page<User> findAllByUsername(String username, Pageable pageable) {
 
-        return null;
-    }
+    return null;
+  }
 
-    @Override
-    public void saveAllTest() {
-    }
+  @Override
+  public void saveAllTest() {
+  }
 }

@@ -24,46 +24,47 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @GetMapping("")
-    @LogExecutionTime
-    public ResponseEntity<CommonResponse> getUsers(@RequestParam(required = false) String username, Pageable pageable) {
+  @GetMapping("")
+  @LogExecutionTime
+  public ResponseEntity<CommonResponse> getUsers(@RequestParam(required = false) String username,
+      Pageable pageable) {
 
-        List<UserDTO.Response> allUsers = userService.getUsersByUsername(username, pageable);
+    List<UserDTO.Response> allUsers = userService.getUsersByUsername(username, pageable);
 
-        CommonResponse response = new CommonResponse(StatusCode.SUCCESS, allUsers);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+    CommonResponse response = new CommonResponse(StatusCode.SUCCESS, allUsers);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-    @GetMapping("/{userId}")
-    @LogExecutionTime
-    public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
+  @GetMapping("/{userId}")
+  @LogExecutionTime
+  public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
 
-        UserDTO.Response user = userService.getUserById(userId);
+    UserDTO.Response user = userService.getUserById(userId);
 
-        CommonResponse response = new CommonResponse(StatusCode.SUCCESS, user);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+    CommonResponse response = new CommonResponse(StatusCode.SUCCESS, user);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-    @PostMapping("")
-    @LogExecutionTime
-    public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserDTO.Request request) {
+  @PostMapping("")
+  @LogExecutionTime
+  public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserDTO.Request request) {
 
-        userService.createUser(request);
+    userService.createUser(request);
 
-        CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
+    CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
 
-    @PostMapping("/test")
-    @LogExecutionTime
-    public ResponseEntity<CommonResponse> createUserTest(
-        @RequestBody @Valid UserDTO.Request request) {
+  @PostMapping("/test")
+  @LogExecutionTime
+  public ResponseEntity<CommonResponse> createUserTest(
+      @RequestBody @Valid UserDTO.Request request) {
 
-        userService.createUserTest(request);
+    userService.createUserTest(request);
 
-        CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
+    CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
 }
