@@ -22,8 +22,8 @@ public class UserService {
 
   private final UserRepository userRepository;
 
-  public List<UserDTO.Response> getUsersByUsername(String username, Pageable pageable) {
-    return userRepository.findAllByUsername(username, pageable).stream()
+  public List<UserDTO.Response> getUsers(String username, Pageable pageable) {
+    return userRepository.findAllByConditions(username, pageable).stream()
         .map(UserDTO.Response::new)
         .collect(Collectors.toList());
   }

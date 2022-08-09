@@ -31,7 +31,7 @@ public class UserController {
   public ResponseEntity<CommonResponse> getUsers(@RequestParam(required = false) String username,
       Pageable pageable) {
 
-    List<UserDTO.Response> allUsers = userService.getUsersByUsername(username, pageable);
+    List<UserDTO.Response> allUsers = userService.getUsers(username, pageable);
 
     CommonResponse response = new CommonResponse(StatusCode.SUCCESS, allUsers);
     return new ResponseEntity<>(response, HttpStatus.OK);
