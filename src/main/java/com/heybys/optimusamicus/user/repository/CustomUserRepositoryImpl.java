@@ -5,6 +5,7 @@ import static com.heybys.optimusamicus.user.entity.QUser.user;
 import com.heybys.optimusamicus.user.entity.User;
 import com.heybys.optimusamicus.user.entity.User.UserType;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Map;
@@ -20,21 +21,30 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
   private final JPAQueryFactory queryFactory;
 
   @Override
-  public Page<User> findAllByConditions(Map<String, String> conditions, Pageable pageable) {
+  public Page<User> searchUsers(Map<String, String> conditions, Pageable pageable) {
 
     List<User> users = queryFactory
         .select(user)
         .from(user)
         .where(
-            usernameEq(conditions.get("username"))
+            usernameEq(conditions.get("username")),
+            userTypeEq(UserType.valueOf(conditions.get("userType"))),
+            useYnEq(Boolean.valueOf(conditions.get("useYn")))
         )
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
         .fetch();
 
-    PageableExecutionUtils.getPage()
+    JPAQuery<User> countQuery = queryFactory
+        .select(user)
+        .from(user)
+        .where(
+            usernameEq(conditions.get("username")),
+            userTypeEq(UserType.valueOf(conditions.get("userType"))),
+            useYnEq(Boolean.valueOf(conditions.get("useYn")))
+        );
 
-    return res;
+    return PageableExecutionUtils.getPage(users, pageable, countQuery::fetchCount);
   }
 
   @Override
