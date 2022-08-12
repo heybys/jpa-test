@@ -21,7 +21,6 @@
   - Spring
   - ...
 
-
 - Phase #2 (MSA 형태로 진화)
   - Spring Cloud 활용 (feat. Netflix OSS)
   
@@ -35,6 +34,8 @@
   - @Column 에 length 등 다 표기하기
   - @EqualsAndHashCode 테스트. 매핑해놓고 레이즈 패치되는지
   - @NoArgsConstructor Best Practice..
+  - @PrePersist, @PostPersist
+  - @UpdateTime?
 
 ---
 
