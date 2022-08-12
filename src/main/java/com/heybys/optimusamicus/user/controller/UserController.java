@@ -3,12 +3,15 @@ package com.heybys.optimusamicus.user.controller;
 import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
-import com.heybys.optimusamicus.user.dto.UserDTO;
+import com.heybys.optimusamicus.user.dto.UserCreate;
+import com.heybys.optimusamicus.user.dto.UserSearch;
+import com.heybys.optimusamicus.user.entity.User;
 import com.heybys.optimusamicus.user.service.UserService;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,12 +30,12 @@ public class UserController {
 
   @GetMapping("")
   @LogExecutionTime
-  public ResponseEntity<CommonResponse> getUsers(@RequestParam(required = false) String username,
-      Pageable pageable) {
+  public ResponseEntity<CommonResponse> searchUsers(UserSearch.Request request,
+      @PageableDefault(page = 0, size = 10) Pageable pageable) {
 
-    List<UserDTO.Response> allUsers = userService.getUsers(username, pageable);
+    Page<User> users = userService.searchUsers(request, pageable);
 
-    CommonResponse response = new CommonResponse(StatusCode.SUCCESS, allUsers);
+    CommonResponse response = new CommonResponse(StatusCode.SUCCESS, users);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
@@ -41,7 +43,7 @@ public class UserController {
   @LogExecutionTime
   public ResponseEntity<CommonResponse> getUserById(@PathVariable Long userId) {
 
-    UserDTO.Response user = userService.getUserById(userId);
+    UserCreate.Response user = userService.getUserById(userId);
 
     CommonResponse response = new CommonResponse(StatusCode.SUCCESS, user);
     return new ResponseEntity<>(response, HttpStatus.OK);
@@ -49,7 +51,7 @@ public class UserController {
 
   @PostMapping("")
   @LogExecutionTime
-  public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserDTO.Request request) {
+  public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserCreate.Request request) {
 
     userService.createUser(request);
 
@@ -60,7 +62,7 @@ public class UserController {
   @PostMapping("/test")
   @LogExecutionTime
   public ResponseEntity<CommonResponse> createUserTest(
-      @RequestBody @Valid UserDTO.Request request) {
+      @RequestBody @Valid UserCreate.Request request) {
 
     userService.createUserTest(request);
 

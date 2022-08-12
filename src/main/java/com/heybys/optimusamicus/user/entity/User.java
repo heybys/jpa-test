@@ -1,6 +1,5 @@
 package com.heybys.optimusamicus.user.entity;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,10 +31,6 @@ public class User {
   @Setter
   @Column(name = "username", nullable = false, unique = true)
   private String username;
-
-  @Setter
-  @Column(name = "ratio", precision = 28, scale = 5)
-  private BigDecimal ratio;
 
   @Setter
   @Enumerated(EnumType.STRING)

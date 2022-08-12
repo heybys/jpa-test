@@ -2,34 +2,32 @@ package com.heybys.optimusamicus.user.repository;
 
 import static com.heybys.optimusamicus.user.entity.QUser.user;
 
+import com.heybys.optimusamicus.user.dto.UserSearch;
 import com.heybys.optimusamicus.user.entity.User;
 import com.heybys.optimusamicus.user.entity.User.UserType;
+import com.heybys.optimusamicus.user.repository.support.UserQuerydslRepositorySupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
-import java.util.Map;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.stereotype.Repository;
 
-@RequiredArgsConstructor
-public class CustomUserRepositoryImpl implements CustomUserRepository {
-
-  private final JPAQueryFactory queryFactory;
+@Repository
+public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport implements
+    CustomUserRepository {
 
   @Override
-  public Page<User> searchUsers(Map<String, String> conditions, Pageable pageable) {
+  public Page<User> searchUsers(UserSearch.Request request, Pageable pageable) {
 
     List<User> users = queryFactory
         .select(user)
         .from(user)
         .where(
-            usernameEq(conditions.get("username")),
-            userTypeEq(UserType.valueOf(conditions.get("userType"))),
-            useYnEq(Boolean.valueOf(conditions.get("useYn")))
+            usernameEq(request.getUsername()),
+            userTypeEq(request.getUserType()),
+            useYnEq(request.getUseYn())
         )
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
@@ -39,9 +37,9 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
         .select(user)
         .from(user)
         .where(
-            usernameEq(conditions.get("username")),
-            userTypeEq(UserType.valueOf(conditions.get("userType"))),
-            useYnEq(Boolean.valueOf(conditions.get("useYn")))
+            usernameEq(request.getUsername()),
+            userTypeEq(request.getUserType()),
+            useYnEq(request.getUseYn())
         );
 
     return PageableExecutionUtils.getPage(users, pageable, countQuery::fetchCount);

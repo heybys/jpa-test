@@ -5,40 +5,32 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.heybys.optimusamicus.user.entity.User;
 import com.heybys.optimusamicus.user.entity.User.UserType;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
-public class UserDTO {
+public class UserCreate {
 
 
-  @Getter
-  @NoArgsConstructor
-  @AllArgsConstructor
+  @Data
   public static class Request {
 
     @NotNull
     private String username;
 
+    private UserType userType = UserType.NORMAL;
+
     public User toUser() {
-      return User.builder().userType(UserType.NORMAL).username(username).build();
+      return User.builder().userType(userType).username(username).build();
     }
   }
 
-  @Getter
+  @Data
   @JsonInclude(Include.NON_NULL)
   public static class Response {
 
-    private final Long userId;
-
-    private final String username;
-
-    private final String userType;
+    private Long userId;
 
     public Response(User user) {
       this.userId = user.getUserId();
-      this.username = user.getUsername();
-      this.userType = user.getUserType().name();
     }
   }
 

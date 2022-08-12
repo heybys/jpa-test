@@ -1,10 +1,13 @@
 package com.heybys.optimusamicus.user.config;
 
 import com.heybys.optimusamicus.common.config.CommonConfigFactory;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import java.util.Objects;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +25,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class UserDataSourceConfig {
 
   private final CommonConfigFactory commonConfigFactory;
+
+  @Value("${app.domain.user.persistence-unit-name}")
+  private String persistenceUnitName;
 
   @Primary
   @Bean
@@ -41,7 +47,7 @@ public class UserDataSourceConfig {
   public LocalContainerEntityManagerFactoryBean userEntityManagerFactory() {
     LocalContainerEntityManagerFactoryBean factoryBean = commonConfigFactory.createEntityManagerFactoryBean();
     factoryBean.setDataSource(userDataSource());
-    factoryBean.setPersistenceUnitName("userEntityManager");
+    factoryBean.setPersistenceUnitName(persistenceUnitName);
     factoryBean.setPackagesToScan("com.heybys.optimusamicus.user.entity");
     return factoryBean;
   }
@@ -52,5 +58,12 @@ public class UserDataSourceConfig {
     JpaTransactionManager transactionManager = new JpaTransactionManager();
     transactionManager.setEntityManagerFactory(userEntityManagerFactory().getObject());
     return transactionManager;
+  }
+
+  @Primary
+  @Bean
+  public JPAQueryFactory userJPAQueryFactory() {
+    return new JPAQueryFactory(
+        Objects.requireNonNull(userEntityManagerFactory().getObject()).createEntityManager());
   }
 }

@@ -5,6 +5,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,9 @@ public class OrderDataSourceConfig {
 
   private final CommonConfigFactory commonConfigFactory;
 
+  @Value("${app.domain.order.persistence-unit-name}")
+  private String persistenceUnitName;
+
   @Bean
   @ConfigurationProperties(prefix = "spring.datasource.hikari.order")
   public HikariConfig orderHikariConfig() {
@@ -37,7 +41,7 @@ public class OrderDataSourceConfig {
   public LocalContainerEntityManagerFactoryBean orderEntityManagerFactory() {
     LocalContainerEntityManagerFactoryBean factoryBean = commonConfigFactory.createEntityManagerFactoryBean();
     factoryBean.setDataSource(orderDataSource());
-    factoryBean.setPersistenceUnitName("orderEntityManager");
+    factoryBean.setPersistenceUnitName(persistenceUnitName);
     factoryBean.setPackagesToScan("com.heybys.optimusamicus.order.entity");
     return factoryBean;
   }
