@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -35,6 +36,11 @@ public class OrderDataSourceConfig {
   @Bean
   public DataSource orderDataSource() {
     return new HikariDataSource(orderHikariConfig());
+  }
+
+  @Bean
+  public JdbcTemplate orderJdbcTemplate() {
+    return new JdbcTemplate(orderDataSource());
   }
 
   @Bean

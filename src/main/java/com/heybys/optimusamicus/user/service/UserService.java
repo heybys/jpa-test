@@ -34,9 +34,9 @@ public class UserService {
 
   @Transactional
   public void createUser(UserCreate.Request request) {
-    List<User> users = cloneUsers(request, 1000);
+    List<User> users = cloneUsers(request, 777);
 
-    userRepository.saveAll(users);
+    userRepository.batchInsert(users);
   }
 
   private List<User> cloneUsers(UserCreate.Request request, Integer count) {

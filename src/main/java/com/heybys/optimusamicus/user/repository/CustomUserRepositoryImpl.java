@@ -9,14 +9,23 @@ import com.heybys.optimusamicus.user.repository.support.UserQuerydslRepositorySu
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport implements
     CustomUserRepository {
+
+  private final JdbcTemplate userJdbcTemplate;
+
+  @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
+  private Integer jdbcBatchSize;
 
   @Override
   public Page<User> searchUsers(UserSearch.Request request, Pageable pageable) {
@@ -46,7 +55,18 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
   }
 
   @Override
-  public void saveAllTest() {
+  public int[][] batchInsert(List<User> users) {
+    return this.userJdbcTemplate.batchUpdate(
+        "  INSERT INTO user (`type`, `username`, `phone_number`, `address`, `use_yn`, `user_group_id`) "
+            + " VALUES (?, ?, ?, ?, ?, ?) ", users, jdbcBatchSize,
+        (ps, argument) -> {
+          ps.setString(1, argument.getUserType().name());
+          ps.setString(2, argument.getUsername());
+          ps.setString(3, argument.getPhoneNumber());
+          ps.setString(4, argument.getAddress());
+          ps.setString(5, useYnFrom(argument));
+          ps.setObject(6, userGroupIdFrom(argument));
+        });
   }
 
   private BooleanExpression usernameEq(String username) {
@@ -59,5 +79,13 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
 
   private BooleanExpression useYnEq(Boolean useYn) {
     return useYn != null ? user.useYn.eq(useYn) : null;
+  }
+
+  private String useYnFrom(User user) {
+    return user.getUseYn().equals(true) ? "Y" : "N";
+  }
+
+  private Long userGroupIdFrom(User user) {
+    return user.getUserGroup() != null ? user.getUserGroup().getUserGroupId() : null;
   }
 }
