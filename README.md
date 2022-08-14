@@ -33,7 +33,7 @@
     - [x] @Column 안붙여도 되는지 언더스코어로 컬럼생성되는지
     - [x] @Table 에 제약조건 달기
     - [x] @Column 에 length 등 다 표기하기
-    - [ ] @EqualsAndHashCode 테스트. 매핑해놓고 레이즈 패치되는지
+    - [x] @EqualsAndHashCode 테스트. 매핑해놓고 레이즈 패치되는지
     - [ ] @NoArgsConstructor Best Practice..
     - [ ] @PrePersist, @PostPersist
     - [ ] @UpdateTime?
