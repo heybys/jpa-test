@@ -3,8 +3,10 @@ package com.heybys.optimusamicus.user.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.heybys.optimusamicus.user.entity.User;
+import com.heybys.optimusamicus.user.entity.User.UserType;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 public class UserCreate {
 
@@ -25,9 +27,16 @@ public class UserCreate {
   public static class Response {
 
     private Long userId;
+    private UserType userType;
+    private String username;
+    private String phoneNumber;
+    private String address;
+    private String userGroupName;
 
     public Response(User user) {
-      this.userId = user.getUserId();
+      BeanUtils.copyProperties(user, this);
+
+      this.userGroupName = user.getUserGroup().getUserGroupName();
     }
   }
 

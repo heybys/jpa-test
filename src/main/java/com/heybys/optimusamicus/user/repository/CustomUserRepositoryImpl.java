@@ -33,10 +33,13 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
     List<User> users = queryFactory
         .select(user)
         .from(user)
+        .leftJoin(user.userGroup)
+        .fetchJoin()
         .where(
-            usernameEq(request.getUsername()),
             userTypeEq(request.getUserType()),
-            useYnEq(request.getUseYn())
+            usernameEq(request.getUsername()),
+            userGroupNameEq(request.getUserGroupName()),
+            user.useYn.eq(true)
         )
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
@@ -45,10 +48,12 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
     JPAQuery<User> countQuery = queryFactory
         .select(user)
         .from(user)
+        .leftJoin(user.userGroup)
         .where(
-            usernameEq(request.getUsername()),
             userTypeEq(request.getUserType()),
-            useYnEq(request.getUseYn())
+            usernameEq(request.getUsername()),
+            userGroupNameEq(request.getUserGroupName()),
+            user.useYn.eq(true)
         );
 
     return PageableExecutionUtils.getPage(users, pageable, countQuery::fetchCount);
@@ -69,16 +74,16 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
         });
   }
 
-  private BooleanExpression usernameEq(String username) {
-    return username != null ? user.username.eq(username) : null;
-  }
-
   private BooleanExpression userTypeEq(UserType userType) {
     return userType != null ? user.userType.eq(userType) : null;
   }
 
-  private BooleanExpression useYnEq(Boolean useYn) {
-    return useYn != null ? user.useYn.eq(useYn) : null;
+  private BooleanExpression usernameEq(String username) {
+    return username != null ? user.username.eq(username) : null;
+  }
+
+  private BooleanExpression userGroupNameEq(String userGroupName) {
+    return userGroupName != null ? user.userGroup.userGroupName.eq(userGroupName) : null;
   }
 
   private String useYnFrom(User user) {

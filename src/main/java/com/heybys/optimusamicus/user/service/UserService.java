@@ -13,6 +13,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -47,15 +48,34 @@ public class UserService {
     user.setAddress("Republic Of Korea");
     user.setUserGroup(userGroup);
 
-    List<User> users = cloneUser(user, 777);
+    List<User> users = cloneUser(user, 100);
 
     userRepository.batchInsert(users);
+
+    UserGroup userGroup2 = UserGroup.builder().userGroupName("TestGroup2").build();
+    userGroupRepository.save(userGroup2);
+
+    User user2 = request.toUser();
+    user2.setUsername("clone");
+    user2.setUserType(UserType.NORMAL);
+    user2.setAddress("Republic Of Korea");
+    user2.setUserGroup(userGroup2);
+
+    List<User> users2 = cloneUser(user2, 100);
+
+    userRepository.batchInsert(users2);
   }
 
   private List<User> cloneUser(User user, Integer count) {
     List<User> users = new ArrayList<>();
+
     for (int i = 0; i < count; i++) {
-      users.add(User.builder().username(user.getUsername() + "_" + i).build());
+      User build = User.builder().build();
+
+      BeanUtils.copyProperties(user, build);
+      build.setUsername(user.getUsername() + "_" + i);
+
+      users.add(build);
     }
     return users;
   }

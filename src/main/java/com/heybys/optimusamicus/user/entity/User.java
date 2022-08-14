@@ -1,5 +1,6 @@
 package com.heybys.optimusamicus.user.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,10 +15,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Type;
 
 @Getter
@@ -27,7 +28,6 @@ import org.hibernate.annotations.Type;
     @UniqueConstraint(name = "UK_phone_number", columnNames = {"phone_number"}),
     @UniqueConstraint(name = "UK_username", columnNames = {"username"})})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode
 public class User {
 
   public enum UserType {
@@ -39,7 +39,6 @@ public class User {
   @Column(name = "user_id", nullable = false)
   private Long userId;
 
-  @Type(type = "")
   @Enumerated(EnumType.STRING)
   @Column(name = "type", nullable = false, columnDefinition = "char(10)")
   private UserType userType;
@@ -66,5 +65,22 @@ public class User {
     this.userId = userId;
     this.username = username;
     this.userType = userType;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    User user = (User) o;
+    return userId != null && Objects.equals(userId, user.userId);
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }

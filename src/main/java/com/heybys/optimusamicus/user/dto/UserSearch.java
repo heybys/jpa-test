@@ -4,14 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.heybys.optimusamicus.user.entity.User;
 import com.heybys.optimusamicus.user.entity.User.UserType;
-import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 public class UserSearch {
 
@@ -23,7 +16,7 @@ public class UserSearch {
 
     private UserType userType;
 
-    private Boolean useYn = true;
+    private String userGroupName;
   }
 
   @Data
