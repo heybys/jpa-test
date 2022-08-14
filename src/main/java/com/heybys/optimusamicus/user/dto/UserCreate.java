@@ -3,7 +3,6 @@ package com.heybys.optimusamicus.user.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.heybys.optimusamicus.user.entity.User;
-import com.heybys.optimusamicus.user.entity.User.UserType;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -16,10 +15,8 @@ public class UserCreate {
     @NotNull
     private String username;
 
-    private UserType userType = UserType.NORMAL;
-
     public User toUser() {
-      return User.builder().userType(userType).username(username).build();
+      return User.builder().username(username).build();
     }
   }
 

@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,5 +27,9 @@ public class UserGroup {
   @Column(name = "name", nullable = false)
   private String userGroupName;
 
-
+  @Builder
+  public UserGroup(Long userGroupId, String userGroupName) {
+    this.userGroupId = userGroupId;
+    this.userGroupName = userGroupName;
+  }
 }

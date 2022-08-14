@@ -4,6 +4,9 @@ import com.heybys.optimusamicus.common.exception.UserNotFoundException;
 import com.heybys.optimusamicus.user.dto.UserCreate;
 import com.heybys.optimusamicus.user.dto.UserSearch;
 import com.heybys.optimusamicus.user.entity.User;
+import com.heybys.optimusamicus.user.entity.User.UserType;
+import com.heybys.optimusamicus.user.entity.UserGroup;
+import com.heybys.optimusamicus.user.repository.UserGroupRepository;
 import com.heybys.optimusamicus.user.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,8 @@ public class UserService {
 
   private final UserRepository userRepository;
 
+  private final UserGroupRepository userGroupRepository;
+
   public Page<User> searchUsers(UserSearch.Request request, Pageable pageable) {
     return userRepository.searchUsers(request, pageable);
   }
@@ -34,17 +39,23 @@ public class UserService {
 
   @Transactional
   public void createUser(UserCreate.Request request) {
-    List<User> users = cloneUsers(request, 777);
+    UserGroup userGroup = UserGroup.builder().userGroupName("TestGroup").build();
+    userGroupRepository.save(userGroup);
+
+    User user = request.toUser();
+    user.setUserType(UserType.NORMAL);
+    user.setAddress("Republic Of Korea");
+    user.setUserGroup(userGroup);
+
+    List<User> users = cloneUser(user, 777);
 
     userRepository.batchInsert(users);
   }
 
-  private List<User> cloneUsers(UserCreate.Request request, Integer count) {
+  private List<User> cloneUser(User user, Integer count) {
     List<User> users = new ArrayList<>();
     for (int i = 0; i < count; i++) {
-      User user = request.toUser();
-      user.setUsername(user.getUsername() + "_" + i);
-      users.add(user);
+      users.add(User.builder().username(user.getUsername() + "_" + i).build());
     }
     return users;
   }
