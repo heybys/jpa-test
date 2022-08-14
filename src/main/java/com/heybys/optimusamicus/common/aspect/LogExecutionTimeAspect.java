@@ -16,13 +16,14 @@ public class LogExecutionTimeAspect {
 
   @Around("@annotation(LogExecutionTime)")
   public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
-    StopWatch stopWatch = new StopWatch();
+    StopWatch stopWatch = new StopWatch(joinPoint.getSignature().getName());
     stopWatch.start();
 
     Object proceed = joinPoint.proceed();
 
     stopWatch.stop();
-    logger.info(stopWatch.prettyPrint());
+    logger.info("StopWatch '{}': running time = {} s", stopWatch.getId(),
+        stopWatch.getTotalTimeSeconds());
 
     return proceed;
   }
