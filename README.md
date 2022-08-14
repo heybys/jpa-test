@@ -1,5 +1,5 @@
 ## ✈️ Goals
-- move the company kkk
+- move! move!
 
 
 <br>
