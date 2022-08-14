@@ -10,6 +10,10 @@ import lombok.Getter;
 @JsonInclude(Include.NON_NULL)
 public class CommonResponse {
 
+  public enum StatusCode {
+    SUCCESS, FAIL
+  }
+
   private StatusCode statusCode;
   private String message;
   private Object data;
@@ -26,9 +30,5 @@ public class CommonResponse {
   public CommonResponse(StatusCode statusCode, Object data) {
     this.statusCode = statusCode;
     this.data = data;
-  }
-
-  public enum StatusCode {
-    SUCCESS, FAIL
   }
 }
