@@ -34,27 +34,9 @@ public class UserService {
 
   @Transactional
   public void createUser(UserCreate.Request request) {
-    List<User> users = cloneUsers(request, 10000);
-    long start = System.currentTimeMillis();
+    List<User> users = cloneUsers(request, 1000);
 
     userRepository.saveAll(users);
-
-    long end = System.currentTimeMillis();
-
-    double workingTime = end - start;
-    logger.info("WorkingTime=[{}s]", workingTime / 1000);
-  }
-
-  public void createUserTest(UserCreate.Request request) {
-    List<User> users = cloneUsers(request, 1000);
-    long start = System.currentTimeMillis();
-
-    userRepository.saveAllTest();
-
-    long end = System.currentTimeMillis();
-
-    double workingTime = end - start;
-    logger.info("WorkingTime=[{}s]", workingTime / 1000);
   }
 
   private List<User> cloneUsers(UserCreate.Request request, Integer count) {

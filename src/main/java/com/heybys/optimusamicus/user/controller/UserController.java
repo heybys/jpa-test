@@ -35,8 +35,7 @@ public class UserController {
 
     Page<User> users = userService.searchUsers(request, pageable);
 
-    CommonResponse response = new CommonResponse(StatusCode.SUCCESS, users);
-    return new ResponseEntity<>(response, HttpStatus.OK);
+    return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, users), HttpStatus.OK);
   }
 
   @GetMapping("/{userId}")
@@ -45,8 +44,7 @@ public class UserController {
 
     UserCreate.Response user = userService.getUserById(userId);
 
-    CommonResponse response = new CommonResponse(StatusCode.SUCCESS, user);
-    return new ResponseEntity<>(response, HttpStatus.OK);
+    return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, user), HttpStatus.OK);
   }
 
   @PostMapping("")
@@ -55,18 +53,6 @@ public class UserController {
 
     userService.createUser(request);
 
-    CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
-  }
-
-  @PostMapping("/test")
-  @LogExecutionTime
-  public ResponseEntity<CommonResponse> createUserTest(
-      @RequestBody @Valid UserCreate.Request request) {
-
-    userService.createUserTest(request);
-
-    CommonResponse response = new CommonResponse(StatusCode.SUCCESS);
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
+    return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS), HttpStatus.CREATED);
   }
 }
