@@ -1,13 +1,14 @@
-package com.heybys.optimusamicus.common.error;
+package com.heybys.optimusamicus.user.error;
 
-public enum CommonError {
+public enum UserError {
 
-  INVALID_PARAMETER("INVALID_PARAMETER", "Invalid Request Parameter");
+  USER_NOT_FOUND("USER_NOT_FOUND", "User Not Found"),
+  USER_NOT_CREATED("USER_NOT_CREATED", "User Not Created");
 
   private final String code;
   private final String message;
 
-  CommonError(String code, String message) {
+  UserError(String code, String message) {
     this.code = code;
     this.message = message;
   }

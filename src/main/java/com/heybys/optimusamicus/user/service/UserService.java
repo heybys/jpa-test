@@ -1,8 +1,9 @@
 package com.heybys.optimusamicus.user.service;
 
-import com.heybys.optimusamicus.common.exception.UserNotFoundException;
 import com.heybys.optimusamicus.user.dto.UserSearch.Request;
 import com.heybys.optimusamicus.user.entity.User;
+import com.heybys.optimusamicus.user.exception.UserNotCreatedException;
+import com.heybys.optimusamicus.user.exception.UserNotFoundException;
 import com.heybys.optimusamicus.user.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,19 @@ public class UserService {
 
   @Transactional
   public User createUser(User user) {
-    return userRepository.save(user);
+    try {
+      return userRepository.save(user);
+    } catch (Exception e) {
+      throw new UserNotCreatedException();
+    }
   }
 
   @Transactional
   public List<User> createUsers(List<User> users) {
-    return userRepository.batchInsert(users);
+    try {
+      return userRepository.batchInsert(users);
+    } catch (Exception e) {
+      throw new UserNotCreatedException();
+    }
   }
 }
