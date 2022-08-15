@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface CustomUserRepository {
 
-  Page<User> searchUsers(UserSearch.Request request, Pageable pageable);
+  Page<User> retrieveUsers(UserSearch.Request request, Pageable pageable);
 
-  int[][] batchInsert(List<User> users);
+  List<User> batchInsert(List<User> users);
 }

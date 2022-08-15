@@ -34,6 +34,7 @@
     - [x] @Table 에 제약조건 달기
     - [x] @Column 에 length 등 다 표기하기
     - [x] @EqualsAndHashCode 테스트. 매핑해놓고 레이즈 패치되는지
+    - [ ] @DynamicUpdate 확인
     - [ ] @NoArgsConstructor Best Practice..
     - [ ] @PrePersist, @PostPersist
     - [ ] @UpdateTime?

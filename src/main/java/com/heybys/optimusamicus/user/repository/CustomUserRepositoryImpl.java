@@ -28,7 +28,7 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
   private Integer jdbcBatchSize;
 
   @Override
-  public Page<User> searchUsers(UserSearch.Request request, Pageable pageable) {
+  public Page<User> retrieveUsers(UserSearch.Request request, Pageable pageable) {
 
     List<User> users = queryFactory
         .select(user)
@@ -60,8 +60,8 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
   }
 
   @Override
-  public int[][] batchInsert(List<User> users) {
-    return this.userJdbcTemplate.batchUpdate(
+  public List<User> batchInsert(List<User> users) {
+    this.userJdbcTemplate.batchUpdate(
         "  INSERT INTO user (`type`, `username`, `phone_number`, `address`, `use_yn`, `user_group_id`) "
             + " VALUES (?, ?, ?, ?, ?, ?) ", users, jdbcBatchSize,
         (ps, argument) -> {
@@ -72,6 +72,8 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
           ps.setString(5, useYnFrom(argument));
           ps.setObject(6, userGroupIdFrom(argument));
         });
+
+    return users;
   }
 
   private BooleanExpression userTypeEq(UserType userType) {
