@@ -7,8 +7,6 @@ import com.heybys.optimusamicus.user.exception.UserNotFoundException;
 import com.heybys.optimusamicus.user.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   private final UserRepository userRepository;
 
