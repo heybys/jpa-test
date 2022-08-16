@@ -49,4 +49,5 @@
     - 양방향 관계는 필요 시에만
     - 관계 형성 시, ToString() 등으로 인한 순환 참조 조심
     - 빌더패턴 사용, setter 사용 거의 없음
+    - GeneratedValue ID 만들 것
 - Controller 단에서 Entity -> DTO 변환할 것.
