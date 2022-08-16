@@ -38,6 +38,7 @@
     - [ ] @NoArgsConstructor Best Practice..
     - [ ] @PrePersist, @PostPersist
     - [ ] @UpdateTime?
+    - [ ] 일대일 관계 시, Lazy 적용안되는 경우 확인
 
 <br>
 
