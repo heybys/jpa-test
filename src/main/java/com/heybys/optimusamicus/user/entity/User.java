@@ -53,10 +53,6 @@ public class User extends BaseEntity {
   @Column(name = "address")
   private String address;
 
-  @Type(type = "yes_no")
-  @Column(name = "use_yn", nullable = false)
-  private Boolean useYn = true;
-
   @ManyToOne(targetEntity = UserGroup.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "user_group_id")
   private UserGroup userGroup;

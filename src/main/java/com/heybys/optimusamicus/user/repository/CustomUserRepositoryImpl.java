@@ -38,8 +38,7 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
         .where(
             userTypeEq(request.getUserType()),
             usernameEq(request.getUsername()),
-            userGroupNameEq(request.getUserGroupName()),
-            user.useYn.eq(true)
+            userGroupNameEq(request.getUserGroupName())
         )
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
@@ -52,8 +51,7 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
         .where(
             userTypeEq(request.getUserType()),
             usernameEq(request.getUsername()),
-            userGroupNameEq(request.getUserGroupName()),
-            user.useYn.eq(true)
+            userGroupNameEq(request.getUserGroupName())
         );
 
     return PageableExecutionUtils.getPage(users, pageable, countQuery::fetchCount);
@@ -62,14 +60,13 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
   @Override
   public List<User> batchInsert(List<User> users) {
     this.userJdbcTemplate.batchUpdate(
-        "  INSERT INTO user (`type`, `username`, `phone_number`, `address`, `use_yn`, `user_group_id`) "
-            + " VALUES (?, ?, ?, ?, ?, ?) ", users, jdbcBatchSize,
+        "  INSERT INTO user (`type`, `username`, `phone_number`, `address`, `user_group_id`) "
+            + " VALUES (?, ?, ?, ?, ?) ", users, jdbcBatchSize,
         (ps, argument) -> {
           ps.setString(1, argument.getUserType().name());
           ps.setString(2, argument.getUsername());
           ps.setString(3, argument.getPhoneNumber());
           ps.setString(4, argument.getAddress());
-          ps.setString(5, useYnFrom(argument));
           ps.setObject(6, userGroupIdFrom(argument));
         });
 
@@ -86,10 +83,6 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
 
   private BooleanExpression userGroupNameEq(String userGroupName) {
     return userGroupName != null ? user.userGroup.userGroupName.eq(userGroupName) : null;
-  }
-
-  private String useYnFrom(User user) {
-    return user.getUseYn().equals(true) ? "Y" : "N";
   }
 
   private Long userGroupIdFrom(User user) {
