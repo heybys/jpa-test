@@ -52,4 +52,5 @@
     - 빌더패턴 사용, setter 사용 거의 없음
     - GeneratedValue ID 만들 것
     - Entity 상속 시, @Inheritance(strategy = InheritanceType.JOINED) 을 기본으로 할 것
+    - 상속 관계 모델링은 우선 정규화하고 억 단위 데이터가 넘어가는 시점등에서 개비
 - Controller 단에서 Entity -> DTO 변환할 것.
