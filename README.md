@@ -36,9 +36,10 @@
     - [x] @EqualsAndHashCode 테스트. 매핑해놓고 레이즈 패치되는지
     - [ ] @DynamicUpdate 확인
     - [ ] @NoArgsConstructor Best Practice..
-    - [ ] @PrePersist, @PostPersist
-    - [ ] @UpdateTime?
+    - [X] @PrePersist, @PostPersist, Auditing 확인
+    - [x] @UpdateTime?
     - [ ] 일대일 관계 시, Lazy 적용안되는 경우 확인
+    - [ ] Entity 상속 케이스
 
 <br>
 
@@ -50,4 +51,5 @@
     - 관계 형성 시, ToString() 등으로 인한 순환 참조 조심
     - 빌더패턴 사용, setter 사용 거의 없음
     - GeneratedValue ID 만들 것
+    - Entity 상속 시, @Inheritance(strategy = InheritanceType.JOINED) 을 기본으로 할 것
 - Controller 단에서 Entity -> DTO 변환할 것.
