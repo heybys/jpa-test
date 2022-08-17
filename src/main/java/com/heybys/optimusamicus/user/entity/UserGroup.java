@@ -1,5 +1,6 @@
 package com.heybys.optimusamicus.user.entity;
 
+import com.heybys.optimusamicus.common.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "user_group")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UserGroup {
+public class UserGroup extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

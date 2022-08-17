@@ -1,5 +1,6 @@
 package com.heybys.optimusamicus.user.entity;
 
+import com.heybys.optimusamicus.common.entity.BaseEntity;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ import org.hibernate.annotations.Type;
     @UniqueConstraint(name = "UK_phone_number", columnNames = {"phone_number"}),
     @UniqueConstraint(name = "UK_username", columnNames = {"username"})})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseEntity {
 
   public enum UserType {
     NORMAL, ADMIN

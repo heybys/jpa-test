@@ -1,5 +1,6 @@
 package com.heybys.optimusamicus.order.entity;
 
+import com.heybys.optimusamicus.common.entity.BaseEntity;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,11 +20,11 @@ import org.hibernate.Hibernate;
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order {
+public class Order extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "orderId", nullable = false)
+  @Column(name = "order_id", nullable = false)
   private Long orderId;
 
   @Column(name = "serial_number", nullable = false)
