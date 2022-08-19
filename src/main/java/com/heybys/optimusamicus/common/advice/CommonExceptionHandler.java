@@ -19,8 +19,11 @@ public class CommonExceptionHandler {
 
   @ExceptionHandler(Exception.class)
   protected ResponseEntity<CommonResponse> handleException(Exception exception) {
-    logger.error("[Exception]: {}, [Cause]: {}, [Message]: {}", exception.getClass().getName(),
-        exception.getCause(), exception.getMessage());
+    logger.error(
+        "[Exception]: {}, [Cause]: {}, [Message]: {}",
+        exception.getClass().getName(),
+        exception.getCause(),
+        exception.getMessage());
     CommonResponse response = new CommonResponse(StatusCode.FAIL, "Internal Server Error");
 
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -33,5 +36,4 @@ public class CommonExceptionHandler {
 
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
-
 }

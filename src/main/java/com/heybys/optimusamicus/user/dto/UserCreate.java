@@ -10,12 +10,11 @@ import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 public class UserCreate {
-  
+
   @Data
   public static class Request {
 
-    @NotNull
-    private String username;
+    @NotNull private String username;
 
     public User toUser() {
       return User.builder().username(username).build();
@@ -39,5 +38,4 @@ public class UserCreate {
       this.userGroupName = user.getUserGroup().getUserGroupName();
     }
   }
-
 }

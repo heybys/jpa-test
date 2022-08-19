@@ -22,7 +22,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @RequiredArgsConstructor
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.heybys.optimusamicus.user.repository", entityManagerFactoryRef = "userEntityManagerFactory", transactionManagerRef = "userTransactionManager")
+@EnableJpaRepositories(
+    basePackages = "com.heybys.optimusamicus.user.repository",
+    entityManagerFactoryRef = "userEntityManagerFactory",
+    transactionManagerRef = "userTransactionManager")
 public class UserDataSourceConfig {
 
   private final CommonConfigFactory commonConfigFactory;
@@ -52,7 +55,8 @@ public class UserDataSourceConfig {
   @Primary
   @Bean
   public LocalContainerEntityManagerFactoryBean userEntityManagerFactory() {
-    LocalContainerEntityManagerFactoryBean factoryBean = commonConfigFactory.createEntityManagerFactoryBean();
+    LocalContainerEntityManagerFactoryBean factoryBean =
+        commonConfigFactory.createEntityManagerFactoryBean();
     factoryBean.setDataSource(userDataSource());
     factoryBean.setPersistenceUnitName(persistenceUnitName);
     factoryBean.setPackagesToScan("com.heybys.optimusamicus.user.entity");

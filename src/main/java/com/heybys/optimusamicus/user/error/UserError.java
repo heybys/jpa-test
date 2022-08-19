@@ -1,7 +1,6 @@
 package com.heybys.optimusamicus.user.error;
 
 public enum UserError {
-
   USER_NOT_FOUND("USER_NOT_FOUND", "User Not Found"),
   USER_NOT_CREATED("USER_NOT_CREATED", "User Not Created");
 

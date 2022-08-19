@@ -19,7 +19,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @RequiredArgsConstructor
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.heybys.optimusamicus.order.repository", entityManagerFactoryRef = "orderEntityManagerFactory", transactionManagerRef = "orderTransactionManager")
+@EnableJpaRepositories(
+    basePackages = "com.heybys.optimusamicus.order.repository",
+    entityManagerFactoryRef = "orderEntityManagerFactory",
+    transactionManagerRef = "orderTransactionManager")
 public class OrderDataSourceConfig {
 
   private final CommonConfigFactory commonConfigFactory;
@@ -45,7 +48,8 @@ public class OrderDataSourceConfig {
 
   @Bean
   public LocalContainerEntityManagerFactoryBean orderEntityManagerFactory() {
-    LocalContainerEntityManagerFactoryBean factoryBean = commonConfigFactory.createEntityManagerFactoryBean();
+    LocalContainerEntityManagerFactoryBean factoryBean =
+        commonConfigFactory.createEntityManagerFactoryBean();
     factoryBean.setDataSource(orderDataSource());
     factoryBean.setPersistenceUnitName(persistenceUnitName);
     factoryBean.setPackagesToScan("com.heybys.optimusamicus.order.entity");

@@ -20,19 +20,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
-import org.hibernate.annotations.Type;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "user", uniqueConstraints = {
-    @UniqueConstraint(name = "UK_phone_number", columnNames = {"phone_number"}),
-    @UniqueConstraint(name = "UK_username", columnNames = {"username"})})
+@Table(
+    name = "user",
+    uniqueConstraints = {
+      @UniqueConstraint(
+          name = "UK_phone_number",
+          columnNames = {"phone_number"}),
+      @UniqueConstraint(
+          name = "UK_username",
+          columnNames = {"username"})
+    })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
   public enum UserType {
-    NORMAL, ADMIN
+    NORMAL,
+    ADMIN
   }
 
   @Id

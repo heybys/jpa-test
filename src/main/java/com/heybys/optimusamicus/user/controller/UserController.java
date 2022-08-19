@@ -38,14 +38,15 @@ public class UserController {
 
   @GetMapping("")
   @LogExecutionTime
-  public ResponseEntity<CommonResponse> retrieveUsers(UserSearch.Request request,
-      @PageableDefault() Pageable pageable) {
+  public ResponseEntity<CommonResponse> retrieveUsers(
+      UserSearch.Request request, @PageableDefault() Pageable pageable) {
 
     List<User> retrievedUsers = userService.retrieveUsers(request, pageable);
 
-    List<UserSearch.Response> responses = retrievedUsers.stream()
-        .map(user -> UserSearch.Response.builder().user(user).build())
-        .collect(Collectors.toList());
+    List<UserSearch.Response> responses =
+        retrievedUsers.stream()
+            .map(user -> UserSearch.Response.builder().user(user).build())
+            .collect(Collectors.toList());
 
     return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, responses), HttpStatus.OK);
   }
@@ -77,8 +78,8 @@ public class UserController {
 
     UserCreate.Response response = UserCreate.Response.builder().user(createdUser).build();
 
-    return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response),
-        HttpStatus.CREATED);
+    return new ResponseEntity<>(
+        new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.CREATED);
   }
 
   @PostMapping("/clones")
@@ -96,12 +97,13 @@ public class UserController {
 
     List<User> createdClones = userService.createUsers(makeUserClones(user, 100));
 
-    List<UserCreate.Response> responses = createdClones.stream()
-        .map(clone -> UserCreate.Response.builder().user(clone).build())
-        .collect(Collectors.toList());
+    List<UserCreate.Response> responses =
+        createdClones.stream()
+            .map(clone -> UserCreate.Response.builder().user(clone).build())
+            .collect(Collectors.toList());
 
-    return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, responses),
-        HttpStatus.CREATED);
+    return new ResponseEntity<>(
+        new CommonResponse(StatusCode.SUCCESS, responses), HttpStatus.CREATED);
   }
 
   private List<User> makeUserClones(User user, Integer count) {

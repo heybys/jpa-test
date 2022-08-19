@@ -19,8 +19,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport implements
-    CustomUserRepository {
+public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
+    implements CustomUserRepository {
 
   private final JdbcTemplate userJdbcTemplate;
 
@@ -30,29 +30,29 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
   @Override
   public Page<User> retrieveUsers(UserSearch.Request request, Pageable pageable) {
 
-    List<User> users = queryFactory
-        .select(user)
-        .from(user)
-        .leftJoin(user.userGroup)
-        .fetchJoin()
-        .where(
-            userTypeEq(request.getUserType()),
-            usernameEq(request.getUsername()),
-            userGroupNameEq(request.getUserGroupName())
-        )
-        .offset(pageable.getOffset())
-        .limit(pageable.getPageSize())
-        .fetch();
+    List<User> users =
+        queryFactory
+            .select(user)
+            .from(user)
+            .leftJoin(user.userGroup)
+            .fetchJoin()
+            .where(
+                userTypeEq(request.getUserType()),
+                usernameEq(request.getUsername()),
+                userGroupNameEq(request.getUserGroupName()))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
 
-    JPAQuery<User> countQuery = queryFactory
-        .select(user)
-        .from(user)
-        .leftJoin(user.userGroup)
-        .where(
-            userTypeEq(request.getUserType()),
-            usernameEq(request.getUsername()),
-            userGroupNameEq(request.getUserGroupName())
-        );
+    JPAQuery<User> countQuery =
+        queryFactory
+            .select(user)
+            .from(user)
+            .leftJoin(user.userGroup)
+            .where(
+                userTypeEq(request.getUserType()),
+                usernameEq(request.getUsername()),
+                userGroupNameEq(request.getUserGroupName()));
 
     return PageableExecutionUtils.getPage(users, pageable, countQuery::fetchCount);
   }
@@ -61,7 +61,9 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport impl
   public List<User> batchInsert(List<User> users) {
     this.userJdbcTemplate.batchUpdate(
         "  INSERT INTO user (`type`, `username`, `phone_number`, `address`, `user_group_id`) "
-            + " VALUES (?, ?, ?, ?, ?) ", users, jdbcBatchSize,
+            + " VALUES (?, ?, ?, ?, ?) ",
+        users,
+        jdbcBatchSize,
         (ps, argument) -> {
           ps.setString(1, argument.getUserType().name());
           ps.setString(2, argument.getUsername());

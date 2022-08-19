@@ -9,7 +9,7 @@ import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 public class UserSearch {
-  
+
   @Data
   public static class Request {
 
@@ -34,5 +34,4 @@ public class UserSearch {
       this.userGroupName = user.getUserGroup().getUserGroupName();
     }
   }
-
 }

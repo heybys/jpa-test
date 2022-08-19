@@ -11,7 +11,8 @@ import lombok.Getter;
 public class CommonResponse {
 
   public enum StatusCode {
-    SUCCESS, FAIL
+    SUCCESS,
+    FAIL
   }
 
   private StatusCode statusCode;
