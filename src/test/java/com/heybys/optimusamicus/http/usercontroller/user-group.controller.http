@@ -1,0 +1,32 @@
+### Successful POST user-groups: check response status is 201
+
+
+POST {{url}}/api/v1/user-groups
+Content-Type: application/json
+
+{
+  "userGroupName": "test-userGroupName-{{$uuid}}"
+}
+
+> {%
+client.test("User group created successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+  client.assert(response.body["statusCode"] === "SUCCESS", "Body statusCode is not SUCCESS");
+  client.assert(response.body["data"]["userGroupId"], "Body data userGroupId should not be undefined");
+});
+%}
+
+### Failed POST user-groups: check response status is 400
+POST {{url}}/api/v1/user-groups
+Content-Type: application/json
+
+{
+  "userGroupName": null
+}
+
+> {%
+client.test("User created unsuccessfully", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+  client.assert(response.body["statusCode"] === "FAIL", "Body statusCode is not FAIL");
+});
+%}
