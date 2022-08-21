@@ -1,0 +1,30 @@
+### Successful POST users: check response status is 201
+POST {{url}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "heybys-{{$uuid}}"
+}
+
+> {%
+client.test("User created successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+  client.assert(response.body["statusCode"] === "SUCCESS", "Body statusCode is not SUCCESS");
+  client.assert(response.body["data"]["userId"], "Body data userId should not be undefined");
+});
+%}
+
+### Failed POST users: check response status is 400
+POST {{url}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": null
+}
+
+> {%
+client.test("User created unsuccessfully", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+  client.assert(response.body["statusCode"] === "FAIL", "Body statusCode is not FAIL");
+});
+%}
