@@ -1,5 +1,6 @@
 package com.heybys.optimusamicus.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.heybys.optimusamicus.common.entity.BaseEntity;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -39,7 +40,17 @@ public class User extends BaseEntity {
 
   public enum UserType {
     NORMAL,
-    ADMIN
+    ADMIN;
+
+    @JsonCreator
+    public UserType from(String value) {
+      for (UserType userType : UserType.values()) {
+        if (userType.name().equals(value)) {
+          return userType;
+        }
+      }
+      return null;
+    }
   }
 
   @Id
@@ -54,7 +65,7 @@ public class User extends BaseEntity {
   @Column(name = "username", nullable = false)
   private String username;
 
-  @Column(name = "phone_number", columnDefinition = "char(11)")
+  @Column(name = "phone_number", columnDefinition = "char(111)")
   private String phoneNumber;
 
   @Column(name = "address")

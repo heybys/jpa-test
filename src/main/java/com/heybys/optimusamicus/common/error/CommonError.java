@@ -1,7 +1,8 @@
 package com.heybys.optimusamicus.common.error;
 
 public enum CommonError {
-  INVALID_PARAMETER("INVALID_PARAMETER", "Invalid Request Parameter");
+  INVALID_PARAMETER("INVALID_PARAMETER", "Invalid Request Parameter"),
+  METHOD_ARGUMENT_NOT_VALID("METHOD_ARGUMENT_NOT_VALID", "Method Argument Not Valid");
 
   private final String code;
   private final String message;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.heybys.optimusamicus.user.entity.User;
 import com.heybys.optimusamicus.user.entity.User.UserType;
+import com.heybys.optimusamicus.user.entity.UserGroup;
 import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,10 @@ public class UserCreate {
 
     @NotNull private UserType userType;
 
-    @NotNull private String phoneNumber;
+    @NotNull
+    // @Length(min = 10, max = 11)
+    // @Pattern(regexp = "^[0-9]+$")
+    private String phoneNumber;
 
     @NotNull private String address;
 
@@ -43,12 +47,11 @@ public class UserCreate {
     private String username;
     private String phoneNumber;
     private String address;
-    private String userGroupName;
+    private UserGroup userGroup;
 
     @Builder
     public Response(User user) {
       BeanUtils.copyProperties(user, this);
-      this.userGroupName = user.getUserGroup().getUserGroupName();
     }
   }
 }
