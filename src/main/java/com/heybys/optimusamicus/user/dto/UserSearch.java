@@ -22,16 +22,20 @@ public class UserSearch {
   @JsonInclude(Include.NON_NULL)
   public static class Response {
 
+    private Long userId;
     private UserType userType;
     private String username;
     private String phoneNumber;
     private String address;
-    private String userGroupName;
+    private UserGroupSearch.Response userGroup;
 
     @Builder
     public Response(User user) {
       BeanUtils.copyProperties(user, this);
-      this.userGroupName = user.getUserGroup().getUserGroupName();
+
+      if (user.getUserGroup() != null) {
+        userGroup = UserGroupSearch.Response.builder().userGroup(user.getUserGroup()).build();
+      }
     }
   }
 }
