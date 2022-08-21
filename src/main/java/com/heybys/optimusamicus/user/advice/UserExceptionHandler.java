@@ -10,6 +10,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,6 +19,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class UserExceptionHandler {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  protected ResponseEntity<CommonResponse> handleException(
+      MethodArgumentNotValidException exception) {
+    logger.error(exception.getMessage());
+    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+  }
 
   @ExceptionHandler(UserNotFoundException.class)
   protected ResponseEntity<CommonResponse> handleException(UserNotFoundException exception) {
