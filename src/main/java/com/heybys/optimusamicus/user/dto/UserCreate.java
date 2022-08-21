@@ -16,8 +16,21 @@ public class UserCreate {
 
     @NotNull private String username;
 
+    @NotNull private UserType userType;
+
+    @NotNull private String phoneNumber;
+
+    @NotNull private String address;
+
+    private Long userGroupId;
+
     public User toUser() {
-      return User.builder().username(username).build();
+      return User.builder()
+          .username(username)
+          .userType(userType)
+          .phoneNumber(phoneNumber)
+          .address(address)
+          .build();
     }
   }
 

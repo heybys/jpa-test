@@ -65,10 +65,13 @@ public class User extends BaseEntity {
   private UserGroup userGroup;
 
   @Builder
-  public User(Long userId, String username, UserType userType) {
-    this.userId = userId;
-    this.username = username;
+  public User(
+      UserType userType, String username, String phoneNumber, String address, UserGroup userGroup) {
     this.userType = userType;
+    this.username = username;
+    this.phoneNumber = phoneNumber;
+    this.address = address;
+    this.userGroup = userGroup;
   }
 
   @Override

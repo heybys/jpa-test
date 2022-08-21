@@ -17,10 +17,12 @@ public class UserService {
 
   private final UserRepository userRepository;
 
+  @Transactional(readOnly = true)
   public List<User> retrieveUsers(Request request, Pageable pageable) {
     return userRepository.retrieveUsers(request, pageable).getContent();
   }
 
+  @Transactional(readOnly = true)
   public User retrieveUser(Long userId) {
     return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
   }

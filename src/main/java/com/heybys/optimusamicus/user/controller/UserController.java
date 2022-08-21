@@ -6,8 +6,6 @@ import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import com.heybys.optimusamicus.user.dto.UserCreate;
 import com.heybys.optimusamicus.user.dto.UserSearch;
 import com.heybys.optimusamicus.user.entity.User;
-import com.heybys.optimusamicus.user.entity.User.UserType;
-import com.heybys.optimusamicus.user.entity.UserGroup;
 import com.heybys.optimusamicus.user.service.UserGroupService;
 import com.heybys.optimusamicus.user.service.UserService;
 import java.util.ArrayList;
@@ -66,13 +64,12 @@ public class UserController {
   @LogExecutionTime
   public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserCreate.Request request) {
 
-    UserGroup userGroup = UserGroup.builder().userGroupName("UserGroupTest").build();
-    UserGroup createdUserGroup = userGroupService.createUserGroup(userGroup);
-
     User user = request.toUser();
-    user.setUserType(UserType.NORMAL);
-    user.setAddress("AddressTest");
-    user.setUserGroup(createdUserGroup);
+
+    Long userGroupId = request.getUserGroupId();
+    if (userGroupId != null) {
+      user.setUserGroup(userGroupService.retrieveUserGroup(userGroupId));
+    }
 
     User createdUser = userService.createUser(user);
 
@@ -87,13 +84,12 @@ public class UserController {
   public ResponseEntity<CommonResponse> createUserClones(
       @RequestBody @Valid UserCreate.Request request) {
 
-    UserGroup userGroup = UserGroup.builder().userGroupName("UserGroupTest").build();
-    UserGroup createdUserGroup = userGroupService.createUserGroup(userGroup);
-
     User user = request.toUser();
-    user.setUserType(UserType.NORMAL);
-    user.setAddress("AddressTest");
-    user.setUserGroup(createdUserGroup);
+
+    Long userGroupId = request.getUserGroupId();
+    if (userGroupId != null) {
+      user.setUserGroup(userGroupService.retrieveUserGroup(userGroupId));
+    }
 
     List<User> createdClones = userService.createUsers(makeUserClones(user, 100));
 
