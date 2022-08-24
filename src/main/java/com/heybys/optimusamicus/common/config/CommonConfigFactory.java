@@ -49,6 +49,13 @@ public class CommonConfigFactory {
   @Value("${spring.jpa.hibernate.use-new-id-generator-mappings}")
   private String useNewIdGeneratorMappings;
 
+  /**
+   * Create EntityManagerFactory with Hibernate Properties.
+   *
+   * @see <a
+   *     href="https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html">
+   *     Hibernate ORM User Guide</a>
+   */
   public LocalContainerEntityManagerFactoryBean createEntityManagerFactoryBean() {
 
     LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();

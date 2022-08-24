@@ -50,13 +50,12 @@ compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }
 
-// 해당 설정이 없을 경우, ./gradlew build 시 에러 발생.
-build {
-    dependsOn 'spotlessApply'
-}
-
 spotless {
     java {
         googleJavaFormat('1.8')
     }
+}
+
+build {
+    dependsOn 'spotlessJavaApply'
 }
