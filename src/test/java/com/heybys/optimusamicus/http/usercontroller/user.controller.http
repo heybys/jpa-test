@@ -1,5 +1,5 @@
 ### Successful POST users: check response status is 201
-POST {{url}}/api/v1/users/clones
+POST {{url}}/api/v1/users
 Content-Type: application/json
 
 {
