@@ -35,11 +35,16 @@
     - [x] @Column 에 length 등 다 표기하기
     - [x] @EqualsAndHashCode 테스트. 매핑해놓고 레이즈 패치되는지
     - [ ] @DynamicUpdate 확인
-    - [ ] @NoArgsConstructor Best Practice..
+    - [x] @NoArgsConstructor Best Practice..
     - [X] @PrePersist, @PostPersist, Auditing 확인
     - [x] @UpdateTime?
-    - [ ] 일대일 관계 시, Lazy 적용안되는 경우 확인
+    - [ ] 일대일 관계 시, Lazy 적용안되는 경우 확인(양방향 관계 맺은 경우)
     - [ ] Entity 상속 케이스
+    - [ ] 외래키 확인
+- QueryDsl
+    - [ ] update 구문 확인
+- Etc
+    - [ ] Aspect 수정 (interface, class, method)
 
 <br>
 
