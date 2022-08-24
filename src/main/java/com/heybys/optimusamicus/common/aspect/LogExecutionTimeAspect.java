@@ -25,7 +25,7 @@ public class LogExecutionTimeAspect {
     Object proceed = joinPoint.proceed();
     stopWatch.stop();
 
-    log.info("{} running time = {}s", stopWatch.getId(), stopWatch.getTotalTimeSeconds());
+    log.info("{} Executed in {}s", stopWatch.getId(), stopWatch.getTotalTimeSeconds());
 
     return proceed;
   }
