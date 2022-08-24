@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.user.dto;
+package com.heybys.optimusamicus.user.dto.create;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -6,30 +6,32 @@ import com.heybys.optimusamicus.user.entity.UserGroup;
 import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.beans.BeanUtils;
 
 public class UserGroupCreate {
 
   @Data
   public static class Request {
-
-    @NotNull private String userGroupName;
+    @NotNull private String name;
 
     public UserGroup toUserGroup() {
-      return UserGroup.builder().userGroupName(userGroupName).build();
+      return UserGroup.builder().name(name).build();
     }
   }
 
   @Data
   @JsonInclude(Include.NON_NULL)
   public static class Response {
-
-    private Long userGroupId;
-    private String userGroupName;
+    private Long id;
+    private String name;
 
     @Builder
-    public Response(UserGroup userGroup) {
-      BeanUtils.copyProperties(userGroup, this);
+    public Response(Long id, String name) {
+      this.id = id;
+      this.name = name;
+    }
+
+    public static Response from(UserGroup userGroup) {
+      return Response.builder().id(userGroup.getId()).name(userGroup.getName()).build();
     }
   }
 }

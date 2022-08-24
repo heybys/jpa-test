@@ -1,8 +1,8 @@
 package com.heybys.optimusamicus.user.service;
 
-import com.heybys.optimusamicus.user.dto.UserSearch.Request;
+import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
+import com.heybys.optimusamicus.user.dto.search.UserSearch.Request;
 import com.heybys.optimusamicus.user.entity.User;
-import com.heybys.optimusamicus.user.exception.UserNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserNotFoundException;
 import com.heybys.optimusamicus.user.repository.UserRepository;
 import java.util.List;
@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@LogExecutionTime
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -29,19 +30,11 @@ public class UserService {
 
   @Transactional
   public User createUser(User user) {
-    try {
-      return userRepository.save(user);
-    } catch (Exception e) {
-      throw new UserNotCreatedException();
-    }
+    return userRepository.save(user);
   }
 
   @Transactional
   public List<User> createUsers(List<User> users) {
-    try {
-      return userRepository.batchInsert(users);
-    } catch (Exception e) {
-      throw new UserNotCreatedException();
-    }
+    return userRepository.batchInsert(users);
   }
 }

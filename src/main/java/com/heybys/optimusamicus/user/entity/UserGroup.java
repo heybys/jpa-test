@@ -22,15 +22,15 @@ public class UserGroup extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "user_group_id", nullable = false)
-  private Long userGroupId;
+  @Column(name = "id", nullable = false)
+  private Long id;
 
   @Column(name = "name", nullable = false)
-  private String userGroupName;
+  private String name;
 
   @Builder
-  public UserGroup(Long userGroupId, String userGroupName) {
-    this.userGroupId = userGroupId;
-    this.userGroupName = userGroupName;
+  public UserGroup(Long id, String name) {
+    this.id = id;
+    this.name = name;
   }
 }

@@ -32,21 +32,21 @@ import org.hibernate.Hibernate;
           name = "UK_phone_number",
           columnNames = {"phone_number"}),
       @UniqueConstraint(
-          name = "UK_username",
-          columnNames = {"username"})
+          name = "UK_name",
+          columnNames = {"name"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
-  public enum UserType {
+  public enum Type {
     NORMAL,
     ADMIN;
 
     @JsonCreator
-    public UserType from(String value) {
-      for (UserType userType : UserType.values()) {
-        if (userType.name().equals(value)) {
-          return userType;
+    public Type from(String value) {
+      for (Type type : Type.values()) {
+        if (type.name().equals(value)) {
+          return type;
         }
       }
       return null;
@@ -55,31 +55,30 @@ public class User extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "user_id", nullable = false)
-  private Long userId;
+  @Column(name = "id", nullable = false)
+  private Long id;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "type", nullable = false, columnDefinition = "char(10)")
-  private UserType userType;
+  private Type type;
 
-  @Column(name = "username", nullable = false)
-  private String username;
+  @Column(name = "name", nullable = false)
+  private String name;
 
-  @Column(name = "phone_number", columnDefinition = "char(111)")
+  @Column(name = "phone_number", columnDefinition = "char(20)")
   private String phoneNumber;
 
   @Column(name = "address")
   private String address;
 
   @ManyToOne(targetEntity = UserGroup.class, fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_group_id")
+  @JoinColumn(name = "user_group_id", referencedColumnName = "id")
   private UserGroup userGroup;
 
   @Builder
-  public User(
-      UserType userType, String username, String phoneNumber, String address, UserGroup userGroup) {
-    this.userType = userType;
-    this.username = username;
+  public User(Type type, String name, String phoneNumber, String address, UserGroup userGroup) {
+    this.type = type;
+    this.name = name;
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.userGroup = userGroup;
@@ -94,7 +93,7 @@ public class User extends BaseEntity {
       return false;
     }
     User user = (User) o;
-    return userId != null && Objects.equals(userId, user.userId);
+    return id != null && Objects.equals(id, user.id);
   }
 
   @Override

@@ -1,6 +1,6 @@
 package com.heybys.optimusamicus.user.repository;
 
-import com.heybys.optimusamicus.user.dto.UserSearch;
+import com.heybys.optimusamicus.user.dto.search.UserSearch;
 import com.heybys.optimusamicus.user.entity.User;
 import java.util.List;
 import org.springframework.data.domain.Page;

@@ -1,10 +1,11 @@
 package com.heybys.optimusamicus.user.repository;
 
 import static com.heybys.optimusamicus.user.entity.QUser.user;
+import static com.heybys.optimusamicus.user.entity.QUserGroup.userGroup;
 
-import com.heybys.optimusamicus.user.dto.UserSearch;
+import com.heybys.optimusamicus.user.dto.search.UserSearch;
 import com.heybys.optimusamicus.user.entity.User;
-import com.heybys.optimusamicus.user.entity.User.UserType;
+import com.heybys.optimusamicus.user.entity.User.Type;
 import com.heybys.optimusamicus.user.repository.support.UserQuerydslRepositorySupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -28,31 +29,31 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
   private Integer jdbcBatchSize;
 
   @Override
-  public Page<User> retrieveUsers(UserSearch.Request request, Pageable pageable) {
+  public Page<User> retrieveUsers(UserSearch.Request userSearchRequest, Pageable pageable) {
 
     List<User> users =
         queryFactory
-            .select(user)
-            .from(user)
-            .leftJoin(user.userGroup)
+            .selectFrom(user)
+            .leftJoin(userGroup)
+            .on(user.userGroup.id.eq(userGroup.id))
             .fetchJoin()
             .where(
-                userTypeEq(request.getUserType()),
-                usernameEq(request.getUsername()),
-                userGroupNameEq(request.getUserGroupName()))
+                userTypeEq(userSearchRequest.getType()),
+                userNameEq(userSearchRequest.getName()),
+                userGroupNameEq(userSearchRequest.getGroupName()))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
 
     JPAQuery<User> countQuery =
         queryFactory
-            .select(user)
-            .from(user)
-            .leftJoin(user.userGroup)
+            .selectFrom(user)
+            .leftJoin(userGroup)
+            .on(user.userGroup.id.eq(userGroup.id))
             .where(
-                userTypeEq(request.getUserType()),
-                usernameEq(request.getUsername()),
-                userGroupNameEq(request.getUserGroupName()));
+                userTypeEq(userSearchRequest.getType()),
+                userNameEq(userSearchRequest.getName()),
+                userGroupNameEq(userSearchRequest.getGroupName()));
 
     return PageableExecutionUtils.getPage(users, pageable, countQuery::fetchCount);
   }
@@ -60,34 +61,34 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
   @Override
   public List<User> batchInsert(List<User> users) {
     this.userJdbcTemplate.batchUpdate(
-        "  INSERT INTO user (`type`, `username`, `phone_number`, `address`, `user_group_id`) "
+        "  INSERT INTO user (`type`, `name`, `phone_number`, `address`, `user_group_id`) "
             + " VALUES (?, ?, ?, ?, ?) ",
         users,
         jdbcBatchSize,
         (ps, argument) -> {
-          ps.setString(1, argument.getUserType().name());
-          ps.setString(2, argument.getUsername());
+          ps.setString(1, argument.getType().name());
+          ps.setString(2, argument.getName());
           ps.setString(3, argument.getPhoneNumber());
           ps.setString(4, argument.getAddress());
-          ps.setObject(6, userGroupIdFrom(argument));
+          ps.setObject(5, userGroupIdFrom(argument));
         });
 
     return users;
   }
 
-  private BooleanExpression userTypeEq(UserType userType) {
-    return userType != null ? user.userType.eq(userType) : null;
+  private BooleanExpression userTypeEq(Type type) {
+    return type != null ? user.type.eq(type) : null;
   }
 
-  private BooleanExpression usernameEq(String username) {
-    return username != null ? user.username.eq(username) : null;
+  private BooleanExpression userNameEq(String name) {
+    return name != null ? user.name.eq(name) : null;
   }
 
   private BooleanExpression userGroupNameEq(String userGroupName) {
-    return userGroupName != null ? user.userGroup.userGroupName.eq(userGroupName) : null;
+    return userGroupName != null ? userGroup.name.eq(userGroupName) : null;
   }
 
   private Long userGroupIdFrom(User user) {
-    return user.getUserGroup() != null ? user.getUserGroup().getUserGroupId() : null;
+    return user.getUserGroup() != null ? user.getUserGroup().getId() : null;
   }
 }

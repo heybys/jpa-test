@@ -1,12 +1,10 @@
 ### Successful POST users: check response status is 201
-
-
-POST {{url}}/api/v1/users
+POST {{url}}/api/v1/users/clones
 Content-Type: application/json
 
 {
-  "userType": "NORMAL",
-  "username": "test-username-{{$uuid}}",
+  "name": "test-name-{{$uuid}}",
+  "type": "NORMAL",
   "phoneNumber": "010{{$randomInt}}{{$randomInt}}{{$randomInt}}",
   "address": "Gangseo-gu, Seoul, Republic of Korea"
 }
@@ -14,8 +12,8 @@ Content-Type: application/json
 > {%
 client.test("User created successfully", function() {
   client.assert(response.status === 201, "Response status is not 201");
-  client.assert(response.body["statusCode"] === "SUCCESS", "Body statusCode is not SUCCESS");
-  client.assert(response.body["data"]["userId"], "Body data userId should not be undefined");
+  client.assert(response.body["statusCode"] === "SUCCESS", "Response body.statusCode is not SUCCESS");
+  client.assert(response.body["data"]["id"], "Response body.data.id should not be undefined");
 });
 %}
 
@@ -30,7 +28,7 @@ Content-Type: application/json
 > {%
 client.test("User created unsuccessfully", function() {
   client.assert(response.status === 400, "Response status is not 400");
-  client.assert(response.body["statusCode"] === "FAIL", "Body statusCode is not FAIL");
+  client.assert(response.body["statusCode"] === "FAIL", "Response body.statusCode is not FAIL");
 });
 %}
 
@@ -39,8 +37,8 @@ POST {{url}}/api/v1/users
 Content-Type: application/json
 
 {
-  "userType": "NORMAL",
-  "username": "test-username-{{$uuid}}",
+  "type": "NORMAL",
+  "name": "test-name-{{$uuid}}",
   "phoneNumber": "010{{$randomInt}}{{$randomInt}}{{$randomInt}}",
   "address": "Gangseo-gu, Seoul, Republic of Korea",
   "userGroupId": -1
@@ -49,7 +47,7 @@ Content-Type: application/json
 > {%
 client.test("User created unsuccessfully", function() {
   client.assert(response.status === 400, "Response status is not 400");
-  client.assert(response.body["statusCode"] === "FAIL", "Body statusCode is not FAIL");
+  client.assert(response.body["statusCode"] === "FAIL", "Response body.statusCode is not FAIL");
 });
 %}
 
