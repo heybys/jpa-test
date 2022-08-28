@@ -1,7 +1,6 @@
 package com.heybys.optimusamicus.user.service;
 
 import com.heybys.optimusamicus.user.entity.UserGroup;
-import com.heybys.optimusamicus.user.exception.UserGroupNotFoundException;
 import com.heybys.optimusamicus.user.repository.UserGroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ public class UserGroupService {
 
   @Transactional(readOnly = true)
   public UserGroup retrieveUserGroup(Long userGroupId) {
-    return userGroupRepository.findById(userGroupId).orElseThrow(UserGroupNotFoundException::new);
+    return userGroupRepository.findById(userGroupId).orElseThrow();
   }
 
   @Transactional

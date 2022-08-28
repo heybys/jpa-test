@@ -2,6 +2,8 @@ package com.heybys.optimusamicus.user.advice;
 
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
+import com.heybys.optimusamicus.user.exception.UserGroupNotCreatedException;
+import com.heybys.optimusamicus.user.exception.UserGroupNotFoundException;
 import com.heybys.optimusamicus.user.exception.UserNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,22 @@ public class UserExceptionHandler {
 
   @ExceptionHandler(UserNotCreatedException.class)
   protected ResponseEntity<CommonResponse> handleException(UserNotCreatedException exception) {
+    log.error(exception.getMessage());
+    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+  }
+
+  @ExceptionHandler(UserGroupNotFoundException.class)
+  protected ResponseEntity<CommonResponse> handleException(UserGroupNotFoundException exception) {
+    log.error(exception.getMessage());
+    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(UserGroupNotCreatedException.class)
+  protected ResponseEntity<CommonResponse> handleException(UserGroupNotCreatedException exception) {
     log.error(exception.getMessage());
     CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
 
