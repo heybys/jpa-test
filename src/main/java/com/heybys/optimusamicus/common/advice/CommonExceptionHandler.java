@@ -27,7 +27,7 @@ public class CommonExceptionHandler {
 
     CommonResponse response = new CommonResponse(StatusCode.FAIL, "Internal Server Error");
 
-    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @ExceptionHandler(InvalidParameterException.class)
