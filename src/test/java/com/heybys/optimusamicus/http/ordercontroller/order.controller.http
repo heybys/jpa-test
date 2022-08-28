@@ -1,0 +1,9 @@
+### Successful GET orders: check response status is 200
+GET {{url}}/api/v1/orders
+
+### Successful POST orders: check response status is 201
+POST {{url}}/api/v1/orders
+Content-Type: application/json
+
+{
+}
