@@ -1,5 +1,6 @@
 package com.heybys.optimusamicus.common.aspect;
 
+import java.text.NumberFormat;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -12,20 +13,34 @@ import org.springframework.util.StopWatch;
 @Aspect
 @Component
 public class LogExecutionTimeAspect {
+
   @Pointcut("this(org.springframework.data.repository.Repository)")
   public void inRepository() {}
 
   @Around("@within(LogExecutionTime) || @annotation(LogExecutionTime) || inRepository()")
   public Object logExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+    Object proceed;
+
     String clazz = joinPoint.getSignature().getDeclaringType().getSimpleName();
     String method = joinPoint.getSignature().getName();
     StopWatch stopWatch = new StopWatch(String.format("[%s::%s]", clazz, method));
 
     stopWatch.start();
-    Object proceed = joinPoint.proceed();
-    stopWatch.stop();
+    try {
+      proceed = joinPoint.proceed();
+    } finally {
+      stopWatch.stop();
 
-    log.info("{} Executed in {}s", stopWatch.getId(), stopWatch.getTotalTimeSeconds());
+      NumberFormat numberFormat = NumberFormat.getInstance();
+      numberFormat.setGroupingUsed(false);
+      numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+      numberFormat.setMaximumIntegerDigits(Integer.MAX_VALUE);
+
+      log.info(
+          "{} Executed in {}s",
+          stopWatch.getId(),
+          numberFormat.format(stopWatch.getTotalTimeSeconds()));
+    }
 
     return proceed;
   }
