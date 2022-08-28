@@ -1,18 +1,16 @@
 ### Successful POST user-groups: check response status is 201
-
-
 POST {{url}}/api/v1/user-groups
 Content-Type: application/json
 
 {
-  "userGroupName": "test-userGroupName-{{$uuid}}"
+  "name": "test-userGroupName-{{$uuid}}"
 }
 
 > {%
 client.test("User group created successfully", function() {
   client.assert(response.status === 201, "Response status is not 201");
   client.assert(response.body["statusCode"] === "SUCCESS", "Body statusCode is not SUCCESS");
-  client.assert(response.body["data"]["userGroupId"], "Body data userGroupId should not be undefined");
+  client.assert(response.body["data"]["id"], "Body data userGroupId should not be undefined");
 });
 %}
 
@@ -21,7 +19,7 @@ POST {{url}}/api/v1/user-groups
 Content-Type: application/json
 
 {
-  "userGroupName": null
+  "name": null
 }
 
 > {%
