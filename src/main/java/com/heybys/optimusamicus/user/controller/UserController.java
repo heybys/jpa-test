@@ -125,7 +125,7 @@ public class UserController {
   /**
    * make user clones by source user entity
    *
-   * @param user  user entity
+   * @param user user entity
    * @param count copy count
    * @return copied user list
    */
