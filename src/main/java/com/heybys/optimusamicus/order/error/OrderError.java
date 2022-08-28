@@ -1,8 +1,8 @@
 package com.heybys.optimusamicus.order.error;
 
 public enum OrderError {
-  ORDER_NOT_FOUND("ORDER_NOT_FOUND", "User Not Found"),
-  ORDER_NOT_CREATED("ORDER_NOT_CREATED", "User Not Created");
+  ORDER_NOT_FOUND("ORDER_NOT_FOUND", "Order Not Found"),
+  ORDER_NOT_CREATED("ORDER_NOT_CREATED", "Order Not Created");
 
   private final String code;
   private final String message;
