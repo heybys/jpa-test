@@ -12,7 +12,9 @@
     - [x] Multiple datasource & JPA 설정
     - [x] QueryDSL 적용 및 동적 쿼리 샘플 작성
     - [x] Bulk Insert 처리
-    - [ ] BaseEntity 기반의 Entity 구현
+    - [x] BaseEntity 기반의 Entity 구현
+    - [ ] 대용량 동시성 처리 구현
+    - [ ] API 캐시 구현
     - [ ] SNS 로그인
     - [ ] JWT 적용
     - [ ] Spring Security
@@ -41,6 +43,7 @@
     - [ ] 일대일 관계 시, Lazy 적용안되는 경우 확인(양방향 관계 맺은 경우)
     - [ ] Entity 상속 케이스
     - [ ] 외래키 확인
+    - [ ] 업데이트 API 구현
 - QueryDsl
     - [ ] update 구문 확인
 - Etc
