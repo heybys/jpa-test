@@ -15,6 +15,7 @@
     - [x] BaseEntity 기반의 Entity 구현
     - [ ] 대용량 동시성 처리 구현
     - [ ] API 캐시 구현
+    - [ ] 분산 트랜잭션 구현
     - [ ] SNS 로그인
     - [ ] JWT 적용
     - [ ] Spring Security
