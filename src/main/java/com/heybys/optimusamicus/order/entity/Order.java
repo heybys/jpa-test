@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Type;
 
 @Getter
 @Setter
@@ -35,6 +36,7 @@ public class Order extends BaseEntity {
   @Column(name = "id")
   private Long id;
 
+  @Type(type = "org.hibernate.type.UUIDCharType")
   @Column(name = "serial_number", nullable = false)
   private UUID serialNumber = UUID.randomUUID();
 
