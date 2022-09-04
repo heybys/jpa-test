@@ -1,5 +1,13 @@
 package com.heybys.optimusamicus.common.config;
 
+import static org.hibernate.cfg.AvailableSettings.DEFAULT_BATCH_FETCH_SIZE;
+import static org.hibernate.cfg.AvailableSettings.FORMAT_SQL;
+import static org.hibernate.cfg.AvailableSettings.HBM2DDL_AUTO;
+import static org.hibernate.cfg.AvailableSettings.IMPLICIT_NAMING_STRATEGY;
+import static org.hibernate.cfg.AvailableSettings.PHYSICAL_NAMING_STRATEGY;
+import static org.hibernate.cfg.AvailableSettings.STATEMENT_BATCH_SIZE;
+import static org.hibernate.cfg.AvailableSettings.USE_NEW_ID_GENERATOR_MAPPINGS;
+
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -49,13 +57,6 @@ public class CommonConfigFactory {
   @Value("${spring.jpa.hibernate.use-new-id-generator-mappings}")
   private String useNewIdGeneratorMappings;
 
-  /**
-   * Create EntityManagerFactory with Hibernate Properties.
-   *
-   * @see <a
-   *     href="https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html">
-   *     Hibernate ORM User Guide</a>
-   */
   public LocalContainerEntityManagerFactoryBean createEntityManagerFactoryBean() {
 
     LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -68,15 +69,15 @@ public class CommonConfigFactory {
     em.setJpaVendorAdapter(vendorAdapter);
 
     Properties properties = new Properties();
-    properties.put("hibernate.format_sql", formatSql);
-    properties.put("hibernate.default_batch_fetch_size", defaultBatchFetchSize);
-    properties.put("hibernate.jdbc.batch_size", jdbcBatchSize);
+    properties.put(FORMAT_SQL, formatSql);
+    properties.put(DEFAULT_BATCH_FETCH_SIZE, defaultBatchFetchSize);
+    properties.put(STATEMENT_BATCH_SIZE, jdbcBatchSize);
     // properties.put("hibernate.order_inserts", orderInserts);
     // properties.put("hibernate.order_updates", orderUpdates);
-    properties.put("hibernate.implicit_naming_strategy", namingImplicitStrategy);
-    properties.put("hibernate.physical_naming_strategy", namingPhysicalStrategy);
-    properties.put("hibernate.hbm2ddl.auto", ddlAuto);
-    properties.put("hibernate.id.new_generator_mappings", useNewIdGeneratorMappings);
+    properties.put(IMPLICIT_NAMING_STRATEGY, namingImplicitStrategy);
+    properties.put(PHYSICAL_NAMING_STRATEGY, namingPhysicalStrategy);
+    properties.put(HBM2DDL_AUTO, ddlAuto);
+    properties.put(USE_NEW_ID_GENERATOR_MAPPINGS, useNewIdGeneratorMappings);
     em.setJpaProperties(properties);
 
     return em;

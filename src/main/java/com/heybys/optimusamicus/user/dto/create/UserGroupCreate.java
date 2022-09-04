@@ -11,16 +11,18 @@ public class UserGroupCreate {
 
   @Data
   public static class Request {
+
     @NotNull private String name;
 
     public UserGroup toUserGroup() {
-      return UserGroup.builder().name(name).build();
+      return UserGroup.builder().userGroupName(name).build();
     }
   }
 
   @Data
   @JsonInclude(Include.NON_NULL)
   public static class Response {
+
     private Long id;
     private String name;
 
@@ -31,7 +33,10 @@ public class UserGroupCreate {
     }
 
     public static Response from(UserGroup userGroup) {
-      return Response.builder().id(userGroup.getId()).name(userGroup.getName()).build();
+      return Response.builder()
+          .id(userGroup.getUserGroupId())
+          .name(userGroup.getUserGroupName())
+          .build();
     }
   }
 }

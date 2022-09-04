@@ -136,7 +136,7 @@ public class UserController {
       User build = User.builder().build();
 
       BeanUtils.copyProperties(user, build);
-      build.setName(user.getName() + "_" + i);
+      build.setUsername(user.getUsername() + "_" + i);
       build.setPhoneNumber(user.getPhoneNumber() + i);
 
       users.add(build);

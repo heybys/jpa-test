@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
   "name": "test-name-{{$uuid}}",
-  "type": "NORMAL",
+  "userType": "NORMAL",
   "phoneNumber": "010{{$randomInt}}{{$randomInt}}{{$randomInt}}",
   "address": "Gangseo-gu, Seoul, Republic of Korea"
 }
@@ -49,7 +49,7 @@ POST {{url}}/api/v1/users
 Content-Type: application/json
 
 {
-  "type": "NORMAL",
+  "userType": "NORMAL",
   "name": "test-name-{{$uuid}}",
   "phoneNumber": "010{{$randomInt}}{{$randomInt}}{{$randomInt}}",
   "address": "Gangseo-gu, Seoul, Republic of Korea",

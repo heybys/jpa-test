@@ -3,7 +3,6 @@ package com.heybys.optimusamicus.user.entity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.heybys.optimusamicus.common.entity.BaseEntity;
 import java.util.Objects;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,38 +14,42 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.ToString.Exclude;
 import org.hibernate.Hibernate;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(
-    name = "user",
     uniqueConstraints = {
-      @UniqueConstraint(
-          name = "UK_phone_number",
-          columnNames = {"phone_number"}),
-      @UniqueConstraint(
-          name = "UK_name",
-          columnNames = {"name"})
+        @UniqueConstraint(
+            name = "UK_phoneNumber",
+            columnNames = {"phoneNumber"}),
+        @UniqueConstraint(
+            name = "UK_username",
+            columnNames = {"username"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
-  public enum Type {
+  public enum UserType {
     NORMAL,
     ADMIN;
 
     @JsonCreator
-    public Type from(String value) {
-      for (Type type : Type.values()) {
-        if (type.name().equals(value)) {
-          return type;
+    public UserType from(String value) {
+      for (UserType userType : UserType.values()) {
+        if (userType.name().equals(value)) {
+          return userType;
         }
       }
       return null;
@@ -55,30 +58,31 @@ public class User extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private Long id;
+  private Long userId;
 
+  @NotNull
+  @Length(max = 10)
   @Enumerated(EnumType.STRING)
-  @Column(name = "type", nullable = false, columnDefinition = "char(10)")
-  private Type type;
+  private UserType userType;
 
-  @Column(name = "name", nullable = false)
-  private String name;
+  @NotNull
+  private String username;
 
-  @Column(name = "phone_number", columnDefinition = "char(20)")
+  @Length(max = 20)
   private String phoneNumber;
 
-  @Column(name = "address")
   private String address;
 
   @ManyToOne(targetEntity = UserGroup.class, fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_group_id", referencedColumnName = "id")
+  @JoinColumn(name = "userGroupId")
+  @Exclude
   private UserGroup userGroup;
 
   @Builder
-  public User(Type type, String name, String phoneNumber, String address, UserGroup userGroup) {
-    this.type = type;
-    this.name = name;
+  public User(
+      UserType userType, String username, String phoneNumber, String address, UserGroup userGroup) {
+    this.userType = userType;
+    this.username = username;
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.userGroup = userGroup;
@@ -93,44 +97,11 @@ public class User extends BaseEntity {
       return false;
     }
     User user = (User) o;
-    return id != null && Objects.equals(id, user.id);
+    return userId != null && Objects.equals(userId, user.userId);
   }
 
   @Override
   public int hashCode() {
     return getClass().hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return getClass().getSimpleName()
-        + "("
-        + "id = "
-        + getId()
-        + ", "
-        + "createdBy = "
-        + getCreatedBy()
-        + ", "
-        + "createdDate = "
-        + getCreatedDate()
-        + ", "
-        + "lastModifiedBy = "
-        + getLastModifiedBy()
-        + ", "
-        + "lastModifiedDate = "
-        + getLastModifiedDate()
-        + ", "
-        + "type = "
-        + getType()
-        + ", "
-        + "name = "
-        + getName()
-        + ", "
-        + "phoneNumber = "
-        + getPhoneNumber()
-        + ", "
-        + "address = "
-        + getAddress()
-        + ")";
   }
 }

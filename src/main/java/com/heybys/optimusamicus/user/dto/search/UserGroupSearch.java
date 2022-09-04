@@ -10,12 +10,14 @@ public class UserGroupSearch {
 
   @Data
   public static class Request {
+
     private String name;
   }
 
   @Data
   @JsonInclude(Include.NON_NULL)
   public static class Response {
+
     private Long id;
     private String name;
 
@@ -26,7 +28,10 @@ public class UserGroupSearch {
     }
 
     public static Response from(UserGroup userGroup) {
-      return Response.builder().id(userGroup.getId()).name(userGroup.getName()).build();
+      return Response.builder()
+          .id(userGroup.getUserGroupId())
+          .name(userGroup.getUserGroupName())
+          .build();
     }
   }
 }

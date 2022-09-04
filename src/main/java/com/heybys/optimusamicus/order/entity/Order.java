@@ -22,22 +22,22 @@ import org.hibernate.annotations.Type;
 @Setter
 @Entity
 @Table(
-    name = "orders",
+    name = "Orders",
     uniqueConstraints = {
       @UniqueConstraint(
           name = "UK_serial_number",
-          columnNames = {"serial_number"})
+          columnNames = {"serialNumber"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
+  @Column(nullable = false)
   private Long id;
 
   @Type(type = "org.hibernate.type.UUIDCharType")
-  @Column(name = "serial_number", nullable = false)
+  @Column(nullable = false)
   private UUID serialNumber = UUID.randomUUID();
 
   @Builder
