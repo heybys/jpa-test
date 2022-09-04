@@ -19,25 +19,25 @@ public abstract class BaseEntity {
   private String createdBy;
 
   @Column(updatable = false)
-  private String createdDate;
+  private String createdAt;
 
-  private String lastModifiedBy;
+  private String modifiedBy;
 
-  private String lastModifiedDate;
+  private String modifiedAt;
 
   @PrePersist
   public void prePersist() {
     LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC"));
     String formattedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-    createdDate = formattedNow;
-    lastModifiedDate = formattedNow;
+    createdAt = formattedNow;
+    modifiedAt = formattedNow;
   }
 
   @PreUpdate
   public void preUpdate() {
     LocalDateTime now = LocalDateTime.now(ZoneId.of("UTC"));
 
-    lastModifiedDate = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    modifiedAt = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
   }
 }
