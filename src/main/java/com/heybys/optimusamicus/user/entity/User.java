@@ -100,4 +100,37 @@ public class User extends BaseEntity {
   public int hashCode() {
     return getClass().hashCode();
   }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName()
+        + "("
+        + "id = "
+        + getId()
+        + ", "
+        + "createdBy = "
+        + getCreatedBy()
+        + ", "
+        + "createdDate = "
+        + getCreatedDate()
+        + ", "
+        + "lastModifiedBy = "
+        + getLastModifiedBy()
+        + ", "
+        + "lastModifiedDate = "
+        + getLastModifiedDate()
+        + ", "
+        + "type = "
+        + getType()
+        + ", "
+        + "name = "
+        + getName()
+        + ", "
+        + "phoneNumber = "
+        + getPhoneNumber()
+        + ", "
+        + "address = "
+        + getAddress()
+        + ")";
+  }
 }
