@@ -12,24 +12,24 @@ public class OrderSearch {
   @Data
   public static class Request {
 
-    private Long id;
+    private Long orderId;
   }
 
   @Data
   @JsonInclude(Include.NON_NULL)
   public static class Response {
 
-    private Long id;
-    private UUID serialNumber;
+    private Long orderId;
+    private UUID orderSerialNumber;
 
     @Builder
-    public Response(Long id, UUID serialNumber) {
-      this.id = id;
-      this.serialNumber = serialNumber;
+    public Response(Long orderId, UUID orderSerialNumber) {
+      this.orderId = orderId;
+      this.orderSerialNumber = orderSerialNumber;
     }
 
     public static Response from(Order order) {
-      return Response.builder().id(order.getId()).serialNumber(order.getSerialNumber()).build();
+      return Response.builder().orderId(order.getId()).orderSerialNumber(order.getSerialNumber()).build();
     }
   }
 }

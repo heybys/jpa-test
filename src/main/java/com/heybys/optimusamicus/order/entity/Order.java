@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,22 +23,23 @@ import org.hibernate.annotations.Type;
 @Setter
 @Entity
 @Table(
-    name = "Orders",
+    name = "orders",
     uniqueConstraints = {
       @UniqueConstraint(
           name = "UK_serial_number",
-          columnNames = {"serialNumber"})
+          columnNames = {"serial_number"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false)
+  @Column(name = "order_id")
   private Long id;
 
+  @NotNull
   @Type(type = "org.hibernate.type.UUIDCharType")
-  @Column(nullable = false)
+  @Column(name = "serial_number")
   private UUID serialNumber = UUID.randomUUID();
 
   @Builder
@@ -54,7 +56,7 @@ public class Order extends BaseEntity {
       return false;
     }
     Order order = (Order) o;
-    return id != null && Objects.equals(id, order.id);
+    return getId() != null && Objects.equals(getId(), order.getId());
   }
 
   @Override
