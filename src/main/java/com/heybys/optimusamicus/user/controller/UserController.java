@@ -42,10 +42,8 @@ public class UserController {
       UserSearch.Request request, @PageableDefault() Pageable pageable) {
 
     try {
-      // call service
       List<User> retrievedUsers = userService.retrieveUsers(request, pageable);
 
-      // convert entity to dto
       List<UserSearch.Response> responses =
           retrievedUsers.stream().map(UserSearch.Response::from).collect(Collectors.toList());
 
@@ -59,10 +57,8 @@ public class UserController {
   public ResponseEntity<CommonResponse> retrieveUser(@PathVariable Long userId) {
 
     try {
-      // call service
       User retrievedUser = userService.retrieveUser(userId);
 
-      // convert entity to dto
       UserSearch.Response response = UserSearch.Response.from(retrievedUser);
 
       return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
@@ -75,17 +71,14 @@ public class UserController {
   public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserCreate.Request request) {
 
     try {
-      // convert dto to entity
       User user = request.toUser();
       Long userGroupId = request.getUserGroupId();
       if (userGroupId != null) {
-        user.setUserGroup(userGroupService.retrieveUserGroup(userGroupId));
+        user.setGroup(userGroupService.retrieveUserGroup(userGroupId));
       }
 
-      // call service
       User createdUser = userService.createUser(user);
 
-      // convert entity to dto
       UserCreate.Response response = UserCreate.Response.from(createdUser);
 
       return new ResponseEntity<>(
@@ -100,18 +93,15 @@ public class UserController {
       @RequestBody @Valid UserCreate.Request request) {
 
     try {
-      // convert dto to entity
       User user = request.toUser();
       Long userGroupId = request.getUserGroupId();
       if (userGroupId != null) {
-        user.setUserGroup(userGroupService.retrieveUserGroup(userGroupId));
+        user.setGroup(userGroupService.retrieveUserGroup(userGroupId));
       }
 
-      // call service
       List<User> userClones = makeUserClones(user, 10000);
       List<User> createdUserClones = userService.createUsers(userClones);
 
-      // convert entity to dto
       List<UserCreate.Response> responses =
           createdUserClones.stream().map(UserCreate.Response::from).collect(Collectors.toList());
 
@@ -130,17 +120,17 @@ public class UserController {
    * @return copied user list
    */
   private List<User> makeUserClones(User user, Integer count) {
-    List<User> users = new ArrayList<>();
+    List<User> userClones = new ArrayList<>();
 
     for (int i = 0; i < count; i++) {
-      User build = User.builder().build();
+      User userClone = User.builder().build();
 
-      BeanUtils.copyProperties(user, build);
-      build.setUsername(user.getUsername() + "_" + i);
-      build.setPhoneNumber(user.getPhoneNumber() + i);
+      BeanUtils.copyProperties(user, userClone);
+      userClone.setName(user.getName() + "_" + i);
+      userClone.setPhoneNumber(user.getPhoneNumber() + i);
 
-      users.add(build);
+      userClones.add(userClone);
     }
-    return users;
+    return userClones;
   }
 }

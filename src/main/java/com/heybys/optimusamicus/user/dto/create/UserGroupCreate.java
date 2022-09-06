@@ -12,10 +12,10 @@ public class UserGroupCreate {
   @Data
   public static class Request {
 
-    @NotNull private String name;
+    @NotNull private String userGroupName;
 
     public UserGroup toUserGroup() {
-      return UserGroup.builder().userGroupName(name).build();
+      return UserGroup.builder().name(userGroupName).build();
     }
   }
 
@@ -23,19 +23,19 @@ public class UserGroupCreate {
   @JsonInclude(Include.NON_NULL)
   public static class Response {
 
-    private Long id;
-    private String name;
+    private Long userGroupId;
+    private String userGroupName;
 
     @Builder
-    public Response(Long id, String name) {
-      this.id = id;
-      this.name = name;
+    public Response(Long userGroupId, String userGroupName) {
+      this.userGroupId = userGroupId;
+      this.userGroupName = userGroupName;
     }
 
     public static Response from(UserGroup userGroup) {
       return Response.builder()
-          .id(userGroup.getUserGroupId())
-          .name(userGroup.getUserGroupName())
+          .userGroupId(userGroup.getId())
+          .userGroupName(userGroup.getName())
           .build();
     }
   }

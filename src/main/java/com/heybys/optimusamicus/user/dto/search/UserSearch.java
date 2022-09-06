@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.heybys.optimusamicus.user.entity.User;
-import com.heybys.optimusamicus.user.entity.User.UserType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,45 +12,50 @@ public class UserSearch {
   @Data
   public static class Request {
 
-    private String name;
-    private UserType userType;
-    private String groupName;
+    private String username;
+    private User.Type userType;
+    private String userGroupName;
   }
 
   @Data
   @JsonInclude(Include.NON_NULL)
   public static class Response {
 
-    private Long id;
-    private UserType userType;
-    private String name;
-    private String phoneNumber;
-    private String address;
+    private Long userId;
+    private User.Type userType;
+    private String username;
+    private String userPhoneNumber;
+    private String userAddress;
 
     @JsonProperty(value = "userGroup")
     private UserGroupSearch.Response userGroupSearchResponse;
 
     @Builder
-    public Response(Long id, UserType userType, String name, String phoneNumber, String address) {
-      this.id = id;
+    public Response(
+        Long userId,
+        User.Type userType,
+        String username,
+        String userPhoneNumber,
+        String userAddress) {
+      this.userId = userId;
       this.userType = userType;
-      this.name = name;
-      this.phoneNumber = phoneNumber;
-      this.address = address;
+      this.username = username;
+      this.userPhoneNumber = userPhoneNumber;
+      this.userAddress = userAddress;
     }
 
     public static Response from(User user) {
       Response response =
           Response.builder()
-              .id(user.getUserId())
-              .userType(user.getUserType())
-              .name(user.getUsername())
-              .phoneNumber(user.getPhoneNumber())
-              .address(user.getAddress())
+              .userId(user.getId())
+              .userType(user.getType())
+              .username(user.getName())
+              .userPhoneNumber(user.getPhoneNumber())
+              .userAddress(user.getAddress())
               .build();
 
-      if (user.getUserGroup() != null) {
-        UserGroupSearch.Response userGroup = UserGroupSearch.Response.from(user.getUserGroup());
+      if (user.getGroup() != null) {
+        UserGroupSearch.Response userGroup = UserGroupSearch.Response.from(user.getGroup());
         response.setUserGroupSearchResponse(userGroup);
       }
 

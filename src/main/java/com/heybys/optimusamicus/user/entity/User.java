@@ -3,6 +3,7 @@ package com.heybys.optimusamicus.user.entity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.heybys.optimusamicus.common.entity.BaseEntity;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -23,33 +24,33 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.ToString.Exclude;
 import org.hibernate.Hibernate;
-import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
 @ToString
 @Entity
 @Table(
+    name = "user",
     uniqueConstraints = {
-        @UniqueConstraint(
-            name = "UK_phoneNumber",
-            columnNames = {"phoneNumber"}),
-        @UniqueConstraint(
-            name = "UK_username",
-            columnNames = {"username"})
+      @UniqueConstraint(
+          name = "UK_phone_number",
+          columnNames = {"phone_number"}),
+      @UniqueConstraint(
+          name = "UK_username",
+          columnNames = {"username"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
-  public enum UserType {
+  public enum Type {
     NORMAL,
     ADMIN;
 
     @JsonCreator
-    public UserType from(String value) {
-      for (UserType userType : UserType.values()) {
-        if (userType.name().equals(value)) {
-          return userType;
+    public Type from(String value) {
+      for (Type type : Type.values()) {
+        if (type.name().equals(value)) {
+          return type;
         }
       }
       return null;
@@ -58,34 +59,36 @@ public class User extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long userId;
+  @Column(name = "user_id")
+  private Long id;
 
   @NotNull
-  @Length(max = 10)
   @Enumerated(EnumType.STRING)
-  private UserType userType;
+  @Column(name = "user_type")
+  private Type type;
 
   @NotNull
-  private String username;
+  @Column(name = "username")
+  private String name;
 
-  @Length(max = 20)
+  @Column(name = "phone_number")
   private String phoneNumber;
 
+  @Column(name = "address")
   private String address;
 
   @ManyToOne(targetEntity = UserGroup.class, fetch = FetchType.LAZY)
-  @JoinColumn(name = "userGroupId")
+  @JoinColumn(name = "user_group_id", referencedColumnName = "user_group_id")
   @Exclude
-  private UserGroup userGroup;
+  private UserGroup group;
 
   @Builder
-  public User(
-      UserType userType, String username, String phoneNumber, String address, UserGroup userGroup) {
-    this.userType = userType;
-    this.username = username;
+  public User(Type type, String name, String phoneNumber, String address, UserGroup group) {
+    this.type = type;
+    this.name = name;
     this.phoneNumber = phoneNumber;
     this.address = address;
-    this.userGroup = userGroup;
+    this.group = group;
   }
 
   @Override
@@ -97,7 +100,7 @@ public class User extends BaseEntity {
       return false;
     }
     User user = (User) o;
-    return userId != null && Objects.equals(userId, user.userId);
+    return getId() != null && Objects.equals(getId(), user.getId());
   }
 
   @Override

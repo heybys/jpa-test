@@ -32,10 +32,8 @@ public class UserGroupController {
   public ResponseEntity<CommonResponse> retrieveUserGroup(@PathVariable Long userGroupId) {
 
     try {
-      // call service
       UserGroup retrievedUserGroup = userGroupService.retrieveUserGroup(userGroupId);
 
-      // convert entity to dto
       UserGroupSearch.Response response = UserGroupSearch.Response.from(retrievedUserGroup);
 
       return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
@@ -49,13 +47,10 @@ public class UserGroupController {
       @RequestBody @Valid UserGroupCreate.Request request) {
 
     try {
-      // convert dto to entity
       UserGroup userGroup = request.toUserGroup();
 
-      // call service
       UserGroup createdUserGroup = userGroupService.createUserGroup(userGroup);
 
-      // convert entity to dto
       UserGroupCreate.Response response = UserGroupCreate.Response.from(createdUserGroup);
 
       return new ResponseEntity<>(

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,21 +21,23 @@ import org.hibernate.Hibernate;
 @Setter
 @ToString
 @Entity
+@Table(name = "user_group")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserGroup extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false)
-  private Long userGroupId;
+  @Column(name = "user_group_id")
+  private Long id;
 
-  @Column(nullable = false)
-  private String userGroupName;
+  @NotNull
+  @Column(name = "user_group_name")
+  private String name;
 
   @Builder
-  public UserGroup(Long userGroupId, String userGroupName) {
-    this.userGroupId = userGroupId;
-    this.userGroupName = userGroupName;
+  public UserGroup(Long id, String name) {
+    this.id = id;
+    this.name = name;
   }
 
   @Override
@@ -45,7 +49,7 @@ public class UserGroup extends BaseEntity {
       return false;
     }
     UserGroup userGroup = (UserGroup) o;
-    return userGroupId != null && Objects.equals(userGroupId, userGroup.userGroupId);
+    return getId() != null && Objects.equals(getId(), userGroup.getId());
   }
 
   @Override

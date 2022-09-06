@@ -3,7 +3,7 @@ POST {{url}}/api/v1/user-groups
 Content-Type: application/json
 
 {
-  "name": "test-userGroupName-{{$uuid}}"
+  "userGroupName": "test-userGroupName-{{$uuid}}"
 }
 
 > {%

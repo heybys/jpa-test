@@ -5,7 +5,7 @@ import static com.heybys.optimusamicus.user.entity.QUserGroup.userGroup;
 
 import com.heybys.optimusamicus.user.dto.search.UserSearch;
 import com.heybys.optimusamicus.user.entity.User;
-import com.heybys.optimusamicus.user.entity.User.UserType;
+import com.heybys.optimusamicus.user.entity.User.Type;
 import com.heybys.optimusamicus.user.repository.support.UserQuerydslRepositorySupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -35,12 +35,12 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
         queryFactory
             .selectFrom(user)
             .leftJoin(userGroup)
-            .on(user.userGroup.userGroupId.eq(userGroup.userGroupId))
+            .on(user.group.id.eq(userGroup.id))
             .fetchJoin()
             .where(
                 userTypeEq(userSearchRequest.getUserType()),
-                usernameEq(userSearchRequest.getName()),
-                userGroupNameEq(userSearchRequest.getGroupName()))
+                usernameEq(userSearchRequest.getUsername()),
+                userGroupNameEq(userSearchRequest.getUserGroupName()))
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
@@ -49,11 +49,11 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
         queryFactory
             .selectFrom(user)
             .leftJoin(userGroup)
-            .on(user.userGroup.userGroupId.eq(userGroup.userGroupId))
+            .on(user.group.id.eq(userGroup.id))
             .where(
                 userTypeEq(userSearchRequest.getUserType()),
-                usernameEq(userSearchRequest.getName()),
-                userGroupNameEq(userSearchRequest.getGroupName()));
+                usernameEq(userSearchRequest.getUsername()),
+                userGroupNameEq(userSearchRequest.getUserGroupName()));
 
     return PageableExecutionUtils.getPage(users, pageable, countQuery::fetchCount);
   }
@@ -66,8 +66,8 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
         users,
         jdbcBatchSize,
         (ps, argument) -> {
-          ps.setString(1, argument.getUserType().name());
-          ps.setString(2, argument.getUsername());
+          ps.setString(1, argument.getType().name());
+          ps.setString(2, argument.getName());
           ps.setString(3, argument.getPhoneNumber());
           ps.setString(4, argument.getAddress());
           ps.setObject(5, userGroupIdFrom(argument));
@@ -76,19 +76,19 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
     return users;
   }
 
-  private BooleanExpression userTypeEq(UserType userType) {
-    return userType != null ? user.userType.eq(userType) : null;
+  private BooleanExpression userTypeEq(Type type) {
+    return type != null ? user.type.eq(type) : null;
   }
 
   private BooleanExpression usernameEq(String username) {
-    return username != null ? user.username.eq(username) : null;
+    return username != null ? user.name.eq(username) : null;
   }
 
   private BooleanExpression userGroupNameEq(String userGroupName) {
-    return userGroupName != null ? userGroup.userGroupName.eq(userGroupName) : null;
+    return userGroupName != null ? userGroup.name.eq(userGroupName) : null;
   }
 
   private Long userGroupIdFrom(User user) {
-    return user.getUserGroup() != null ? user.getUserGroup().getUserGroupId() : null;
+    return user.getGroup() != null ? user.getGroup().getId() : null;
   }
 }
