@@ -6,6 +6,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -13,6 +14,9 @@ import org.springframework.util.StopWatch;
 @Aspect
 @Component
 public class LogExecutionTimeAspect {
+
+  @Value("${app.logging.execution_time.enable}")
+  private boolean enableLogging;
 
   @Pointcut("this(org.springframework.data.repository.Repository)")
   public void inRepository() {}
@@ -36,10 +40,12 @@ public class LogExecutionTimeAspect {
       numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
       numberFormat.setMaximumIntegerDigits(Integer.MAX_VALUE);
 
-      log.info(
-          "{} Executed in {}s",
-          stopWatch.getId(),
-          numberFormat.format(stopWatch.getTotalTimeSeconds()));
+      if (enableLogging) {
+        log.info(
+            "{} Executed in {}s",
+            stopWatch.getId(),
+            numberFormat.format(stopWatch.getTotalTimeSeconds()));
+      }
     }
 
     return proceed;
