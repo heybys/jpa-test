@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -123,11 +122,14 @@ public class UserController {
     List<User> userClones = new ArrayList<>();
 
     for (int i = 0; i < count; i++) {
-      User userClone = User.builder().build();
-
-      BeanUtils.copyProperties(user, userClone);
-      userClone.setName(user.getName() + "_" + i);
-      userClone.setPhoneNumber(user.getPhoneNumber() + i);
+      User userClone =
+          User.builder()
+              .type(user.getType())
+              .name(user.getName() + "_" + i)
+              .address(user.getAddress())
+              .phoneNumber(user.getPhoneNumber() + i)
+              .group(user.getGroup())
+              .build();
 
       userClones.add(userClone);
     }

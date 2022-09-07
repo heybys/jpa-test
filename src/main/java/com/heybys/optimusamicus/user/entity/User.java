@@ -27,7 +27,6 @@ import lombok.ToString.Exclude;
 import org.hibernate.Hibernate;
 
 @Getter
-@Setter
 @ToString
 @Entity
 @Table(
@@ -78,12 +77,13 @@ public class User extends BaseEntity {
   @Column(name = "address")
   private String address;
 
+  @Exclude
+  @Setter
   @ManyToOne(targetEntity = UserGroup.class, fetch = FetchType.LAZY)
   @JoinColumn(
       name = "user_group_id",
       referencedColumnName = "user_group_id",
       foreignKey = @ForeignKey(name = "FK_user_group_id"))
-  @Exclude
   private UserGroup group;
 
   @Builder

@@ -11,23 +11,21 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.Hibernate;
 
 @Getter
-@Setter
 @Entity
-@Table(name = "menu")
+@Table(name = "item")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Menu {
+public class Item {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "menu_id")
+  @Column(name = "item_id")
   private Long id;
 
   @Builder
-  public Menu(Long id) {
+  public Item(Long id) {
     this.id = id;
   }
 
@@ -39,8 +37,8 @@ public class Menu {
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
       return false;
     }
-    Menu menu = (Menu) o;
-    return getId() != null && Objects.equals(getId(), menu.getId());
+    Item item = (Item) o;
+    return getId() != null && Objects.equals(getId(), item.getId());
   }
 
   @Override

@@ -34,7 +34,10 @@ public class OrderCreate {
     }
 
     public static Response from(Order order) {
-      return Response.builder().orderId(order.getId()).orderSerialNumber(order.getSerialNumber()).build();
+      return Response.builder()
+          .orderId(order.getId())
+          .orderSerialNumber(order.getSerialNumber())
+          .build();
     }
   }
 }
