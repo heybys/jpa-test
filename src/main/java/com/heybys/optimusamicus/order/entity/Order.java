@@ -1,6 +1,5 @@
 package com.heybys.optimusamicus.order.entity;
 
-import com.heybys.optimusamicus.common.entity.BaseEntity;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -19,6 +18,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.Type;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 @Getter
 @Setter
@@ -32,7 +32,7 @@ import org.hibernate.annotations.Type;
           columnNames = {"serial_number"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order extends BaseEntity {
+public class Order extends AbstractAggregateRoot<Order> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

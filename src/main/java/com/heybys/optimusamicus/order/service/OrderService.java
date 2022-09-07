@@ -2,9 +2,10 @@ package com.heybys.optimusamicus.order.service;
 
 import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
 import com.heybys.optimusamicus.order.entity.Order;
-import com.heybys.optimusamicus.order.handler.TransactionHandler;
+import com.heybys.optimusamicus.order.event.OrderEvent;
 import com.heybys.optimusamicus.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,7 @@ public class OrderService {
 
   private final OrderRepository orderRepository;
 
-  private final TransactionHandler transactionHandler;
+  private final ApplicationEventPublisher publisher;
 
   @Transactional(readOnly = true, transactionManager = "orderTransactionManager")
   public Order retrieveOrder(Long orderId) {
@@ -24,6 +25,12 @@ public class OrderService {
 
   @Transactional(transactionManager = "orderTransactionManager")
   public Order createOrder(Order order) {
-    return orderRepository.save(order);
+    Order savedOrder = orderRepository.save(order);
+
+    publisher.publishEvent(OrderEvent.of(savedOrder));
+    publisher.publishEvent(OrderEvent.of(savedOrder));
+    publisher.publishEvent(OrderEvent.of(savedOrder));
+
+    return savedOrder;
   }
 }

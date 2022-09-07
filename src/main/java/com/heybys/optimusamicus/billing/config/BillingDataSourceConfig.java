@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.order.config;
+package com.heybys.optimusamicus.billing.config;
 
 import com.heybys.optimusamicus.common.config.CommonConfigFactory;
 import com.zaxxer.hikari.HikariConfig;
@@ -19,27 +19,27 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @RequiredArgsConstructor
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    basePackages = "com.heybys.optimusamicus.order.repository",
-    entityManagerFactoryRef = "orderEntityManagerFactory",
-    transactionManagerRef = "orderTransactionManager")
-public class OrderDataSourceConfig {
+    basePackages = "com.heybys.optimusamicus.billing.repository",
+    entityManagerFactoryRef = "billingEntityManagerFactory",
+    transactionManagerRef = "billingTransactionManager")
+public class BillingDataSourceConfig {
 
   private final CommonConfigFactory commonConfigFactory;
 
-  @Value("${app.domain.order.persistence-unit-name}")
+  @Value("${app.domain.billing.persistence-unit-name}")
   private String persistenceUnitName;
 
-  @Value("${spring.datasource.hikari.order.jdbc-url}")
+  @Value("${spring.datasource.hikari.billing.jdbc-url}")
   private String jdbcUrl;
 
-  @Value("${spring.datasource.hikari.order.username}")
+  @Value("${spring.datasource.hikari.billing.username}")
   private String username;
 
-  @Value("${spring.datasource.hikari.order.password}")
+  @Value("${spring.datasource.hikari.billing.password}")
   private String password;
 
   @Bean
-  public HikariConfig orderHikariConfig() {
+  public HikariConfig billingHikariConfig() {
 
     HikariConfig hikariConfig = new HikariConfig();
     hikariConfig.setJdbcUrl(jdbcUrl);
@@ -50,29 +50,29 @@ public class OrderDataSourceConfig {
   }
 
   @Bean
-  public DataSource orderDataSource() {
-    return new HikariDataSource(orderHikariConfig());
+  public DataSource billingDataSource() {
+    return new HikariDataSource(billingHikariConfig());
   }
 
   @Bean
-  public JdbcTemplate orderJdbcTemplate() {
-    return new JdbcTemplate(orderDataSource());
+  public JdbcTemplate billingJdbcTemplate() {
+    return new JdbcTemplate(billingDataSource());
   }
 
   @Bean
-  public LocalContainerEntityManagerFactoryBean orderEntityManagerFactory() {
+  public LocalContainerEntityManagerFactoryBean billingEntityManagerFactory() {
     LocalContainerEntityManagerFactoryBean factoryBean =
         commonConfigFactory.createEntityManagerFactoryBean();
-    factoryBean.setDataSource(orderDataSource());
+    factoryBean.setDataSource(billingDataSource());
     factoryBean.setPersistenceUnitName(persistenceUnitName);
-    factoryBean.setPackagesToScan("com.heybys.optimusamicus.order.entity");
+    factoryBean.setPackagesToScan("com.heybys.optimusamicus.billing.entity");
     return factoryBean;
   }
 
   @Bean
-  public PlatformTransactionManager orderTransactionManager() {
+  public PlatformTransactionManager billingTransactionManager() {
     JpaTransactionManager transactionManager = new JpaTransactionManager();
-    transactionManager.setEntityManagerFactory(orderEntityManagerFactory().getObject());
+    transactionManager.setEntityManagerFactory(billingEntityManagerFactory().getObject());
     return transactionManager;
   }
 }

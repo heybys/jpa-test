@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.order.config;
+package com.heybys.optimusamicus.shop.config;
 
 import com.heybys.optimusamicus.common.config.CommonConfigFactory;
 import com.zaxxer.hikari.HikariConfig;
@@ -19,27 +19,27 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @RequiredArgsConstructor
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    basePackages = "com.heybys.optimusamicus.order.repository",
-    entityManagerFactoryRef = "orderEntityManagerFactory",
-    transactionManagerRef = "orderTransactionManager")
-public class OrderDataSourceConfig {
+    basePackages = "com.heybys.optimusamicus.shop.repository",
+    entityManagerFactoryRef = "shopEntityManagerFactory",
+    transactionManagerRef = "shopTransactionManager")
+public class ShopDataSourceConfig {
 
   private final CommonConfigFactory commonConfigFactory;
 
-  @Value("${app.domain.order.persistence-unit-name}")
+  @Value("${app.domain.shop.persistence-unit-name}")
   private String persistenceUnitName;
 
-  @Value("${spring.datasource.hikari.order.jdbc-url}")
+  @Value("${spring.datasource.hikari.shop.jdbc-url}")
   private String jdbcUrl;
 
-  @Value("${spring.datasource.hikari.order.username}")
+  @Value("${spring.datasource.hikari.shop.username}")
   private String username;
 
-  @Value("${spring.datasource.hikari.order.password}")
+  @Value("${spring.datasource.hikari.shop.password}")
   private String password;
 
   @Bean
-  public HikariConfig orderHikariConfig() {
+  public HikariConfig shopHikariConfig() {
 
     HikariConfig hikariConfig = new HikariConfig();
     hikariConfig.setJdbcUrl(jdbcUrl);
@@ -50,29 +50,29 @@ public class OrderDataSourceConfig {
   }
 
   @Bean
-  public DataSource orderDataSource() {
-    return new HikariDataSource(orderHikariConfig());
+  public DataSource shopDataSource() {
+    return new HikariDataSource(shopHikariConfig());
   }
 
   @Bean
-  public JdbcTemplate orderJdbcTemplate() {
-    return new JdbcTemplate(orderDataSource());
+  public JdbcTemplate shopJdbcTemplate() {
+    return new JdbcTemplate(shopDataSource());
   }
 
   @Bean
-  public LocalContainerEntityManagerFactoryBean orderEntityManagerFactory() {
+  public LocalContainerEntityManagerFactoryBean shopEntityManagerFactory() {
     LocalContainerEntityManagerFactoryBean factoryBean =
         commonConfigFactory.createEntityManagerFactoryBean();
-    factoryBean.setDataSource(orderDataSource());
+    factoryBean.setDataSource(shopDataSource());
     factoryBean.setPersistenceUnitName(persistenceUnitName);
-    factoryBean.setPackagesToScan("com.heybys.optimusamicus.order.entity");
+    factoryBean.setPackagesToScan("com.heybys.optimusamicus.shop.entity");
     return factoryBean;
   }
 
   @Bean
-  public PlatformTransactionManager orderTransactionManager() {
+  public PlatformTransactionManager shopTransactionManager() {
     JpaTransactionManager transactionManager = new JpaTransactionManager();
-    transactionManager.setEntityManagerFactory(orderEntityManagerFactory().getObject());
+    transactionManager.setEntityManagerFactory(shopEntityManagerFactory().getObject());
     return transactionManager;
   }
 }

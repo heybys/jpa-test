@@ -8,7 +8,6 @@ import java.util.Objects;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -33,11 +32,25 @@ public class UserDataSourceConfig {
   @Value("${app.domain.user.persistence-unit-name}")
   private String persistenceUnitName;
 
+  @Value("${spring.datasource.hikari.user.jdbc-url}")
+  private String jdbcUrl;
+
+  @Value("${spring.datasource.hikari.user.username}")
+  private String username;
+
+  @Value("${spring.datasource.hikari.user.password}")
+  private String password;
+
   @Primary
   @Bean
-  @ConfigurationProperties(prefix = "spring.datasource.hikari.user")
   public HikariConfig userHikariConfig() {
-    return new HikariConfig();
+
+    HikariConfig hikariConfig = new HikariConfig();
+    hikariConfig.setJdbcUrl(jdbcUrl);
+    hikariConfig.setUsername(username);
+    hikariConfig.setPassword(password);
+
+    return hikariConfig;
   }
 
   @Primary
