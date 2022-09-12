@@ -50,8 +50,13 @@
 - Etc
     - [ ] Aspect 수정 (interface, class, method)
     - [ ] check serializable transient
-    - [] dto 란..?
+    - [x] dto 란..?
+    - [ ] DDD..
+    - [ ] 오브젝트
     - [ ] 객체지향의 사실과 오해
+    - [ ] GOF 디자인 패턴
+    - [ ] 리팩토링
+    
 
 <br>
 
