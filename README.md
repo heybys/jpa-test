@@ -49,6 +49,9 @@
     - [ ] update 구문 확인
 - Etc
     - [ ] Aspect 수정 (interface, class, method)
+    - [ ] check serializable transient
+    - [] dto 란..?
+    - [ ] 객체지향의 사실과 오해
 
 <br>
 
