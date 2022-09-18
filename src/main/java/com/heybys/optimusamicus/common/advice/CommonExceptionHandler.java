@@ -5,16 +5,16 @@ import com.heybys.optimusamicus.common.exception.InvalidParameterException;
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Slf4j
-@Order
-@RestControllerAdvice(basePackages = {"com.heybys.optimusamicus"})
+@RestControllerAdvice
 public class CommonExceptionHandler {
 
   @ExceptionHandler(Exception.class)
@@ -48,5 +48,28 @@ public class CommonExceptionHandler {
         new CommonResponse(StatusCode.FAIL, CommonError.METHOD_ARGUMENT_NOT_VALID.getMessage());
 
     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  protected ResponseEntity<CommonResponse> handleException(
+      MethodArgumentTypeMismatchException exception) {
+    log.error(exception.getMessage());
+
+    CommonResponse response =
+        new CommonResponse(StatusCode.FAIL, CommonError.METHOD_ARGUMENT_TYPE_MISMATCH.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  protected ResponseEntity<CommonResponse> handleException(
+      HttpRequestMethodNotSupportedException exception) {
+    log.error(exception.getMessage());
+
+    CommonResponse response =
+        new CommonResponse(
+            StatusCode.FAIL, CommonError.HTTP_REQUEST_METHOD_NOT_SUPPORTED.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
   }
 }

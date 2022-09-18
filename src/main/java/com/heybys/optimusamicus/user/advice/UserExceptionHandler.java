@@ -2,6 +2,7 @@ package com.heybys.optimusamicus.user.advice;
 
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
+import com.heybys.optimusamicus.user.controller.UserController;
 import com.heybys.optimusamicus.user.exception.UserGroupNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserGroupNotFoundException;
 import com.heybys.optimusamicus.user.exception.UserNotCreatedException;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@RestControllerAdvice(basePackages = {"com.heybys.optimusamicus.user"})
+@RestControllerAdvice(assignableTypes = {UserController.class})
 public class UserExceptionHandler {
 
   @ExceptionHandler(UserNotFoundException.class)

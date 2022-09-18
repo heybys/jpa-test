@@ -2,6 +2,7 @@ package com.heybys.optimusamicus.order.advice;
 
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
+import com.heybys.optimusamicus.order.controller.OrderController;
 import com.heybys.optimusamicus.order.exception.OrderNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@RestControllerAdvice(basePackages = {"com.heybys.optimusamicus.order"})
+@RestControllerAdvice(assignableTypes = {OrderController.class})
 public class OrderExceptionHandler {
 
   @ExceptionHandler(OrderNotFoundException.class)
