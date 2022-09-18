@@ -7,14 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class TransactionHandler {
 
-  @Transactional(
-      propagation = Propagation.REQUIRES_NEW,
-      transactionManager = "orderTransactionManager")
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
   public void runInTransaction(Action action) {
     action.act();
   }
 
   public interface Action {
+
     void act();
   }
 }
