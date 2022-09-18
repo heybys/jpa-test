@@ -4,7 +4,8 @@ public enum UserError {
   USER_NOT_FOUND("USER_NOT_FOUND", "User Not Found"),
   USER_NOT_CREATED("USER_NOT_CREATED", "User Not Created"),
   USER_GROUP_NOT_FOUND("USER_GROUP_NOT_FOUND", "User Group Not Found"),
-  USER_GROUP_NOT_CREATED("USER_GROUP_NOT_CREATED", "User Group Not Created");
+  USER_GROUP_NOT_CREATED("USER_GROUP_NOT_CREATED", "User Group Not Created"),
+  AUTHENTICATION_FAILED("AUTHENTICATION_FAILED", "Authentication Failed");
 
   private final String code;
   private final String message;

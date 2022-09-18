@@ -3,6 +3,7 @@ package com.heybys.optimusamicus.user.advice;
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import com.heybys.optimusamicus.user.controller.UserController;
+import com.heybys.optimusamicus.user.exception.AuthenticationFailedException;
 import com.heybys.optimusamicus.user.exception.UserGroupNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserGroupNotFoundException;
 import com.heybys.optimusamicus.user.exception.UserNotCreatedException;
@@ -50,5 +51,14 @@ public class UserExceptionHandler {
     CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
 
     return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+  }
+
+  @ExceptionHandler(AuthenticationFailedException.class)
+  protected ResponseEntity<CommonResponse> handleException(
+      AuthenticationFailedException exception) {
+    log.error(exception.getMessage());
+    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 }
