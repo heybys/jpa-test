@@ -2,6 +2,7 @@ package com.heybys.optimusamicus.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.heybys.optimusamicus.common.entity.BaseEntity;
+import com.heybys.optimusamicus.common.utils.StringUtils;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,8 +25,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.ToString.Exclude;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 
+@Slf4j
 @Getter
 @ToString
 @Entity
@@ -93,6 +96,26 @@ public class User extends BaseEntity {
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.group = group;
+  }
+
+  public User copy() {
+    User copy = User.builder().type(type).address(address).group(group).build();
+
+    copy.autoGenerateName();
+    copy.autoGeneratePhoneNumber();
+
+    log.info("copy = " + copy);
+    return copy;
+  }
+
+  public void autoGenerateName() {
+    this.name = "AUTO_GENERATED_" + StringUtils.generateRandomAlphabets(10);
+    log.info("auto generate name = " + name);
+  }
+
+  public void autoGeneratePhoneNumber() {
+    this.phoneNumber = "010" + StringUtils.generateRandomNumbers(8);
+    log.info("auto generate phoneNumber = " + phoneNumber);
   }
 
   @Override
