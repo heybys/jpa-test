@@ -7,8 +7,10 @@ import static org.hibernate.cfg.AvailableSettings.IMPLICIT_NAMING_STRATEGY;
 import static org.hibernate.cfg.AvailableSettings.PHYSICAL_NAMING_STRATEGY;
 import static org.hibernate.cfg.AvailableSettings.STATEMENT_BATCH_SIZE;
 import static org.hibernate.cfg.AvailableSettings.USE_NEW_ID_GENERATOR_MAPPINGS;
+import static org.hibernate.jpa.AvailableSettings.FLUSH_MODE;
 
 import java.util.Properties;
+import org.hibernate.annotations.FlushModeType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -78,6 +80,7 @@ public class CommonConfigFactory {
     properties.put(PHYSICAL_NAMING_STRATEGY, namingPhysicalStrategy);
     properties.put(HBM2DDL_AUTO, ddlAuto);
     properties.put(USE_NEW_ID_GENERATOR_MAPPINGS, useNewIdGeneratorMappings);
+    properties.put(FLUSH_MODE, FlushModeType.COMMIT.name());
     em.setJpaProperties(properties);
 
     return em;
