@@ -5,6 +5,7 @@ import com.heybys.optimusamicus.user.dto.search.UserSearch.Request;
 import com.heybys.optimusamicus.user.entity.User;
 import com.heybys.optimusamicus.user.repository.UserRepository;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,11 @@ public class UserService {
   @Transactional
   public User createUser(User user) {
     return userRepository.save(user);
+  }
+
+  @Transactional // (propagation = Propagation.REQUIRES_NEW)
+  public Long updateUser(Long userId, Map<String, Object> params) {
+    return userRepository.updateUser(userId, params);
   }
 
   @Transactional

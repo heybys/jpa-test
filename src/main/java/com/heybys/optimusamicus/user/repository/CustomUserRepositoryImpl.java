@@ -9,7 +9,10 @@ import com.heybys.optimusamicus.user.entity.User.Type;
 import com.heybys.optimusamicus.user.repository.support.UserQuerydslRepositorySupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAUpdateClause;
 import java.util.List;
+import java.util.Map;
+import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -31,11 +34,10 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
   @Override
   public Page<User> retrieveUsers(UserSearch.Request userSearchRequest, Pageable pageable) {
 
-    List<User> users =
+    List<User> content =
         queryFactory
             .selectFrom(user)
-            .leftJoin(userGroup)
-            .on(user.group.id.eq(userGroup.id))
+            .leftJoin(user.group, userGroup)
             .fetchJoin()
             .where(
                 userTypeEq(userSearchRequest.getUserType()),
@@ -45,9 +47,10 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
             .limit(pageable.getPageSize())
             .fetch();
 
-    JPAQuery<User> countQuery =
+    JPAQuery<Long> countQuery =
         queryFactory
-            .selectFrom(user)
+            .select(user.count())
+            .from(user)
             .leftJoin(userGroup)
             .on(user.group.id.eq(userGroup.id))
             .where(
@@ -55,7 +58,33 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
                 usernameEq(userSearchRequest.getUsername()),
                 userGroupNameEq(userSearchRequest.getUserGroupName()));
 
-    return PageableExecutionUtils.getPage(users, pageable, countQuery::fetchCount);
+    return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
+  }
+
+  @Override
+  public Long updateUser(Long userId, Map<String, Object> params) {
+    EntityManager entityManager = getEntityManager();
+    assert entityManager != null;
+
+    // entityManager.flush();
+
+    JPAUpdateClause updateClause = queryFactory.update(user);
+
+    if (params.containsKey("username") && params.get("username") != null) {
+      String username = params.get("username").toString();
+      updateClause.set(user.name, username);
+    }
+
+    if (params.containsKey("phoneNumber") && params.get("phoneNumber") != null) {
+      String phoneNumber = params.get("phoneNumber").toString();
+      updateClause.set(user.phoneNumber, phoneNumber);
+    }
+
+    long count = updateClause.where(user.id.eq(userId)).execute();
+
+    // entityManager.clear();
+
+    return count;
   }
 
   @Override
