@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.order.dto.create;
+package com.heybys.optimusamicus.order.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

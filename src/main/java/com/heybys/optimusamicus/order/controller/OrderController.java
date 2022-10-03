@@ -3,12 +3,12 @@ package com.heybys.optimusamicus.order.controller;
 import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
-import com.heybys.optimusamicus.order.dto.create.OrderCreate;
-import com.heybys.optimusamicus.order.dto.create.OrderCreate.Response;
-import com.heybys.optimusamicus.order.dto.search.OrderSearch;
 import com.heybys.optimusamicus.order.entity.Order;
 import com.heybys.optimusamicus.order.exception.OrderNotCreatedException;
 import com.heybys.optimusamicus.order.exception.OrderNotFoundException;
+import com.heybys.optimusamicus.order.model.OrderCreate;
+import com.heybys.optimusamicus.order.model.OrderCreate.Response;
+import com.heybys.optimusamicus.order.model.OrderSearch;
 import com.heybys.optimusamicus.order.service.OrderService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -42,6 +43,17 @@ public class OrderController {
       return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
     } catch (Exception e) {
       throw new OrderNotFoundException();
+    }
+  }
+
+  @PostMapping("/coffee")
+  public ResponseEntity<CommonResponse> orderCoffee(@RequestParam String menuName) {
+    try {
+      this.orderService.order(menuName);
+
+      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS), HttpStatus.OK);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 

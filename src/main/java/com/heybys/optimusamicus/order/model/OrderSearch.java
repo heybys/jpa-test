@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.order.dto.search;
+package com.heybys.optimusamicus.order.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
