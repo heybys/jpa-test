@@ -18,12 +18,12 @@ public class OrderService {
 
   private final ApplicationEventPublisher publisher;
 
-  @Transactional(readOnly = true, transactionManager = "orderTransactionManager")
+  @Transactional(readOnly = true)
   public Order retrieveOrder(Long orderId) {
     return orderRepository.findById(orderId).orElseThrow();
   }
 
-  @Transactional(transactionManager = "orderTransactionManager")
+  @Transactional
   public Order createOrder(Order order) {
     Order savedOrder = orderRepository.save(order);
 

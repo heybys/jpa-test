@@ -18,7 +18,8 @@ public abstract class UserQuerydslRepositorySupport extends QuerydslRepositorySu
   }
 
   @Override
-  @PersistenceContext(unitName = "userEntityManager")
+  @PersistenceContext
+  // @PersistenceContext(unitName = "userEntityManager")
   public void setEntityManager(EntityManager entityManager) {
     super.setEntityManager(entityManager);
     queryFactory = new JPAQueryFactory(entityManager);

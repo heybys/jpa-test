@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
 public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
     implements CustomUserRepository {
 
-  private final JdbcTemplate userJdbcTemplate;
+  private final JdbcTemplate jdbcTemplate;
 
   @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
   private Integer jdbcBatchSize;
@@ -89,7 +89,7 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
 
   @Override
   public List<User> batchInsert(List<User> users) {
-    this.userJdbcTemplate.batchUpdate(
+    this.jdbcTemplate.batchUpdate(
         "  INSERT INTO user (`type`, `name`, `phone_number`, `address`, `user_group_id`) "
             + " VALUES (?, ?, ?, ?, ?) ",
         users,
