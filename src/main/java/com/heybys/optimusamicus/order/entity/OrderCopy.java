@@ -23,15 +23,14 @@ import org.springframework.data.domain.Persistable;
 @ToString
 @Entity
 @Table(
-    name = "orders",
+    name = "orders_copy",
     uniqueConstraints = {
       @UniqueConstraint(
           name = "UK_serial_number",
           columnNames = {"serial_number"})
     })
-// @EntityListeners(OrderListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order implements Persistable<Long> {
+public class OrderCopy implements Persistable<Long> {
 
   @Override
   public boolean isNew() {
@@ -40,7 +39,7 @@ public class Order implements Persistable<Long> {
 
   @Id
   // @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "order_id")
+  @Column(name = "orders_copy_id")
   private Long id;
 
   @NotNull
@@ -49,8 +48,9 @@ public class Order implements Persistable<Long> {
   private UUID serialNumber = UUID.randomUUID();
 
   @Builder
-  public Order(Long id) {
-    this.id = id;
+  public OrderCopy(Order order) {
+    this.id = order.getId();
+    this.serialNumber = order.getSerialNumber();
   }
 
   public void refreshSerialNumber() {
@@ -65,12 +65,16 @@ public class Order implements Persistable<Long> {
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
       return false;
     }
-    Order order = (Order) o;
+    OrderCopy order = (OrderCopy) o;
     return getId() != null && Objects.equals(getId(), order.getId());
   }
 
   @Override
   public int hashCode() {
     return getClass().hashCode();
+  }
+
+  public void updateBy(Order order) {
+    this.serialNumber = order.getSerialNumber();
   }
 }

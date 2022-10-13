@@ -74,6 +74,7 @@ public class OrderController {
       return new ResponseEntity<>(
           new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.CREATED);
     } catch (Exception e) {
+      e.printStackTrace();
       throw new OrderNotCreatedException();
     }
   }
