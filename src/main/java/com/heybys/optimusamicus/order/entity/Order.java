@@ -1,17 +1,19 @@
 package com.heybys.optimusamicus.order.entity;
 
+import com.heybys.optimusamicus.order.listener.OrderListener;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
@@ -29,8 +31,7 @@ import org.springframework.data.domain.Persistable;
           name = "UK_serial_number",
           columnNames = {"serial_number"})
     })
-// @EntityListeners(OrderListener.class)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(OrderListener.class)
 public class Order implements Persistable<Long> {
 
   @Override
@@ -39,18 +40,18 @@ public class Order implements Persistable<Long> {
   }
 
   @Id
-  // @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "order_id")
   private Long id;
 
   @NotNull
   @Type(type = "org.hibernate.type.UUIDCharType")
   @Column(name = "serial_number")
-  private UUID serialNumber = UUID.randomUUID();
+  private UUID serialNumber;
 
   @Builder
-  public Order(Long id) {
-    this.id = id;
+  public Order() {
+    this.serialNumber = UUID.randomUUID();
   }
 
   public void refreshSerialNumber() {

@@ -8,7 +8,14 @@ import lombok.Value;
 @Getter
 @ToString
 @Value(staticConstructor = "of")
-public class OrderUpdateEvent {
+public class OrderEvent {
 
   Order order;
+
+  Type type;
+
+  public enum Type {
+    CREATE,
+    UPDATE
+  }
 }

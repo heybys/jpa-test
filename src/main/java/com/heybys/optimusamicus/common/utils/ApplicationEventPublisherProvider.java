@@ -19,4 +19,11 @@ public class ApplicationEventPublisherProvider implements ApplicationEventPublis
   public static ApplicationEventPublisher getPublisher() {
     return publisher;
   }
+
+  public static void publishEvent(Object event) {
+    if (publisher != null) {
+      log.debug("publish event. {}", event);
+      publisher.publishEvent(event);
+    }
+  }
 }
