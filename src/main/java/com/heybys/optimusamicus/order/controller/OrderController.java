@@ -10,6 +10,8 @@ import com.heybys.optimusamicus.order.model.OrderCreate;
 import com.heybys.optimusamicus.order.model.OrderCreate.Response;
 import com.heybys.optimusamicus.order.model.OrderSearch;
 import com.heybys.optimusamicus.order.service.OrderService;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
   private final OrderService orderService;
+
+  @GetMapping("")
+  public ResponseEntity<CommonResponse> retrieveOrder(@RequestParam String name) {
+
+    try {
+      // call service
+      List<Order> orders = orderService.retrieveOrders(name);
+
+      // convert entity to dto
+      List<OrderSearch.Response> response =
+          orders.stream().map(OrderSearch.Response::from).collect(Collectors.toList());
+
+      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
+    } catch (Exception e) {
+      throw new OrderNotFoundException();
+    }
+  }
 
   @GetMapping("/{orderId}")
   public ResponseEntity<CommonResponse> retrieveOrder(@PathVariable Long orderId) {

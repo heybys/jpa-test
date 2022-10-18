@@ -34,7 +34,8 @@ POST {{url}}/api/v1/users
 Content-Type: application/json
 
 {
-  "username": null
+  "username": "d",
+  "userPhoneNumber": "0129222"
 }
 
 > {%

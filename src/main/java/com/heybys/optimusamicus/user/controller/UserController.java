@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @LogExecutionTime
 @RequiredArgsConstructor
@@ -68,20 +70,19 @@ public class UserController {
 
   @PostMapping("")
   public ResponseEntity<CommonResponse> createUser(@RequestBody @Valid UserCreate.Request request) {
-
+    log.error("hello");
     try {
-      User user = request.toUser();
-      Long userGroupId = request.getUserGroupId();
-      if (userGroupId != null) {
-        user.setGroup(userGroupService.retrieveUserGroup(userGroupId));
-      }
+      // User user = request.toUser();
+      // Long userGroupId = request.getUserGroupId();
+      // if (userGroupId != null) {
+      //   user.setGroup(userGroupService.retrieveUserGroup(userGroupId));
+      // }
+      //
+      // User createdUser = userService.createUser(user);
+      //
+      // UserCreate.Response response = UserCreate.Response.from(createdUser);
 
-      User createdUser = userService.createUser(user);
-
-      UserCreate.Response response = UserCreate.Response.from(createdUser);
-
-      return new ResponseEntity<>(
-          new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.CREATED);
+      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS), HttpStatus.CREATED);
     } catch (Exception e) {
       throw new UserNotCreatedException();
     }

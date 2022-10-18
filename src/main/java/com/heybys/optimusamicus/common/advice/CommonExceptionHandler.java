@@ -7,6 +7,8 @@ import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -42,6 +44,17 @@ public class CommonExceptionHandler {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   protected ResponseEntity<CommonResponse> handleException(
       MethodArgumentNotValidException exception) {
+
+    BindingResult bindingResult = exception.getBindingResult();
+    log.error("===============");
+    for (FieldError error : bindingResult.getFieldErrors()) {
+      log.error(
+          "{} : {} (value:{})",
+          error.getField(),
+          error.getDefaultMessage(),
+          error.getRejectedValue());
+    }
+    log.error("===============");
     log.error(exception.getMessage());
 
     CommonResponse response =

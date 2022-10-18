@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.heybys.optimusamicus.user.entity.User;
 import com.heybys.optimusamicus.user.entity.User.Type;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,10 +15,18 @@ public class UserCreate {
   @Data
   public static class Request {
 
-    @NotNull private String username;
-    @NotNull private User.Type userType;
-    @NotNull private String userPhoneNumber;
-    @NotNull private String userAddress;
+    @NotNull(message = "Need to username")
+    private String username;
+
+    @NotNull(message = "Need to userType")
+    private User.Type userType;
+
+    @NotNull(message = "Need to userPhoneNumber")
+    @Pattern(regexp = "01(?:0|1|[6-9])(\\d{3}|\\d{4})(\\d{4})", message = "Invalid format")
+    private String userPhoneNumber;
+
+    @NotNull(message = "Need to userAddress")
+    private String userAddress;
 
     private Long userGroupId;
 

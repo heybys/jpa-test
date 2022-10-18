@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableJpaRepositories(basePackages = "com.heybys.optimusamicus.*.repository")
+@EnableJpaRepositories(basePackages = "com.heybys.optimusamicus.*")
 @EnableTransactionManagement
 public class DefaultDataSourceConfig {
 
@@ -33,6 +33,12 @@ public class DefaultDataSourceConfig {
   @Value("${spring.datasource.hikari.password}")
   private String password;
 
+  @Value("${spring.datasource.hikari.driver-class-name}")
+  private String driverClassName;
+
+  @Value("${spring.datasource.hikari.auto-commit}")
+  private Boolean autoCommit;
+
   @Bean
   public HikariConfig hikariConfig() {
 
@@ -40,6 +46,8 @@ public class DefaultDataSourceConfig {
     hikariConfig.setJdbcUrl(jdbcUrl);
     hikariConfig.setUsername(username);
     hikariConfig.setPassword(password);
+    hikariConfig.setDriverClassName(driverClassName);
+    hikariConfig.addDataSourceProperty("elideSetAutoCommits", false);
 
     return hikariConfig;
   }
@@ -59,7 +67,7 @@ public class DefaultDataSourceConfig {
     LocalContainerEntityManagerFactoryBean factoryBean =
         commonConfigFactory.createEntityManagerFactoryBean();
     factoryBean.setDataSource(dataSource());
-    factoryBean.setPackagesToScan("com.heybys.optimusamicus.*.entity");
+    factoryBean.setPackagesToScan("com.heybys.optimusamicus.*");
 
     return factoryBean;
   }

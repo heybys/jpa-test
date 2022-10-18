@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.heybys.optimusamicus.order.entity.Order;
 import java.util.UUID;
+import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,11 +13,11 @@ public class OrderCreate {
   @Data
   public static class Request {
 
-    @Builder
-    public Request() {}
+    @NotNull(message = "Need to orderId")
+    private Long orderId;
 
     public Order toOrder() {
-      return Order.builder().build();
+      return Order.builder().id(orderId).build();
     }
   }
 
