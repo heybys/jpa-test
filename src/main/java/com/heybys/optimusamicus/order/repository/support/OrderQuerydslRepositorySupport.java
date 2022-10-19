@@ -1,7 +1,6 @@
 package com.heybys.optimusamicus.order.repository.support;
 
 import com.heybys.optimusamicus.order.entity.Order;
-import com.heybys.optimusamicus.user.entity.User;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

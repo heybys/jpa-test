@@ -1,5 +1,7 @@
 package com.heybys.optimusamicus.order.repository;
 
-public interface CustomOrderRepository {
+import com.heybys.optimusamicus.order.entity.Order;
 
+public interface CustomOrderRepository {
+  Order insert(Order orderEntity);
 }

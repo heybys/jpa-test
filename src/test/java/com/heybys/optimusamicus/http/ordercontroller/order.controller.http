@@ -9,7 +9,8 @@ POST {{url}}/api/v1/orders
 Content-Type: application/json
 
 {
-  "orderId": 1
+  "orderId": 1,
+  "orderName": "ys"
 }
 
 ### Successful POST orders/coffee: check response status is 201

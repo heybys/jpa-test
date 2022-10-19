@@ -5,6 +5,7 @@ import com.heybys.optimusamicus.order.entity.Order;
 import com.heybys.optimusamicus.order.model.Coffee;
 import com.heybys.optimusamicus.order.model.Customer;
 import com.heybys.optimusamicus.order.repository.OrderRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class OrderService {
     log.info("Ordered coffee. {}", coffee);
   }
 
+  public List<Order> retrieveOrders(String name) {
+    return orderRepository.findByName(name);
+  }
+
   @Transactional
   public Order retrieveOrder(Long orderId) {
     Order order = orderRepository.findById(orderId).orElseThrow();
@@ -35,6 +40,6 @@ public class OrderService {
 
   @Transactional
   public Order createOrder(Order order) {
-    return orderRepository.save(order);
+    return orderRepository.insert(order);
   }
 }

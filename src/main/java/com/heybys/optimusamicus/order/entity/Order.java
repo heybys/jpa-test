@@ -6,14 +6,12 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
@@ -32,6 +30,7 @@ import org.springframework.data.domain.Persistable;
           columnNames = {"serial_number"})
     })
 @EntityListeners(OrderListener.class)
+@NoArgsConstructor
 public class Order implements Persistable<Long> {
 
   @Override
@@ -40,18 +39,20 @@ public class Order implements Persistable<Long> {
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "order_id")
   private Long id;
 
-  @NotNull
   @Type(type = "org.hibernate.type.UUIDCharType")
   @Column(name = "serial_number")
   private UUID serialNumber;
 
+  @Column private String name;
+
   @Builder
-  public Order() {
+  public Order(Long id, String name) {
+    this.id = id;
     this.serialNumber = UUID.randomUUID();
+    this.name = name;
   }
 
   public void refreshSerialNumber() {
