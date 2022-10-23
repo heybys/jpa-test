@@ -25,5 +25,4 @@ public class UserGroupCommon {
       return Response.builder().id(userGroup.getId()).name(userGroup.getName()).build();
     }
   }
-
 }

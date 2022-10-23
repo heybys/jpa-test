@@ -5,14 +5,16 @@ import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import com.heybys.optimusamicus.user.dto.common.UserCommon;
 import com.heybys.optimusamicus.user.dto.create.UserCreate;
-import com.heybys.optimusamicus.user.dto.patch.UserPatch;
 import com.heybys.optimusamicus.user.dto.search.UserSearch;
 import com.heybys.optimusamicus.user.entity.User;
 import com.heybys.optimusamicus.user.exception.UserNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserNotFoundException;
+import com.heybys.optimusamicus.user.exception.UserNotPatchedException;
 import com.heybys.optimusamicus.user.service.UserGroupService;
 import com.heybys.optimusamicus.user.service.UserService;
+import com.heybys.optimusamicus.user.validator.UserValidator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,8 @@ public class UserController {
   private final UserService userService;
 
   private final UserGroupService userGroupService;
+
+  private final UserValidator userValidator;
 
   @GetMapping("/{userId}")
   public ResponseEntity<CommonResponse> retrieveUser(@PathVariable Long userId) {
@@ -91,9 +95,21 @@ public class UserController {
     }
   }
 
-  @PatchMapping("")
-  public ResponseEntity<CommonResponse> patchUser(@RequestBody @Valid UserPatch.Request request) {
-    
-    return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS), HttpStatus.OK);
+  @PatchMapping("/{userId}")
+  public ResponseEntity<CommonResponse> patchUser(
+      @PathVariable Long userId, @RequestBody Map<String, Object> params) {
+
+    try {
+      userValidator.validate(params);
+
+      User patchedUser = userService.updateUser(userId, params);
+
+      UserCommon.Response response = UserCommon.Response.from(patchedUser);
+
+      return new ResponseEntity<>(
+          new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.ACCEPTED);
+    } catch (Exception e) {
+      throw new UserNotPatchedException();
+    }
   }
 }

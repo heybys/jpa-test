@@ -62,7 +62,7 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
   }
 
   @Override
-  public Long patchUser(Long userId, Map<String, Object> params) {
+  public void patchUser(Long userId, Map<String, Object> params) {
     EntityManager entityManager = getEntityManager();
     assert entityManager != null;
 
@@ -101,9 +101,11 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
 
     long count = updateClause.where(user.id.eq(userId)).execute();
 
-    entityManager.clear();
+    if (count != 1L) {
+      throw new IllegalArgumentException();
+    }
 
-    return count;
+    entityManager.clear();
   }
 
   @Override

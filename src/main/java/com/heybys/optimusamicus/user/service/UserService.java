@@ -34,8 +34,9 @@ public class UserService {
   }
 
   @Transactional
-  public Long updateUser(Long userId, Map<String, Object> params) {
-    return userRepository.patchUser(userId, params);
+  public User updateUser(Long userId, Map<String, Object> params) {
+    userRepository.patchUser(userId, params);
+    return userRepository.findById(userId).orElseThrow();
   }
 
   @Transactional
