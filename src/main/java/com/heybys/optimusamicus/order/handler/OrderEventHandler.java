@@ -1,5 +1,6 @@
-package com.heybys.optimusamicus.order.event;
+package com.heybys.optimusamicus.order.handler;
 
+import com.heybys.optimusamicus.order.event.OrderEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

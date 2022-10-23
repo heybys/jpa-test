@@ -13,7 +13,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: default
     ports:
-      - "3306:3306"
+      - "3307:3306"
 #  user-db:
 #    container_name: user-db
 #    image: mysql:latest

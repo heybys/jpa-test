@@ -21,17 +21,20 @@ public class OrderSearch {
 
     private Long orderId;
     private UUID orderSerialNumber;
+    private String orderName;
 
     @Builder
-    public Response(Long orderId, UUID orderSerialNumber) {
+    public Response(Long orderId, UUID orderSerialNumber, String orderName) {
       this.orderId = orderId;
       this.orderSerialNumber = orderSerialNumber;
+      this.orderName = orderName;
     }
 
     public static Response from(Order order) {
       return Response.builder()
           .orderId(order.getId())
           .orderSerialNumber(order.getSerialNumber())
+          .orderName(order.getName())
           .build();
     }
   }

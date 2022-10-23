@@ -10,6 +10,8 @@ import com.heybys.optimusamicus.order.model.OrderCreate;
 import com.heybys.optimusamicus.order.model.OrderCreate.Response;
 import com.heybys.optimusamicus.order.model.OrderSearch;
 import com.heybys.optimusamicus.order.service.OrderService;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,34 @@ public class OrderController {
 
   private final OrderService orderService;
 
+  @PostMapping("/coffee")
+  public ResponseEntity<CommonResponse> orderCoffee(@RequestParam String menuName) {
+    try {
+      this.orderService.order(menuName);
+
+      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS), HttpStatus.OK);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @GetMapping("")
+  public ResponseEntity<CommonResponse> retrieveOrder(@RequestParam String name) {
+
+    try {
+      // call service
+      List<Order> orders = orderService.retrieveOrders(name);
+
+      // convert entity to dto
+      List<OrderSearch.Response> response =
+          orders.stream().map(OrderSearch.Response::from).collect(Collectors.toList());
+
+      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
+    } catch (Exception e) {
+      throw new OrderNotFoundException();
+    }
+  }
+
   @GetMapping("/{orderId}")
   public ResponseEntity<CommonResponse> retrieveOrder(@PathVariable Long orderId) {
 
@@ -43,17 +73,6 @@ public class OrderController {
       return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
     } catch (Exception e) {
       throw new OrderNotFoundException();
-    }
-  }
-
-  @PostMapping("/coffee")
-  public ResponseEntity<CommonResponse> orderCoffee(@RequestParam String menuName) {
-    try {
-      this.orderService.order(menuName);
-
-      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS), HttpStatus.OK);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
     }
   }
 

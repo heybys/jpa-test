@@ -38,7 +38,6 @@ public class OrderCopy implements Persistable<Long> {
   }
 
   @Id
-  // @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "orders_copy_id")
   private Long id;
 

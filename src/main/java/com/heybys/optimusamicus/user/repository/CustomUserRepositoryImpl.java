@@ -62,13 +62,18 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
   }
 
   @Override
-  public Long updateUser(Long userId, Map<String, Object> params) {
+  public Long patchUser(Long userId, Map<String, Object> params) {
     EntityManager entityManager = getEntityManager();
     assert entityManager != null;
 
-    // entityManager.flush();
+    entityManager.flush();
 
     JPAUpdateClause updateClause = queryFactory.update(user);
+
+    if (params.containsKey("type") && params.get("type") != null) {
+      User.Type type = User.Type.valueOf(params.get("type").toString());
+      updateClause.set(user.type, type);
+    }
 
     if (params.containsKey("username") && params.get("username") != null) {
       String username = params.get("username").toString();
@@ -80,9 +85,23 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
       updateClause.set(user.phoneNumber, phoneNumber);
     }
 
+    if (params.containsKey("address") && params.get("address") != null) {
+      String address = params.get("address").toString();
+      updateClause.set(user.address, address);
+    }
+
+    if (params.containsKey("selfIntroduction")) {
+      if (params.get("selfIntroduction") != null) {
+        String selfIntroduction = params.get("selfIntroduction").toString();
+        updateClause.set(user.selfIntroduction, selfIntroduction);
+      } else {
+        updateClause.setNull(user.selfIntroduction);
+      }
+    }
+
     long count = updateClause.where(user.id.eq(userId)).execute();
 
-    // entityManager.clear();
+    entityManager.clear();
 
     return count;
   }
@@ -90,7 +109,7 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
   @Override
   public List<User> batchInsert(List<User> users) {
     this.jdbcTemplate.batchUpdate(
-        "  INSERT INTO user (`type`, `name`, `phone_number`, `address`, `user_group_id`) "
+        "  INSERT INTO user (`type`, `name`, `phone_number`, `address`,`self_introduction`, `user_group_id`) "
             + " VALUES (?, ?, ?, ?, ?) ",
         users,
         jdbcBatchSize,
@@ -99,7 +118,8 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
           ps.setString(2, argument.getName());
           ps.setString(3, argument.getPhoneNumber());
           ps.setString(4, argument.getAddress());
-          ps.setObject(5, userGroupIdFrom(argument));
+          ps.setString(5, argument.getSelfIntroduction());
+          ps.setObject(6, userGroupIdFrom(argument));
         });
 
     return users;

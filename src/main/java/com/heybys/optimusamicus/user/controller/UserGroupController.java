@@ -3,8 +3,8 @@ package com.heybys.optimusamicus.user.controller;
 import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
+import com.heybys.optimusamicus.user.dto.common.UserGroupCommon;
 import com.heybys.optimusamicus.user.dto.create.UserGroupCreate;
-import com.heybys.optimusamicus.user.dto.search.UserGroupSearch;
 import com.heybys.optimusamicus.user.entity.UserGroup;
 import com.heybys.optimusamicus.user.exception.UserGroupNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserGroupNotFoundException;
@@ -34,7 +34,7 @@ public class UserGroupController {
     try {
       UserGroup retrievedUserGroup = userGroupService.retrieveUserGroup(userGroupId);
 
-      UserGroupSearch.Response response = UserGroupSearch.Response.from(retrievedUserGroup);
+      UserGroupCommon.Response response = UserGroupCommon.Response.from(retrievedUserGroup);
 
       return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
     } catch (Exception e) {
@@ -51,7 +51,7 @@ public class UserGroupController {
 
       UserGroup createdUserGroup = userGroupService.createUserGroup(userGroup);
 
-      UserGroupCreate.Response response = UserGroupCreate.Response.from(createdUserGroup);
+      UserGroupCommon.Response response = UserGroupCommon.Response.from(createdUserGroup);
 
       return new ResponseEntity<>(
           new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.CREATED);
