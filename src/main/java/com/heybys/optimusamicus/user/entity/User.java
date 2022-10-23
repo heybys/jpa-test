@@ -22,15 +22,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
-import lombok.ToString.Exclude;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 
 @Slf4j
 @Getter
-@ToString
+@ToString(exclude = {"group"})
 @Entity
 @Table(
     name = "user",
@@ -80,8 +78,9 @@ public class User extends BaseEntity {
   @Column(name = "address")
   private String address;
 
-  @Exclude
-  @Setter
+  @Column(name = "self_introduction")
+  private String selfIntroduction;
+
   @ManyToOne(targetEntity = UserGroup.class, fetch = FetchType.LAZY)
   @JoinColumn(
       name = "user_group_id",
@@ -90,22 +89,20 @@ public class User extends BaseEntity {
   private UserGroup group;
 
   @Builder
-  public User(Type type, String name, String phoneNumber, String address, UserGroup group) {
+  public User(Type type, String name, String phoneNumber, String address, String selfIntroduction) {
     this.type = type;
     this.name = name;
     this.phoneNumber = phoneNumber;
     this.address = address;
+    this.selfIntroduction = selfIntroduction;
+  }
+
+  public void joinTo(UserGroup group) {
     this.group = group;
   }
 
-  public User copy() {
-    User copy = User.builder().type(type).address(address).group(group).build();
-
-    copy.autoGenerateName();
-    copy.autoGeneratePhoneNumber();
-
-    log.info("copy = " + copy);
-    return copy;
+  public boolean isGroupIn() {
+    return this.group != null;
   }
 
   public void autoGenerateName() {

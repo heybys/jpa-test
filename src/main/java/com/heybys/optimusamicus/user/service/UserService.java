@@ -19,13 +19,13 @@ public class UserService {
   private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
-  public List<User> retrieveUsers(Request request, Pageable pageable) {
-    return userRepository.retrieveUsers(request, pageable).getContent();
+  public User retrieveUser(Long userId) {
+    return userRepository.findById(userId).orElseThrow();
   }
 
   @Transactional(readOnly = true)
-  public User retrieveUser(Long userId) {
-    return userRepository.findById(userId).orElseThrow();
+  public List<User> retrieveUsers(Request request, Pageable pageable) {
+    return userRepository.retrieveUsers(request, pageable).getContent();
   }
 
   @Transactional
@@ -33,9 +33,9 @@ public class UserService {
     return userRepository.save(user);
   }
 
-  @Transactional // (propagation = Propagation.REQUIRES_NEW)
+  @Transactional
   public Long updateUser(Long userId, Map<String, Object> params) {
-    return userRepository.updateUser(userId, params);
+    return userRepository.patchUser(userId, params);
   }
 
   @Transactional
