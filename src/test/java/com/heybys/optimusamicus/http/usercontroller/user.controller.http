@@ -16,9 +16,10 @@ Content-Type: application/json
 
 {
   "username": "test-name-{{$uuid}}",
-  "userType": "NORMAL",
-  "userPhoneNumber": "010{{$randomInt}}{{$randomInt}}{{$randomInt}}",
-  "userAddress": "Gangseo-gu, Seoul, Republic of Korea"
+  "password": "password",
+  "type": "NORMAL",
+  "phoneNumber": "0101231234",
+  "address": "Gangseo-gu, Seoul, Republic of Korea"
 }
 
 > {%

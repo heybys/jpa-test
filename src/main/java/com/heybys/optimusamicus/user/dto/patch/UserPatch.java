@@ -11,6 +11,8 @@ public class UserPatch {
 
     private String username;
 
+    private String password;
+
     private User.Type type;
 
     @Pattern(

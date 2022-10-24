@@ -13,6 +13,9 @@ public class UserCreate {
     @NotNull(message = "need to username")
     private String username;
 
+    @NotNull(message = "need to password")
+    private String password;
+
     @NotNull(message = "need to type")
     private User.Type type;
 
@@ -32,6 +35,7 @@ public class UserCreate {
     public User toUser() {
       return User.builder()
           .name(username)
+          .password(password)
           .type(type)
           .phoneNumber(phoneNumber)
           .address(address)

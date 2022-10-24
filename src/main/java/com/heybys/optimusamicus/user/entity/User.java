@@ -2,7 +2,6 @@ package com.heybys.optimusamicus.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.heybys.optimusamicus.common.entity.BaseEntity;
-import com.heybys.optimusamicus.common.utils.StringUtils;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,40 +22,26 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.ToString.Exclude;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 
 @Slf4j
 @Getter
-@ToString(exclude = {"group"})
+@ToString
 @Entity
 @Table(
     name = "user",
     uniqueConstraints = {
-      @UniqueConstraint(
-          name = "UK_phone_number",
-          columnNames = {"phone_number"}),
-      @UniqueConstraint(
-          name = "UK_username",
-          columnNames = {"username"})
+        @UniqueConstraint(
+            name = "UK_phone_number",
+            columnNames = {"phone_number"}),
+        @UniqueConstraint(
+            name = "UK_username",
+            columnNames = {"username"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
-
-  public enum Type {
-    NORMAL,
-    ADMIN;
-
-    @JsonCreator
-    public Type from(String value) {
-      for (Type type : Type.values()) {
-        if (type.name().equals(value)) {
-          return type;
-        }
-      }
-      return null;
-    }
-  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,6 +57,10 @@ public class User extends BaseEntity {
   @Column(name = "username")
   private String name;
 
+  @NotNull
+  @Column(name = "password")
+  private String password;
+
   @Column(name = "phone_number")
   private String phoneNumber;
 
@@ -81,6 +70,7 @@ public class User extends BaseEntity {
   @Column(name = "self_introduction")
   private String selfIntroduction;
 
+  @Exclude
   @ManyToOne(targetEntity = UserGroup.class, fetch = FetchType.LAZY)
   @JoinColumn(
       name = "user_group_id",
@@ -89,9 +79,16 @@ public class User extends BaseEntity {
   private UserGroup group;
 
   @Builder
-  public User(Type type, String name, String phoneNumber, String address, String selfIntroduction) {
+  public User(
+      Type type,
+      String name,
+      String password,
+      String phoneNumber,
+      String address,
+      String selfIntroduction) {
     this.type = type;
     this.name = name;
+    this.password = password;
     this.phoneNumber = phoneNumber;
     this.address = address;
     this.selfIntroduction = selfIntroduction;
@@ -103,16 +100,6 @@ public class User extends BaseEntity {
 
   public boolean isGroupIn() {
     return this.group != null;
-  }
-
-  public void autoGenerateName() {
-    this.name = "AUTO_GENERATED_" + StringUtils.generateRandomAlphabets(10);
-    log.info("auto generate name = " + name);
-  }
-
-  public void autoGeneratePhoneNumber() {
-    this.phoneNumber = "010" + StringUtils.generateRandomNumbers(8);
-    log.info("auto generate phoneNumber = " + phoneNumber);
   }
 
   @Override
@@ -130,5 +117,20 @@ public class User extends BaseEntity {
   @Override
   public int hashCode() {
     return getClass().hashCode();
+  }
+
+  public enum Type {
+    NORMAL,
+    ADMIN;
+
+    @JsonCreator
+    public Type from(String value) {
+      for (Type type : Type.values()) {
+        if (type.name().equals(value)) {
+          return type;
+        }
+      }
+      return null;
+    }
   }
 }
