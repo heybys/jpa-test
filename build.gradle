@@ -32,7 +32,7 @@ dependencies {
 
     // DB
     implementation 'mysql:mysql-connector-java:8.0.30'
-    implementation 'software.aws.rds:aws-mysql-jdbc:1.1.1'
+    // implementation 'software.aws.rds:aws-mysql-jdbc:1.1.1'
     implementation 'com.querydsl:querydsl-jpa:5.0.0'
     implementation 'com.querydsl:querydsl-apt:5.0.0'
 

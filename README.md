@@ -56,7 +56,7 @@
     - [ ] 객체지향의 사실과 오해
     - [ ] GOF 디자인 패턴
     - [ ] 리팩토링
-    
+    - [ ] JDBC Driver auto commit test
 
 <br>
 
