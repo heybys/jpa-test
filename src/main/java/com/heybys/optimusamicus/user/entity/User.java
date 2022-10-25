@@ -33,12 +33,12 @@ import org.hibernate.Hibernate;
 @Table(
     name = "user",
     uniqueConstraints = {
-        @UniqueConstraint(
-            name = "UK_phone_number",
-            columnNames = {"phone_number"}),
-        @UniqueConstraint(
-            name = "UK_username",
-            columnNames = {"username"})
+      @UniqueConstraint(
+          name = "UK_phone_number",
+          columnNames = {"phone_number"}),
+      @UniqueConstraint(
+          name = "UK_username",
+          columnNames = {"username"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {

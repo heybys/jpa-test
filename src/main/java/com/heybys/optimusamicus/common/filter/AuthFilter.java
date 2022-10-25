@@ -19,28 +19,22 @@ public class AuthFilter implements Filter {
 
   private static final String[] whitelist = {"/login", "/user/*"};
 
-  public void init(FilterConfig config) throws ServletException {
-  }
+  public void init(FilterConfig config) throws ServletException {}
 
-  public void destroy() {
-  }
+  public void destroy() {}
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws ServletException, IOException {
     HttpServletRequest httpRequest = (HttpServletRequest) request;
-    String requestURI = httpRequest.getRequestURI();
 
+    String requestURI = httpRequest.getRequestURI();
     log.info("requestURI : {}", requestURI);
 
-    if (isLoginRequired(requestURI)) {
-      HttpSession httpSession = httpRequest.getSession(false);
+    HttpSession session = httpRequest.getSession(false);
+    log.info("session : {}", session);
 
-
-    }
     chain.doFilter(request, response);
-
-
   }
 
   private boolean isLoginRequired(String requestURI) {
