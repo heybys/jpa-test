@@ -2,7 +2,6 @@ package com.heybys.optimusamicus.user.controller;
 
 import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import com.heybys.optimusamicus.user.dto.common.UserCommon;
 import com.heybys.optimusamicus.user.dto.create.UserCreate;
 import com.heybys.optimusamicus.user.dto.search.UserSearch;
@@ -13,6 +12,7 @@ import com.heybys.optimusamicus.user.exception.UserNotPatchedException;
 import com.heybys.optimusamicus.user.service.UserGroupService;
 import com.heybys.optimusamicus.user.service.UserService;
 import com.heybys.optimusamicus.user.validator.UserValidator;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -52,9 +51,9 @@ public class UserController {
 
       UserCommon.Response response = UserCommon.Response.from(retrievedUser);
 
-      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
+      return ResponseEntity.ok(CommonResponse.success(response));
     } catch (Exception e) {
-      throw new UserNotFoundException();
+      throw new UserNotFoundException(e);
     }
   }
 
@@ -68,9 +67,9 @@ public class UserController {
       List<UserCommon.Response> responses =
           retrievedUsers.stream().map(UserCommon.Response::from).collect(Collectors.toList());
 
-      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, responses), HttpStatus.OK);
+      return ResponseEntity.ok(CommonResponse.success(responses));
     } catch (Exception e) {
-      throw new UserNotFoundException();
+      throw new UserNotFoundException(e);
     }
   }
 
@@ -87,11 +86,11 @@ public class UserController {
       User createdUser = userService.createUser(user);
 
       UserCommon.Response response = UserCommon.Response.from(createdUser);
+      URI uri = URI.create("api/v1/users/" + response.getId());
 
-      return new ResponseEntity<>(
-          new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.CREATED);
+      return ResponseEntity.created(uri).body(CommonResponse.success(response));
     } catch (Exception e) {
-      throw new UserNotCreatedException();
+      throw new UserNotCreatedException(e);
     }
   }
 
@@ -106,10 +105,9 @@ public class UserController {
 
       UserCommon.Response response = UserCommon.Response.from(patchedUser);
 
-      return new ResponseEntity<>(
-          new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.ACCEPTED);
+      return ResponseEntity.ok().body(CommonResponse.success(response));
     } catch (Exception e) {
-      throw new UserNotPatchedException();
+      throw new UserNotPatchedException(e);
     }
   }
 }

@@ -2,7 +2,6 @@ package com.heybys.optimusamicus.order.controller;
 
 import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import com.heybys.optimusamicus.order.entity.Order;
 import com.heybys.optimusamicus.order.exception.OrderNotCreatedException;
 import com.heybys.optimusamicus.order.exception.OrderNotFoundException;
@@ -10,11 +9,11 @@ import com.heybys.optimusamicus.order.model.OrderCreate;
 import com.heybys.optimusamicus.order.model.OrderCreate.Response;
 import com.heybys.optimusamicus.order.model.OrderSearch;
 import com.heybys.optimusamicus.order.service.OrderService;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +36,7 @@ public class OrderController {
     try {
       this.orderService.order(menuName);
 
-      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS), HttpStatus.OK);
+      return ResponseEntity.ok(CommonResponse.success());
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -47,16 +46,14 @@ public class OrderController {
   public ResponseEntity<CommonResponse> retrieveOrder(@RequestParam String name) {
 
     try {
-      // call service
       List<Order> orders = orderService.retrieveOrders(name);
 
-      // convert entity to dto
       List<OrderSearch.Response> response =
           orders.stream().map(OrderSearch.Response::from).collect(Collectors.toList());
 
-      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
+      return ResponseEntity.ok(CommonResponse.success(response));
     } catch (Exception e) {
-      throw new OrderNotFoundException();
+      throw new OrderNotFoundException(e);
     }
   }
 
@@ -70,9 +67,9 @@ public class OrderController {
       // convert entity to dto
       OrderSearch.Response response = OrderSearch.Response.from(retrievedOrder);
 
-      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
+      return ResponseEntity.ok(CommonResponse.success(response));
     } catch (Exception e) {
-      throw new OrderNotFoundException();
+      throw new OrderNotFoundException(e);
     }
   }
 
@@ -89,12 +86,11 @@ public class OrderController {
 
       // convert entity to dto
       Response response = Response.from(createdOrder);
+      URI uri = URI.create("api/v1/orders/" + response.getOrderId());
 
-      return new ResponseEntity<>(
-          new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.CREATED);
+      return ResponseEntity.created(uri).body(CommonResponse.success(response));
     } catch (Exception e) {
-      e.printStackTrace();
-      throw new OrderNotCreatedException();
+      throw new OrderNotCreatedException(e);
     }
   }
 }

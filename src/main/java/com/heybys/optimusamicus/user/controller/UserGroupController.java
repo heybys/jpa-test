@@ -2,16 +2,15 @@ package com.heybys.optimusamicus.user.controller;
 
 import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import com.heybys.optimusamicus.user.dto.common.UserGroupCommon;
 import com.heybys.optimusamicus.user.dto.create.UserGroupCreate;
 import com.heybys.optimusamicus.user.entity.UserGroup;
 import com.heybys.optimusamicus.user.exception.UserGroupNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserGroupNotFoundException;
 import com.heybys.optimusamicus.user.service.UserGroupService;
+import java.net.URI;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +35,7 @@ public class UserGroupController {
 
       UserGroupCommon.Response response = UserGroupCommon.Response.from(retrievedUserGroup);
 
-      return new ResponseEntity<>(new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.OK);
+      return ResponseEntity.ok(CommonResponse.success(response));
     } catch (Exception e) {
       throw new UserGroupNotFoundException();
     }
@@ -52,9 +51,9 @@ public class UserGroupController {
       UserGroup createdUserGroup = userGroupService.createUserGroup(userGroup);
 
       UserGroupCommon.Response response = UserGroupCommon.Response.from(createdUserGroup);
+      URI uri = URI.create("/api/v1/user-groups/" + response.getId());
 
-      return new ResponseEntity<>(
-          new CommonResponse(StatusCode.SUCCESS, response), HttpStatus.CREATED);
+      return ResponseEntity.created(uri).body(CommonResponse.success(response));
     } catch (Exception e) {
       throw new UserGroupNotCreatedException();
     }

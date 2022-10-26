@@ -1,9 +1,7 @@
 package com.heybys.optimusamicus.user.advice;
 
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import com.heybys.optimusamicus.user.controller.UserController;
-import com.heybys.optimusamicus.user.exception.AuthenticationFailedException;
 import com.heybys.optimusamicus.user.exception.UserGroupNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserGroupNotFoundException;
 import com.heybys.optimusamicus.user.exception.UserNotCreatedException;
@@ -24,41 +22,30 @@ public class UserExceptionHandler {
   @ExceptionHandler(UserNotFoundException.class)
   protected ResponseEntity<CommonResponse> handleException(UserNotFoundException exception) {
     log.error(exception.getMessage());
-    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
 
-    return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    return ResponseEntity.notFound().build();
   }
 
   @ExceptionHandler(UserNotCreatedException.class)
   protected ResponseEntity<CommonResponse> handleException(UserNotCreatedException exception) {
-    log.error(exception.getMessage());
-    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
+    String message = exception.getMessage();
 
-    return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    log.error(message);
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(CommonResponse.fail(message));
   }
 
   @ExceptionHandler(UserGroupNotFoundException.class)
   protected ResponseEntity<CommonResponse> handleException(UserGroupNotFoundException exception) {
     log.error(exception.getMessage());
-    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
 
-    return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    return ResponseEntity.notFound().build();
   }
 
   @ExceptionHandler(UserGroupNotCreatedException.class)
   protected ResponseEntity<CommonResponse> handleException(UserGroupNotCreatedException exception) {
-    log.error(exception.getMessage());
-    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
+    String message = exception.getMessage();
 
-    return new ResponseEntity<>(response, HttpStatus.CONFLICT);
-  }
-
-  @ExceptionHandler(AuthenticationFailedException.class)
-  protected ResponseEntity<CommonResponse> handleException(
-      AuthenticationFailedException exception) {
-    log.error(exception.getMessage());
-    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
-
-    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    log.error(message);
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(CommonResponse.fail(message));
   }
 }

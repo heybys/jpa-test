@@ -3,7 +3,6 @@ package com.heybys.optimusamicus.common.advice;
 import com.heybys.optimusamicus.common.error.CommonError;
 import com.heybys.optimusamicus.common.exception.InvalidParameterException;
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.common.model.CommonResponse.StatusCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +26,16 @@ public class CommonExceptionHandler {
         exception.getCause(),
         exception.getMessage());
 
-    CommonResponse response = new CommonResponse(StatusCode.FAIL, "Internal Server Error");
-
-    return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    return ResponseEntity.internalServerError().body(CommonResponse.fail("Internal Server Error"));
   }
 
   @ExceptionHandler(InvalidParameterException.class)
   protected ResponseEntity<CommonResponse> handleException(InvalidParameterException exception) {
     log.error(exception.getMessage());
 
-    CommonResponse response = new CommonResponse(StatusCode.FAIL, exception.getMessage());
+    String message = CommonError.INVALID_PARAMETER.getMessage();
 
-    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    return ResponseEntity.badRequest().body(CommonResponse.fail(message));
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -55,34 +52,27 @@ public class CommonExceptionHandler {
           error.getRejectedValue());
     }
     log.error("===============");
-    log.error(exception.getMessage());
+    String message = exception.getMessage();
 
-    CommonResponse response =
-        new CommonResponse(StatusCode.FAIL, CommonError.METHOD_ARGUMENT_NOT_VALID.getMessage());
-
-    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    log.error(message);
+    return ResponseEntity.badRequest().body(CommonResponse.fail(message));
   }
 
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   protected ResponseEntity<CommonResponse> handleException(
       MethodArgumentTypeMismatchException exception) {
+    String message = exception.getMessage();
+
     log.error(exception.getMessage());
-
-    CommonResponse response =
-        new CommonResponse(StatusCode.FAIL, CommonError.METHOD_ARGUMENT_TYPE_MISMATCH.getMessage());
-
-    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    return ResponseEntity.badRequest().body(CommonResponse.fail(message));
   }
 
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
   protected ResponseEntity<CommonResponse> handleException(
       HttpRequestMethodNotSupportedException exception) {
+    String message = exception.getMessage();
+
     log.error(exception.getMessage());
-
-    CommonResponse response =
-        new CommonResponse(
-            StatusCode.FAIL, CommonError.HTTP_REQUEST_METHOD_NOT_SUPPORTED.getMessage());
-
-    return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
+    return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(CommonResponse.fail(message));
   }
 }
