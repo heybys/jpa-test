@@ -9,4 +9,8 @@ public class InvalidParameterException extends BaseException {
   public InvalidParameterException() {
     super(CommonError.INVALID_PARAMETER);
   }
+
+  public InvalidParameterException(Exception e) {
+    super(CommonError.INVALID_PARAMETER, e);
+  }
 }

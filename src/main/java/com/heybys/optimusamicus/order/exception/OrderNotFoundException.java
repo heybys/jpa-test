@@ -9,4 +9,8 @@ public class OrderNotFoundException extends OrderBaseException {
   public OrderNotFoundException() {
     super(OrderError.ORDER_NOT_FOUND);
   }
+
+  public OrderNotFoundException(Exception e) {
+    super(OrderError.ORDER_NOT_FOUND, e);
+  }
 }

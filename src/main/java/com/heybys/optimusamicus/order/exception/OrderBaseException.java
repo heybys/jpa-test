@@ -13,6 +13,11 @@ public class OrderBaseException extends RuntimeException {
     this.error = error;
   }
 
+  public OrderBaseException(OrderError error, Exception e) {
+    super(e.getMessage(), e.getCause());
+    this.error = error;
+  }
+
   public OrderError getError() {
     return error;
   }

@@ -9,4 +9,8 @@ public class UserNotPatchedException extends UserBaseException {
   public UserNotPatchedException() {
     super(UserError.USER_NOT_PATCHED);
   }
+
+  public UserNotPatchedException(Exception e) {
+    super(UserError.USER_NOT_PATCHED, e);
+  }
 }

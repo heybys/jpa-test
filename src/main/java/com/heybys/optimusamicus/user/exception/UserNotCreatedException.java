@@ -9,4 +9,8 @@ public class UserNotCreatedException extends UserBaseException {
   public UserNotCreatedException() {
     super(UserError.USER_NOT_CREATED);
   }
+
+  public UserNotCreatedException(Exception e) {
+    super(UserError.USER_NOT_CREATED, e);
+  }
 }

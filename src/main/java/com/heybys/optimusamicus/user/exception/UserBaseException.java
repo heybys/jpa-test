@@ -13,6 +13,11 @@ public class UserBaseException extends RuntimeException {
     this.error = error;
   }
 
+  public UserBaseException(UserError error, Exception e) {
+    super(e.getMessage(), e.getCause());
+    this.error = error;
+  }
+
   public UserError getError() {
     return error;
   }

@@ -9,4 +9,8 @@ public class UserNotFoundException extends UserBaseException {
   public UserNotFoundException() {
     super(UserError.USER_NOT_FOUND);
   }
+
+  public UserNotFoundException(Exception e) {
+    super(UserError.USER_NOT_FOUND, e);
+  }
 }

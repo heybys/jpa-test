@@ -9,4 +9,8 @@ public class UserGroupNotCreatedException extends UserBaseException {
   public UserGroupNotCreatedException() {
     super(UserError.USER_GROUP_NOT_CREATED);
   }
+
+  public UserGroupNotCreatedException(Exception e) {
+    super(UserError.USER_GROUP_NOT_CREATED, e);
+  }
 }

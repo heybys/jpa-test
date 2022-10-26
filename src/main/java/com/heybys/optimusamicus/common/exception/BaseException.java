@@ -13,6 +13,11 @@ public class BaseException extends RuntimeException {
     this.error = error;
   }
 
+  public BaseException(CommonError error, Exception e) {
+    super(e.getMessage(), e.getCause());
+    this.error = error;
+  }
+
   public CommonError getError() {
     return error;
   }

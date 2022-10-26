@@ -9,4 +9,8 @@ public class UserGroupNotFoundException extends UserBaseException {
   public UserGroupNotFoundException() {
     super(UserError.USER_GROUP_NOT_FOUND);
   }
+
+  public UserGroupNotFoundException(Exception e) {
+    super(UserError.USER_GROUP_NOT_FOUND, e);
+  }
 }

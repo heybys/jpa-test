@@ -9,4 +9,8 @@ public class OrderNotCreatedException extends OrderBaseException {
   public OrderNotCreatedException() {
     super(OrderError.ORDER_NOT_CREATED);
   }
+
+  public OrderNotCreatedException(Exception e) {
+    super(OrderError.ORDER_NOT_CREATED, e);
+  }
 }
