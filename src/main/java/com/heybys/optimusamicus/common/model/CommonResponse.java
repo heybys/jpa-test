@@ -23,13 +23,37 @@ public class CommonResponse {
     this.statusCode = statusCode;
   }
 
-  public CommonResponse(StatusCode statusCode, String message) {
-    this.statusCode = statusCode;
+  public CommonResponse message(String message) {
     this.message = message;
+    return this;
   }
 
-  public CommonResponse(StatusCode statusCode, Object data) {
-    this.statusCode = statusCode;
+  public CommonResponse data(Object data) {
     this.data = data;
+    return this;
+  }
+
+  public static CommonResponse success() {
+    return new CommonResponse(StatusCode.SUCCESS);
+  }
+
+  public static CommonResponse success(String message) {
+    return success().message(message);
+  }
+
+  public static CommonResponse success(Object data) {
+    return success().data(data);
+  }
+
+  public static CommonResponse fail() {
+    return new CommonResponse(StatusCode.FAIL);
+  }
+
+  public static CommonResponse fail(String message) {
+    return fail().message(message);
+  }
+
+  public static CommonResponse fail(Object data) {
+    return fail().data(data);
   }
 }
