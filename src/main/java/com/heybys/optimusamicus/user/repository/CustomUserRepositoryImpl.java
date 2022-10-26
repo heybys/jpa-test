@@ -77,7 +77,7 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
 
     if (params.containsKey("username") && params.get("username") != null) {
       String username = params.get("username").toString();
-      updateClause.set(user.name, username);
+      updateClause.set(user.username, username);
     }
 
     if (params.containsKey("phoneNumber") && params.get("phoneNumber") != null) {
@@ -117,7 +117,7 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
         jdbcBatchSize,
         (ps, argument) -> {
           ps.setString(1, argument.getType().name());
-          ps.setString(2, argument.getName());
+          ps.setString(2, argument.getUsername());
           ps.setString(3, argument.getPhoneNumber());
           ps.setString(4, argument.getAddress());
           ps.setString(5, argument.getSelfIntroduction());
@@ -132,7 +132,7 @@ public class CustomUserRepositoryImpl extends UserQuerydslRepositorySupport
   }
 
   private BooleanExpression usernameEq(String username) {
-    return username != null ? user.name.eq(username) : null;
+    return username != null ? user.username.eq(username) : null;
   }
 
   private BooleanExpression userGroupNameEq(String userGroupName) {

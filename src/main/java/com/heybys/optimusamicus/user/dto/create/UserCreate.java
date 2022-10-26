@@ -34,7 +34,7 @@ public class UserCreate {
 
     public User toUser() {
       return User.builder()
-          .name(username)
+          .username(username)
           .password(password)
           .type(type)
           .phoneNumber(phoneNumber)

@@ -55,7 +55,7 @@ public class User extends BaseEntity {
 
   @NotNull
   @Column(name = "username")
-  private String name;
+  private String username;
 
   @NotNull
   @Column(name = "password")
@@ -81,13 +81,13 @@ public class User extends BaseEntity {
   @Builder
   public User(
       Type type,
-      String name,
+      String username,
       String password,
       String phoneNumber,
       String address,
       String selfIntroduction) {
     this.type = type;
-    this.name = name;
+    this.username = username;
     this.password = password;
     this.phoneNumber = phoneNumber;
     this.address = address;

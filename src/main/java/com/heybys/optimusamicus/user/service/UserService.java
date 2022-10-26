@@ -19,6 +19,11 @@ public class UserService {
   private final UserRepository userRepository;
 
   @Transactional(readOnly = true)
+  public User findRegisteredUser(String username, String password) {
+    return userRepository.findByUsernameAndPassword(username, password);
+  }
+
+  @Transactional(readOnly = true)
   public User retrieveUser(Long userId) {
     return userRepository.findById(userId).orElseThrow();
   }

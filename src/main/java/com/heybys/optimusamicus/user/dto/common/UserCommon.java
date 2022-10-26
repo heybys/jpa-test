@@ -42,7 +42,7 @@ public class UserCommon {
           Response.builder()
               .id(user.getId())
               .type(user.getType())
-              .username(user.getName())
+              .username(user.getUsername())
               .phoneNumber(user.getPhoneNumber())
               .address(user.getAddress())
               .selfIntroduction(user.getSelfIntroduction())
