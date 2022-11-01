@@ -7,13 +7,24 @@ services:
     container_name: default-db
     image: mysql:latest
     restart: always
-    volumes:
-      - ./db/default/data:/var/lib/mysql
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --transaction-isolation=READ-COMMITTED
-    environment:
-      MYSQL_ROOT_PASSWORD: default
     ports:
       - "3307:3306"
+    volumes:
+      - ./db/default/data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: default
+  default-redis:
+    container_name: default-redis
+    image: redis:latest
+    restart: always
+    command: redis-server --notify-keyspace-events Ex
+    ports:
+      - "6381:6379"
+    volumes:
+      - ./redis/default/data:/data
+      - ./redis/default/redis.conf:/usr/local/etc/redis/redis.conf
+
 #  user-db:
 #    container_name: user-db
 #    image: mysql:latest
