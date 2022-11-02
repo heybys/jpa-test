@@ -61,10 +61,8 @@ public class OrderController {
   public ResponseEntity<CommonResponse> retrieveOrder(@PathVariable Long orderId) {
 
     try {
-      // call service
       Order retrievedOrder = orderService.retrieveOrder(orderId);
 
-      // convert entity to dto
       OrderSearch.Response response = OrderSearch.Response.from(retrievedOrder);
 
       return ResponseEntity.ok(CommonResponse.success(response));
@@ -78,13 +76,10 @@ public class OrderController {
       @RequestBody @Valid OrderCreate.Request request) {
 
     try {
-      // convert dto to entity
       Order order = request.toOrder();
 
-      // call service
       Order createdOrder = orderService.createOrder(order);
 
-      // convert entity to dto
       Response response = Response.from(createdOrder);
       URI uri = URI.create("api/v1/orders/" + response.getOrderId());
 
