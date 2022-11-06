@@ -1,6 +1,5 @@
 package com.heybys.optimusamicus.user.exception;
 
-import com.heybys.optimusamicus.user.error.UserError;
 import org.springframework.lang.Nullable;
 
 public class UserBaseException extends RuntimeException {

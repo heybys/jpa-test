@@ -1,7 +1,5 @@
 package com.heybys.optimusamicus.user.exception;
 
-import com.heybys.optimusamicus.user.error.UserError;
-
 public class UserNotPatchedException extends UserBaseException {
 
   private static final long serialVersionUID = 1L;

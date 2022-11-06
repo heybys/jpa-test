@@ -1,10 +1,10 @@
 package com.heybys.optimusamicus.order.service;
 
-import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
-import com.heybys.optimusamicus.order.entity.Order;
-import com.heybys.optimusamicus.order.model.Coffee;
-import com.heybys.optimusamicus.order.model.Customer;
-import com.heybys.optimusamicus.order.repository.OrderRepository;
+import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
+import com.heybys.optimusamicus.order.domain.entity.Order;
+import com.heybys.optimusamicus.order.controller.dto.Coffee;
+import com.heybys.optimusamicus.order.controller.dto.Customer;
+import com.heybys.optimusamicus.order.domain.repository.OrderRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

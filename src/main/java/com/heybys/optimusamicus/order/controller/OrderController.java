@@ -1,13 +1,13 @@
 package com.heybys.optimusamicus.order.controller;
 
-import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
+import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.order.entity.Order;
+import com.heybys.optimusamicus.order.domain.entity.Order;
 import com.heybys.optimusamicus.order.exception.OrderNotCreatedException;
 import com.heybys.optimusamicus.order.exception.OrderNotFoundException;
-import com.heybys.optimusamicus.order.model.OrderCreate;
-import com.heybys.optimusamicus.order.model.OrderCreate.Response;
-import com.heybys.optimusamicus.order.model.OrderSearch;
+import com.heybys.optimusamicus.order.controller.dto.OrderCreate;
+import com.heybys.optimusamicus.order.controller.dto.OrderCreate.Response;
+import com.heybys.optimusamicus.order.controller.dto.OrderSearch;
 import com.heybys.optimusamicus.order.service.OrderService;
 import java.net.URI;
 import java.util.List;

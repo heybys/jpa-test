@@ -1,9 +1,9 @@
 package com.heybys.optimusamicus.order.service;
 
-import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
-import com.heybys.optimusamicus.order.entity.Order;
-import com.heybys.optimusamicus.order.entity.OrderCopy;
-import com.heybys.optimusamicus.order.repository.OrderCopyRepository;
+import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
+import com.heybys.optimusamicus.order.domain.entity.Order;
+import com.heybys.optimusamicus.order.domain.entity.OrderCopy;
+import com.heybys.optimusamicus.order.domain.repository.OrderCopyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

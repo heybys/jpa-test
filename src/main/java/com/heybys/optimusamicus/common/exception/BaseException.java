@@ -1,6 +1,5 @@
 package com.heybys.optimusamicus.common.exception;
 
-import com.heybys.optimusamicus.common.error.CommonError;
 import org.springframework.lang.Nullable;
 
 public class BaseException extends RuntimeException {

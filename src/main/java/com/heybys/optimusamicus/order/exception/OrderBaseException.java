@@ -1,6 +1,5 @@
 package com.heybys.optimusamicus.order.exception;
 
-import com.heybys.optimusamicus.order.error.OrderError;
 import org.springframework.lang.Nullable;
 
 public class OrderBaseException extends RuntimeException {

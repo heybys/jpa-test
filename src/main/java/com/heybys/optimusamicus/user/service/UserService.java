@@ -1,9 +1,9 @@
 package com.heybys.optimusamicus.user.service;
 
-import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
-import com.heybys.optimusamicus.user.dto.search.UserSearch.Request;
-import com.heybys.optimusamicus.user.entity.User;
-import com.heybys.optimusamicus.user.repository.UserRepository;
+import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
+import com.heybys.optimusamicus.user.controller.dto.search.UserSearch.Request;
+import com.heybys.optimusamicus.user.domain.entity.User;
+import com.heybys.optimusamicus.user.domain.repository.UserRepository;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

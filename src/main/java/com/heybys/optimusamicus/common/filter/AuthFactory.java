@@ -1,7 +1,7 @@
 package com.heybys.optimusamicus.common.filter;
 
-import com.heybys.optimusamicus.common.service.AuthService;
-import com.heybys.optimusamicus.common.service.SessionAuthService;
+import com.heybys.optimusamicus.user.service.AuthService;
+import com.heybys.optimusamicus.user.service.SessionAuthService;
 import com.heybys.optimusamicus.user.service.UserService;
 import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;

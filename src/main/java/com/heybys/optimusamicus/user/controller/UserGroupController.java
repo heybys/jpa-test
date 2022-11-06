@@ -1,10 +1,10 @@
 package com.heybys.optimusamicus.user.controller;
 
-import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
+import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.user.dto.common.UserGroupCommon;
-import com.heybys.optimusamicus.user.dto.create.UserGroupCreate;
-import com.heybys.optimusamicus.user.entity.UserGroup;
+import com.heybys.optimusamicus.user.controller.dto.common.UserGroupCommon;
+import com.heybys.optimusamicus.user.controller.dto.create.UserGroupCreate;
+import com.heybys.optimusamicus.user.domain.entity.UserGroup;
 import com.heybys.optimusamicus.user.exception.UserGroupNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserGroupNotFoundException;
 import com.heybys.optimusamicus.user.service.UserGroupService;

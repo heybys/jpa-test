@@ -1,7 +1,7 @@
 package com.heybys.optimusamicus.common.config;
 
 import com.heybys.optimusamicus.common.filter.AuthFactory;
-import com.heybys.optimusamicus.common.service.AuthService;
+import com.heybys.optimusamicus.user.service.AuthService;
 import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -28,7 +28,8 @@ public class WebConfig implements WebMvcConfigurer {
   }
 
   @Override
-  public void addInterceptors(InterceptorRegistry registry) {}
+  public void addInterceptors(InterceptorRegistry registry) {
+  }
 
   @Bean
   public FilterRegistrationBean<Filter> AuthFilter() {

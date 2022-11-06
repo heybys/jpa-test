@@ -1,8 +1,8 @@
 package com.heybys.optimusamicus.user.service;
 
-import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
-import com.heybys.optimusamicus.user.entity.UserGroup;
-import com.heybys.optimusamicus.user.repository.UserGroupRepository;
+import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
+import com.heybys.optimusamicus.user.domain.entity.UserGroup;
+import com.heybys.optimusamicus.user.domain.repository.UserGroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

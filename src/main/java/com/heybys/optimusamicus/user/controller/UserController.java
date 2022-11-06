@@ -1,17 +1,17 @@
 package com.heybys.optimusamicus.user.controller;
 
-import com.heybys.optimusamicus.common.aspect.LogExecutionTime;
+import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.user.dto.common.UserCommon;
-import com.heybys.optimusamicus.user.dto.create.UserCreate;
-import com.heybys.optimusamicus.user.dto.search.UserSearch;
-import com.heybys.optimusamicus.user.entity.User;
+import com.heybys.optimusamicus.user.controller.dto.common.UserCommon;
+import com.heybys.optimusamicus.user.controller.dto.create.UserCreate;
+import com.heybys.optimusamicus.user.controller.dto.search.UserSearch;
+import com.heybys.optimusamicus.user.domain.entity.User;
 import com.heybys.optimusamicus.user.exception.UserNotCreatedException;
 import com.heybys.optimusamicus.user.exception.UserNotFoundException;
 import com.heybys.optimusamicus.user.exception.UserNotPatchedException;
 import com.heybys.optimusamicus.user.service.UserGroupService;
 import com.heybys.optimusamicus.user.service.UserService;
-import com.heybys.optimusamicus.user.validator.UserValidator;
+import com.heybys.optimusamicus.user.service.UserValidator;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
