@@ -25,9 +25,9 @@ import org.springframework.data.domain.Persistable;
 @Table(
     name = "orders",
     uniqueConstraints = {
-        @UniqueConstraint(
-            name = "UK_serial_number",
-            columnNames = {"serial_number"})
+      @UniqueConstraint(
+          name = "UK_serial_number",
+          columnNames = {"serial_number"})
     })
 @EntityListeners(OrderListener.class)
 @NoArgsConstructor
@@ -46,8 +46,7 @@ public class Order implements Persistable<Long> {
   @Column(name = "serial_number")
   private UUID serialNumber;
 
-  @Column
-  private String name;
+  @Column private String name;
 
   @Builder
   public Order(Long id, String name) {

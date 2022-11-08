@@ -25,9 +25,9 @@ import org.springframework.data.domain.Persistable;
 @Table(
     name = "orders_copy",
     uniqueConstraints = {
-        @UniqueConstraint(
-            name = "UK_serial_number",
-            columnNames = {"serial_number"})
+      @UniqueConstraint(
+          name = "UK_serial_number",
+          columnNames = {"serial_number"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderCopy implements Persistable<Long> {

@@ -10,9 +10,7 @@ public class OrderQuerydslRepositorySupport extends QuerydslRepositorySupport {
 
   protected JPAQueryFactory queryFactory;
 
-  /**
-   * Creates a new {@link QuerydslRepositorySupport} instance for the given domain type.
-   */
+  /** Creates a new {@link QuerydslRepositorySupport} instance for the given domain type. */
   public OrderQuerydslRepositorySupport() {
     super(Order.class);
   }

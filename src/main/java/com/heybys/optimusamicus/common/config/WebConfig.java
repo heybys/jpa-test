@@ -28,8 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
   }
 
   @Override
-  public void addInterceptors(InterceptorRegistry registry) {
-  }
+  public void addInterceptors(InterceptorRegistry registry) {}
 
   @Bean
   public FilterRegistrationBean<Filter> AuthFilter() {

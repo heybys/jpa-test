@@ -1,7 +1,5 @@
 package com.heybys.optimusamicus.common.exception;
 
-import com.heybys.optimusamicus.common.exception.CommonError;
-import com.heybys.optimusamicus.common.exception.InvalidParameterException;
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

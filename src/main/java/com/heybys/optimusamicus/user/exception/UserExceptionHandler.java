@@ -2,10 +2,6 @@ package com.heybys.optimusamicus.user.exception;
 
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.user.controller.UserController;
-import com.heybys.optimusamicus.user.exception.UserGroupNotCreatedException;
-import com.heybys.optimusamicus.user.exception.UserGroupNotFoundException;
-import com.heybys.optimusamicus.user.exception.UserNotCreatedException;
-import com.heybys.optimusamicus.user.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

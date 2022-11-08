@@ -9,8 +9,7 @@ public class UserGroupCreate {
   @Data
   public static class Request {
 
-    @NotNull
-    private String name;
+    @NotNull private String name;
 
     public UserGroup toUserGroup() {
       return UserGroup.builder().name(name).build();

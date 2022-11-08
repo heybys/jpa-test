@@ -1,10 +1,10 @@
 package com.heybys.optimusamicus.order.domain.repository;
 
-import static com.heybys.optimusamicus.order.entity.QOrder.order;
+import static com.heybys.optimusamicus.order.domain.entity.QOrder.order;
 
 import com.heybys.optimusamicus.order.domain.entity.Order;
-import com.heybys.optimusamicus.order.service.feign.FeignTest;
 import com.heybys.optimusamicus.order.domain.repository.support.OrderQuerydslRepositorySupport;
+import com.heybys.optimusamicus.order.service.feign.FeignTest;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;

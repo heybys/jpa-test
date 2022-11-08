@@ -32,8 +32,7 @@ public class SessionAuthService implements AuthService {
     return false;
   }
 
-  public void register() {
-  }
+  public void register() {}
 
   private AuthInfo parse(final String authorization) {
     if (authorization != null && authorization.toLowerCase().startsWith("basic")) {

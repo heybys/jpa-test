@@ -1,7 +1,7 @@
 package com.heybys.optimusamicus.user.domain.repository;
 
-import static com.heybys.optimusamicus.user.entity.QUser.user;
-import static com.heybys.optimusamicus.user.entity.QUserGroup.userGroup;
+import static com.heybys.optimusamicus.user.domain.entity.QUser.user;
+import static com.heybys.optimusamicus.user.domain.entity.QUserGroup.userGroup;
 
 import com.heybys.optimusamicus.user.controller.dto.search.UserSearch;
 import com.heybys.optimusamicus.user.domain.entity.User;
