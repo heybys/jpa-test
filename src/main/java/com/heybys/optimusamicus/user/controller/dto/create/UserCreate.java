@@ -1,6 +1,5 @@
 package com.heybys.optimusamicus.user.controller.dto.create;
 
-import com.heybys.optimusamicus.user.domain.entity.User;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.Data;
@@ -10,14 +9,8 @@ public class UserCreate {
   @Data
   public static class Request {
 
-    @NotNull(message = "need to username")
-    private String username;
-
-    @NotNull(message = "need to password")
-    private String password;
-
-    @NotNull(message = "need to type")
-    private User.Type type;
+    @NotNull(message = "need to address")
+    private String address;
 
     @NotNull(message = "need to phoneNumber")
     @Pattern(
@@ -25,22 +18,6 @@ public class UserCreate {
         message = "Invalid phoneNumber format")
     private String phoneNumber;
 
-    @NotNull(message = "need to address")
-    private String address;
-
-    private String selfIntroduction;
-
-    private Long userGroupId;
-
-    public User toUser() {
-      return User.builder()
-          .username(username)
-          .password(password)
-          .type(type)
-          .phoneNumber(phoneNumber)
-          .address(address)
-          .selfIntroduction(selfIntroduction)
-          .build();
-    }
+    private String email;
   }
 }

@@ -1,8 +1,8 @@
 package com.heybys.optimusamicus.common.filter;
 
+import com.heybys.optimusamicus.user.domain.repository.UserRepository;
 import com.heybys.optimusamicus.user.service.AuthService;
 import com.heybys.optimusamicus.user.service.SessionAuthService;
-import com.heybys.optimusamicus.user.service.UserService;
 import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class AuthFactory {
     OAuth
   }
 
-  private final UserService userService;
+  private final UserRepository userRepository;
 
   private final AuthType authType = AuthType.SESSION;
 
@@ -37,7 +37,7 @@ public class AuthFactory {
   public AuthService getService() {
     switch (authType) {
       case SESSION:
-        return new SessionAuthService(userService);
+        return new SessionAuthService(userRepository);
       case JWT:
         throw new RuntimeException("The JWT authentication service is not implemented.");
       case OAuth:

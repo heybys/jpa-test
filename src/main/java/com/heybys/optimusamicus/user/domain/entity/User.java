@@ -1,19 +1,12 @@
 package com.heybys.optimusamicus.user.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.heybys.optimusamicus.common.entity.BaseEntity;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -22,20 +15,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.ToString.Exclude;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 
 @Slf4j
-@Getter
 @ToString
+@Getter
 @Entity
 @Table(
     name = "user",
     uniqueConstraints = {
-      @UniqueConstraint(
-          name = "UK_phone_number",
-          columnNames = {"phone_number"}),
       @UniqueConstraint(
           name = "UK_username",
           columnNames = {"username"})
@@ -47,11 +36,6 @@ public class User extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_id")
   private Long id;
-
-  @NotNull
-  @Enumerated(EnumType.STRING)
-  @Column(name = "user_type")
-  private Type type;
 
   @NotNull
   @Column(name = "username")
@@ -67,39 +51,16 @@ public class User extends BaseEntity {
   @Column(name = "address")
   private String address;
 
-  @Column(name = "self_introduction")
-  private String selfIntroduction;
-
-  @Exclude
-  @ManyToOne(targetEntity = UserGroup.class, fetch = FetchType.LAZY)
-  @JoinColumn(
-      name = "user_group_id",
-      referencedColumnName = "user_group_id",
-      foreignKey = @ForeignKey(name = "FK_user_group_id"))
-  private UserGroup group;
+  @Column(name = "email")
+  private String email;
 
   @Builder
-  public User(
-      Type type,
-      String username,
-      String password,
-      String phoneNumber,
-      String address,
-      String selfIntroduction) {
-    this.type = type;
+  public User(String username, String password, String phoneNumber, String address, String email) {
     this.username = username;
     this.password = password;
     this.phoneNumber = phoneNumber;
     this.address = address;
-    this.selfIntroduction = selfIntroduction;
-  }
-
-  public void joinTo(UserGroup group) {
-    this.group = group;
-  }
-
-  public boolean isGroupIn() {
-    return this.group != null;
+    this.email = email;
   }
 
   @Override
@@ -117,20 +78,5 @@ public class User extends BaseEntity {
   @Override
   public int hashCode() {
     return getClass().hashCode();
-  }
-
-  public enum Type {
-    NORMAL,
-    ADMIN;
-
-    @JsonCreator
-    public Type from(String value) {
-      for (Type type : Type.values()) {
-        if (type.name().equals(value)) {
-          return type;
-        }
-      }
-      return null;
-    }
   }
 }
