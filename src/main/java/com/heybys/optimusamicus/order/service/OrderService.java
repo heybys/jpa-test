@@ -5,9 +5,15 @@ import com.heybys.optimusamicus.order.controller.dto.Coffee;
 import com.heybys.optimusamicus.order.controller.dto.Customer;
 import com.heybys.optimusamicus.order.domain.entity.Order;
 import com.heybys.optimusamicus.order.domain.repository.OrderRepository;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.engine.jdbc.connections.spi.JdbcConnectionAccess;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +41,18 @@ public class OrderService {
   public Order retrieveOrder(Long orderId) {
     Order order = orderRepository.findById(orderId).orElseThrow();
     order.refreshSerialNumber();
+
+    // try {
+    //   Session session = entityManager.unwrap(Session.class);
+    //   SessionFactory sessionFactory = session.getSessionFactory();
+    //   JdbcConnectionAccess access = ((SessionImplementor) sessionFactory).getJdbcConnectionAccess();
+    //   Connection connection = access.obtainConnection();
+    //   int isolation = connection.getTransactionIsolation();
+    //   int transactionReadUncommitted = Connection.TRANSACTION_READ_UNCOMMITTED;
+    // } catch (SQLException e) {
+    //   throw new RuntimeException(e);
+    // }
+
     return order;
   }
 
