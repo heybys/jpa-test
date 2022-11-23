@@ -9,7 +9,7 @@ services:
     restart: always
     command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --transaction-isolation=READ-COMMITTED
     ports:
-      - "3307:3306"
+      - "4306:3306"
     volumes:
       - ./db/mysql/default/data:/var/lib/mysql
     environment:
@@ -20,7 +20,7 @@ services:
     restart: always
     command: redis-server --notify-keyspace-events Ex
     ports:
-      - "6381:6379"
+      - "7379:6379"
     volumes:
       - ./db/redis/default/data:/data
       - ./db/redis/default/redis.conf:/usr/local/etc/redis.conf
