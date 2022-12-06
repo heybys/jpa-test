@@ -1,10 +1,11 @@
 package com.heybys.optimusamicus.user.service;
 
-import com.heybys.optimusamicus.user.domain.entity.User;
+import com.heybys.optimusamicus.user.service.model.UserLoginInfo;
+import com.heybys.optimusamicus.user.service.model.UserRegisterInfo;
 
 public interface AuthService {
 
-  void login(AuthInfo authInfo);
+  void login(UserLoginInfo userLoginInfo);
 
-  void register(User user);
+  void register(UserRegisterInfo userRegisterInfo);
 }

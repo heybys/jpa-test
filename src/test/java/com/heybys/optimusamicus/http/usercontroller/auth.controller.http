@@ -1,0 +1,33 @@
+### Successful POST auth register: check response status is 200
+POST {{url}}/api/v1/auth/register
+Content-Type: application/json
+Authorization: Basic aGV5YnlzOjEyMzRxd2Vy
+
+{
+  "address": "Seoul City",
+  "phoneNumber": "01049051923",
+  "email": "heybys@naver.com"
+}
+
+> {%
+  client.test("User register successfully", function () {
+    client.assert(response.status === 200, "Response status should be 200");
+    client.assert(response.body["statusCode"] === "SUCCESS",
+        "Response body.statusCode should be SUCCESS");
+  });
+%}
+
+### Successful POST auth login: check response status is 200
+POST {{url}}/api/v1/auth/login
+Content-Type: application/json
+Authorization: Basic aGV5YnlzOjEyMzRxd2Vy
+
+{}
+
+> {%
+  client.test("User login successfully", function () {
+    client.assert(response.status === 200, "Response status should be 200");
+    client.assert(response.body["statusCode"] === "SUCCESS",
+        "Response body.statusCode should be SUCCESS");
+  });
+%}
