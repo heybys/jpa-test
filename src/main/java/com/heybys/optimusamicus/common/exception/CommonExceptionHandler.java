@@ -32,45 +32,41 @@ public class CommonExceptionHandler {
     log.error(exception.getMessage());
 
     String message = CommonError.INVALID_PARAMETER.getMessage();
-
     return ResponseEntity.badRequest().body(CommonResponse.fail(message));
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   protected ResponseEntity<CommonResponse> handleException(
       MethodArgumentNotValidException exception) {
+    log.error(exception.getMessage());
 
     BindingResult bindingResult = exception.getBindingResult();
     log.error("===============");
     for (FieldError error : bindingResult.getFieldErrors()) {
       log.error(
-          "{} : {} (value:{})",
-          error.getField(),
-          error.getDefaultMessage(),
-          error.getRejectedValue());
+          "{} ({}={})", error.getDefaultMessage(), error.getField(), error.getRejectedValue());
     }
     log.error("===============");
-    String message = exception.getMessage();
 
-    log.error(message);
+    String message = CommonError.METHOD_ARGUMENT_NOT_VALID.getMessage();
     return ResponseEntity.badRequest().body(CommonResponse.fail(message));
   }
 
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   protected ResponseEntity<CommonResponse> handleException(
       MethodArgumentTypeMismatchException exception) {
-    String message = exception.getMessage();
-
     log.error(exception.getMessage());
+
+    String message = CommonError.METHOD_ARGUMENT_TYPE_MISMATCH.getMessage();
     return ResponseEntity.badRequest().body(CommonResponse.fail(message));
   }
 
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
   protected ResponseEntity<CommonResponse> handleException(
       HttpRequestMethodNotSupportedException exception) {
-    String message = exception.getMessage();
-
     log.error(exception.getMessage());
+
+    String message = CommonError.HTTP_REQUEST_METHOD_NOT_SUPPORTED.getMessage();
     return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(CommonResponse.fail(message));
   }
 }
