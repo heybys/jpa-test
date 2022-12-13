@@ -2,15 +2,15 @@ package com.heybys.optimusamicus.user.controller;
 
 import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
+import com.heybys.optimusamicus.user.exception.UnauthorizedException;
 import com.heybys.optimusamicus.user.service.AuthService;
-import com.heybys.optimusamicus.user.service.model.UserLoginInfo;
+import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.UserRegisterInfo;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,27 +31,29 @@ public class AuthController {
 
     try {
       String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+      Credentials credentials = Credentials.of(authorization);
 
-      authService.login(UserLoginInfo.of(authorization));
+      authService.login(credentials);
 
       return ResponseEntity.ok(CommonResponse.success());
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(CommonResponse.fail());
+      throw new UnauthorizedException(e);
     }
   }
 
   @PostMapping("/register")
   public ResponseEntity<CommonResponse> register(
-      HttpServletRequest request, @RequestBody @Valid UserRegisterInfo.Additional additional) {
+      HttpServletRequest request, @RequestBody @Valid UserRegisterInfo userRegisterInfo) {
 
     try {
       String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+      Credentials credentials = Credentials.of(authorization);
 
-      authService.register(UserRegisterInfo.of(authorization, additional));
+      authService.register(credentials, userRegisterInfo);
 
       return ResponseEntity.ok(CommonResponse.success());
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(CommonResponse.fail());
+      throw new UnauthorizedException(e);
     }
   }
 }
