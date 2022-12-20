@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Slf4j
 @RestController
@@ -31,10 +32,9 @@ public class AuthController {
   private final AuthService authService;
 
   @GetMapping("/profile")
-  public ResponseEntity<CommonResponse> getProfile() {
+  public ResponseEntity<CommonResponse> getProfile(
+      @SessionAttribute(name = "sessionUser", required = false) UserProfile profile) {
     try {
-      UserProfile profile = authService.getUserProfile();
-
       return ResponseEntity.ok(CommonResponse.success(profile));
     } catch (Exception e) {
       throw new IllegalArgumentException(e);

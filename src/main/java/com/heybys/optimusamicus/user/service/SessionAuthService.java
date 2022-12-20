@@ -15,14 +15,6 @@ public class SessionAuthService implements AuthService {
   private final UserRepository userRepository;
 
   @Override
-  public UserProfile getUserProfile() {
-    HttpSession session = HttpServletRequestProvider.getSession();
-    User sessionUser = (User) session.getAttribute("sessionUser");
-
-    return UserProfile.from(sessionUser);
-  }
-
-  @Override
   public UserProfile login(Credentials credentials) {
     User user =
         userRepository
