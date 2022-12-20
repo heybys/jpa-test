@@ -17,7 +17,7 @@ public class CommonResponse {
 
   private StatusCode statusCode;
   private String message;
-  private Object data;
+  private Object payload;
 
   public CommonResponse(StatusCode statusCode) {
     this.statusCode = statusCode;
@@ -28,8 +28,8 @@ public class CommonResponse {
     return this;
   }
 
-  public CommonResponse data(Object data) {
-    this.data = data;
+  public CommonResponse payload(Object payload) {
+    this.payload = payload;
     return this;
   }
 
@@ -41,8 +41,8 @@ public class CommonResponse {
     return success().message(message);
   }
 
-  public static CommonResponse success(Object data) {
-    return success().data(data);
+  public static CommonResponse success(Object payload) {
+    return success().payload(payload);
   }
 
   public static CommonResponse fail() {
@@ -53,7 +53,7 @@ public class CommonResponse {
     return fail().message(message);
   }
 
-  public static CommonResponse fail(Object data) {
-    return fail().data(data);
+  public static CommonResponse fail(Object payload) {
+    return fail().payload(payload);
   }
 }
