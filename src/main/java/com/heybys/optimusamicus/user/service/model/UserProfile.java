@@ -16,7 +16,7 @@ public class UserProfile {
   private String email;
 
   @Builder
-  private UserProfile(String username, String address, String phoneNumber, String email) {
+  public UserProfile(String username, String address, String phoneNumber, String email) {
     this.username = username;
     this.address = address;
     this.phoneNumber = phoneNumber;
