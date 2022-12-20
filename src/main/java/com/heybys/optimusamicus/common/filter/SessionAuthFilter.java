@@ -25,17 +25,18 @@ public class SessionAuthFilter implements Filter {
   private static final Map<HttpMethod, String[]> whitelist = new HashMap<>();
 
   public void init(FilterConfig config) throws ServletException {
-    whitelist.put(HttpMethod.OPTIONS, new String[] {"*"});
-    whitelist.put(HttpMethod.GET, new String[] {});
+    whitelist.put(HttpMethod.OPTIONS, new String[]{"*"});
+    whitelist.put(HttpMethod.GET, new String[]{});
     whitelist.put(
         HttpMethod.POST,
-        new String[] {"/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/auth/logout"});
-    whitelist.put(HttpMethod.PUT, new String[] {});
-    whitelist.put(HttpMethod.PATCH, new String[] {});
-    whitelist.put(HttpMethod.DELETE, new String[] {});
+        new String[]{"/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/auth/logout"});
+    whitelist.put(HttpMethod.PUT, new String[]{});
+    whitelist.put(HttpMethod.PATCH, new String[]{});
+    whitelist.put(HttpMethod.DELETE, new String[]{});
   }
 
-  public void destroy() {}
+  public void destroy() {
+  }
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

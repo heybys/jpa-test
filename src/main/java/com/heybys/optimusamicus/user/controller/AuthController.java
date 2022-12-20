@@ -7,7 +7,6 @@ import com.heybys.optimusamicus.user.service.AuthService;
 import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.UserProfile;
 import com.heybys.optimusamicus.user.service.model.UserRegisterInfo;
-import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
