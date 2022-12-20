@@ -25,9 +25,10 @@ public class SessionAuthService implements AuthService {
                         "There is no user with the username and password."));
 
     HttpSession session = HttpServletRequestProvider.getSession();
-    session.setAttribute("sessionUser", user);
+    UserProfile profile = UserProfile.from(user);
+    session.setAttribute("userProfile", profile);
 
-    return UserProfile.from(user);
+    return profile;
   }
 
   @Override
