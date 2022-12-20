@@ -5,12 +5,15 @@ import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.user.exception.UnauthorizedException;
 import com.heybys.optimusamicus.user.service.AuthService;
 import com.heybys.optimusamicus.user.service.model.Credentials;
+import com.heybys.optimusamicus.user.service.model.UserProfile;
 import com.heybys.optimusamicus.user.service.model.UserRegisterInfo;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,9 +36,9 @@ public class AuthController {
       String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
       Credentials credentials = Credentials.of(authorization);
 
-      authService.login(credentials);
+      UserProfile userProfile = authService.login(credentials);
 
-      return ResponseEntity.ok(CommonResponse.success());
+      return ResponseEntity.status(HttpStatus.CREATED).body(CommonResponse.success(userProfile));
     } catch (Exception e) {
       throw new UnauthorizedException(e);
     }
