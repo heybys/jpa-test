@@ -32,7 +32,7 @@ public class AuthController {
 
   @GetMapping("/profile")
   public ResponseEntity<CommonResponse> getProfile(
-      @SessionAttribute(name = "sessionUser", required = false) UserProfile profile) {
+      @SessionAttribute(name = "userProfile", required = false) UserProfile profile) {
     try {
       return ResponseEntity.ok(CommonResponse.success(profile));
     } catch (Exception e) {

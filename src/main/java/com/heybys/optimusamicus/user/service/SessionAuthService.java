@@ -6,7 +6,6 @@ import com.heybys.optimusamicus.user.domain.repository.UserRepository;
 import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.UserProfile;
 import com.heybys.optimusamicus.user.service.model.UserRegisterInfo;
-import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -23,12 +22,11 @@ public class SessionAuthService implements AuthService {
                 () ->
                     new IllegalArgumentException(
                         "There is no user with the username and password."));
+    UserProfile userProfile = UserProfile.from(user);
 
-    HttpSession session = HttpServletRequestProvider.getSession();
-    UserProfile profile = UserProfile.from(user);
-    session.setAttribute("userProfile", profile);
+    HttpServletRequestProvider.getSession().setAttribute("userProfile", userProfile);
 
-    return profile;
+    return userProfile;
   }
 
   @Override
