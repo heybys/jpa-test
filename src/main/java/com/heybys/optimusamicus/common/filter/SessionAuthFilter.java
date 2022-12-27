@@ -2,9 +2,8 @@ package com.heybys.optimusamicus.common.filter;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -12,18 +11,17 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.PatternMatchUtils;
 
 @Slf4j
-// @WebFilter(filterName = "SessionAuthFilter")
 public class SessionAuthFilter implements Filter {
 
-  private static final Map<HttpMethod, String[]> whitelist = new HashMap<>();
+  private static final EnumMap<HttpMethod, String[]> whitelist = new EnumMap<>(HttpMethod.class);
 
+  @Override
   public void init(FilterConfig config) throws ServletException {
     whitelist.put(HttpMethod.OPTIONS, new String[]{"*"});
     whitelist.put(HttpMethod.GET, new String[]{});
@@ -35,14 +33,15 @@ public class SessionAuthFilter implements Filter {
     whitelist.put(HttpMethod.DELETE, new String[]{});
   }
 
+  @Override
   public void destroy() {
+    // not yet implemented.
   }
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws ServletException, IOException {
     HttpServletRequest httpRequest = (HttpServletRequest) request;
-    HttpServletResponse httpResponse = (HttpServletResponse) response;
 
     String requestURI = httpRequest.getRequestURI();
     String method = httpRequest.getMethod();
@@ -51,8 +50,7 @@ public class SessionAuthFilter implements Filter {
     if (isLoginRequired(HttpMethod.valueOf(method), requestURI)) {
       HttpSession session = httpRequest.getSession(false);
       if (session == null) {
-        // httpResponse.sendRedirect("/api/v1/auth/login?redirectURL=" + requestURI);
-        throw new RuntimeException();
+        throw new IllegalArgumentException();
       } else {
         Enumeration<String> attributeNames = session.getAttributeNames();
         for (String attributeName : Collections.list(attributeNames)) {

@@ -47,7 +47,6 @@ public class DefaultDataSourceConfig {
     hikariConfig.setUsername(username);
     hikariConfig.setPassword(password);
     hikariConfig.setDriverClassName(driverClassName);
-    // hikariConfig.setAutoCommit(true);
     hikariConfig.addDataSourceProperty("elideSetAutoCommits", true);
 
     return hikariConfig;

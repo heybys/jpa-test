@@ -9,18 +9,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationEventPublisherProvider implements ApplicationEventPublisherAware {
 
-  private static ApplicationEventPublisher publisher;
+  private ApplicationEventPublisher publisher;
 
   @Override
   public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
     publisher = applicationEventPublisher;
   }
 
-  public static ApplicationEventPublisher getPublisher() {
+  public ApplicationEventPublisher getPublisher() {
     return publisher;
   }
 
-  public static void publishEvent(Object event) {
+  public void publishEvent(Object event) {
     if (publisher != null) {
       log.debug("publish event. {}", event);
       publisher.publishEvent(event);
