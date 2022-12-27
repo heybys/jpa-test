@@ -28,10 +28,12 @@ public class WebConfig implements WebMvcConfigurer {
   }
 
   @Override
-  public void addInterceptors(InterceptorRegistry registry) {}
+  public void addInterceptors(InterceptorRegistry registry) {
+    // not set yet.
+  }
 
   @Bean
-  public FilterRegistrationBean<Filter> AuthFilter() {
+  public FilterRegistrationBean<Filter> authFilter() {
     Filter authFilter = authFactory.getFilter();
 
     FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();

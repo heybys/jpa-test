@@ -1,5 +1,6 @@
 package com.heybys.optimusamicus.common.filter;
 
+import com.heybys.optimusamicus.common.exception.InvalidParameterException;
 import com.heybys.optimusamicus.user.domain.repository.UserRepository;
 import com.heybys.optimusamicus.user.service.AuthService;
 import com.heybys.optimusamicus.user.service.SessionAuthService;
@@ -14,23 +15,23 @@ public class AuthFactory {
   public enum AuthType {
     SESSION,
     JWT,
-    OAuth
+    OAUTH
   }
 
   private final UserRepository userRepository;
 
-  private final AuthType authType = AuthType.SESSION;
+  private static final AuthType authType = AuthType.SESSION;
 
   public Filter getFilter() {
     switch (authType) {
       case SESSION:
         return new SessionAuthFilter();
       case JWT:
-        throw new RuntimeException("The JWT authentication filter is not implemented.");
-      case OAuth:
-        throw new RuntimeException("The OAuth authentication filter is not implemented.");
+        throw new InvalidParameterException("The JWT authentication filter is not implemented.");
+      case OAUTH:
+        throw new InvalidParameterException("The OAuth authentication filter is not implemented.");
       default:
-        throw new RuntimeException("The authentication filter type is wrong.");
+        throw new InvalidParameterException("The authentication filter type is wrong.");
     }
   }
 
@@ -39,11 +40,11 @@ public class AuthFactory {
       case SESSION:
         return new SessionAuthService(userRepository);
       case JWT:
-        throw new RuntimeException("The JWT authentication service is not implemented.");
-      case OAuth:
-        throw new RuntimeException("The OAuth authentication service is not implemented.");
+        throw new InvalidParameterException("The JWT authentication service is not implemented.");
+      case OAUTH:
+        throw new InvalidParameterException("The OAuth authentication service is not implemented.");
       default:
-        throw new RuntimeException("The authentication service type is wrong.");
+        throw new InvalidParameterException("The authentication service type is wrong.");
     }
   }
 }

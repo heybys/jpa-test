@@ -14,8 +14,18 @@ public class AuthBaseException extends RuntimeException {
     this.error = error;
   }
 
-  public AuthBaseException(AuthError error, Throwable e) {
-    super(e);
+  public AuthBaseException(AuthError error, String message) {
+    super(message);
+    this.error = error;
+  }
+
+  public AuthBaseException(AuthError error, Throwable cause) {
+    super(cause);
+    this.error = error;
+  }
+
+  public AuthBaseException(AuthError error, String message, Throwable cause) {
+    super(message, cause);
     this.error = error;
   }
 

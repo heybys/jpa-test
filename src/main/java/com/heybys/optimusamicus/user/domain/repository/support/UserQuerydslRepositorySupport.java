@@ -12,8 +12,10 @@ public abstract class UserQuerydslRepositorySupport extends QuerydslRepositorySu
 
   protected JPAQueryFactory queryFactory;
 
-  /** Creates a new {@link QuerydslRepositorySupport} instance for the given domain type. */
-  public UserQuerydslRepositorySupport() {
+  /**
+   * Creates a new {@link QuerydslRepositorySupport} instance for the given domain type.
+   */
+  protected UserQuerydslRepositorySupport() {
     super(User.class);
   }
 

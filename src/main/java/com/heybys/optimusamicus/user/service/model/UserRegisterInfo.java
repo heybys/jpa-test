@@ -12,7 +12,7 @@ public class UserRegisterInfo {
 
   @NotNull(message = "need to phoneNumber")
   @Pattern(
-      regexp = "01(?:0|1|[6-9])(\\d{3}|\\d{4})(\\d{4})",
+      regexp = "01([016789])(\\d{3}|\\d{4})(\\d{4})",
       message = "Invalid phoneNumber format")
   private String phoneNumber;
 

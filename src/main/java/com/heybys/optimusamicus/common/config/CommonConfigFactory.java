@@ -39,12 +39,6 @@ public class CommonConfigFactory {
   @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
   private Integer jdbcBatchSize;
 
-  @Value("${spring.jpa.properties.hibernate.order_inserts}")
-  private Boolean orderInserts;
-
-  @Value("${spring.jpa.properties.hibernate.order_updates}")
-  private Boolean orderUpdates;
-
   @Value("${spring.jpa.hibernate.naming.implicit-strategy}")
   private String namingImplicitStrategy;
 
@@ -76,12 +70,7 @@ public class CommonConfigFactory {
     properties.put(PHYSICAL_NAMING_STRATEGY, namingPhysicalStrategy);
     properties.put(HBM2DDL_AUTO, ddlAuto);
     properties.put(USE_NEW_ID_GENERATOR_MAPPINGS, useNewIdGeneratorMappings);
-    // properties.put(ORDER_INSERTS, orderInserts);
-    // properties.put(ORDER_UPDATES, orderUpdates);
-    // properties.put(FLUSH_MODE, FlushModeType.COMMIT.name());
     em.setJpaProperties(properties);
-
-    // em.afterPropertiesSet();
 
     return em;
   }

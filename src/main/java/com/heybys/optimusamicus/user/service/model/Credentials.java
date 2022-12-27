@@ -11,16 +11,16 @@ public class Credentials {
 
   /**
    * @see <a
-   *     href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes">HTTP
-   *     authentication - MDN Web Docs - Mozilla</a>
+   * href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes">HTTP
+   * authentication - MDN Web Docs - Mozilla</a>
    */
   public enum Scheme {
     BASIC("Basic"),
-    Bearer("Bearer"),
+    BEARER("Bearer"),
     DIGEST("Digest"),
     HOBA("HOBA"),
-    Mutual("Mutual"),
-    Negotiate("Negotiate"),
+    MUTUAL("Mutual"),
+    NEGOTIATE("Negotiate"),
     NTLM("NTLM");
 
     private final String name;
@@ -44,9 +44,8 @@ public class Credentials {
   }
 
   public static Credentials of(String authorization) {
-    assert authorization != null;
 
-    if (authorization.startsWith(Scheme.BASIC.name)) {
+    if (authorization != null && authorization.startsWith(Scheme.BASIC.name)) {
       // authorization: Basic credentialsBase64Token
       String token = authorization.substring(Scheme.BASIC.name.length()).trim();
       byte[] bytes = Base64.getDecoder().decode(token);
