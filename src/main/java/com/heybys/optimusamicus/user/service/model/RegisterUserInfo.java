@@ -5,7 +5,7 @@ import javax.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class UserRegisterInfo {
+public class RegisterUserInfo {
 
   @NotNull(message = "need to address")
   private String address;

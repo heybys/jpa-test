@@ -6,8 +6,8 @@ import com.heybys.optimusamicus.user.exception.UnauthorizedException;
 import com.heybys.optimusamicus.user.service.AuthService;
 import com.heybys.optimusamicus.user.service.model.AuthConst;
 import com.heybys.optimusamicus.user.service.model.Credentials;
-import com.heybys.optimusamicus.user.service.model.UserProfile;
-import com.heybys.optimusamicus.user.service.model.UserRegisterInfo;
+import com.heybys.optimusamicus.user.service.model.RegisterUserInfo;
+import com.heybys.optimusamicus.user.service.model.SessionUserInfo;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,13 +34,13 @@ public class AuthController {
 
   @PostMapping("/register")
   public ResponseEntity<CommonResponse> register(
-      HttpServletRequest request, @RequestBody @Valid UserRegisterInfo userRegisterInfo) {
+      HttpServletRequest request, @RequestBody @Valid RegisterUserInfo registerUserInfo) {
 
     try {
       String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
       Credentials credentials = Credentials.of(authorization);
 
-      authService.register(credentials, userRegisterInfo);
+      authService.register(credentials, registerUserInfo);
 
       return ResponseEntity.ok(CommonResponse.success());
     } catch (Exception e) {
@@ -55,9 +55,10 @@ public class AuthController {
       String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
       Credentials credentials = Credentials.of(authorization);
 
-      UserProfile userProfile = authService.login(credentials);
+      SessionUserInfo sessionUserInfo = authService.login(credentials);
 
-      return ResponseEntity.status(HttpStatus.CREATED).body(CommonResponse.success(userProfile));
+      return ResponseEntity.status(HttpStatus.CREATED)
+          .body(CommonResponse.success(sessionUserInfo));
     } catch (Exception e) {
       throw new UnauthorizedException(e);
     }
@@ -74,11 +75,11 @@ public class AuthController {
     }
   }
 
-  @GetMapping("/profile")
-  public ResponseEntity<CommonResponse> getProfile(
-      @SessionAttribute(name = AuthConst.USER_INFO, required = false) UserProfile profile) {
+  @GetMapping("/session-user-info")
+  public ResponseEntity<CommonResponse> getSessionUserInfo(
+      @SessionAttribute(name = AuthConst.USER_INFO, required = false) SessionUserInfo userInfo) {
     try {
-      return ResponseEntity.ok(CommonResponse.success(profile));
+      return ResponseEntity.ok(CommonResponse.success(userInfo));
     } catch (Exception e) {
       throw new IllegalArgumentException(e);
     }

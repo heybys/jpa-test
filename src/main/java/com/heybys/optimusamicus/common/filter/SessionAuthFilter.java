@@ -1,7 +1,7 @@
 package com.heybys.optimusamicus.common.filter;
 
 import com.heybys.optimusamicus.user.service.model.AuthConst;
-import com.heybys.optimusamicus.user.service.model.UserProfile;
+import com.heybys.optimusamicus.user.service.model.SessionUserInfo;
 import java.io.IOException;
 import java.util.EnumMap;
 import javax.servlet.Filter;
@@ -52,8 +52,9 @@ public class SessionAuthFilter implements Filter {
       if (session == null) {
         throw new IllegalArgumentException();
       } else {
-        UserProfile userProfile = (UserProfile) session.getAttribute(AuthConst.USER_INFO);
-        log.info("userProfile : {}", userProfile);
+        SessionUserInfo sessionUserInfo = (SessionUserInfo) session.getAttribute(
+            AuthConst.USER_INFO);
+        log.info("userProfile : {}", sessionUserInfo);
       }
     }
 

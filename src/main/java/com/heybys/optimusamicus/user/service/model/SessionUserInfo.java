@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class UserProfile implements Serializable {
+public class SessionUserInfo implements Serializable {
 
   private final String username;
 
@@ -18,15 +18,15 @@ public class UserProfile implements Serializable {
   private final String email;
 
   @Builder
-  public UserProfile(String username, String address, String phoneNumber, String email) {
+  public SessionUserInfo(String username, String address, String phoneNumber, String email) {
     this.username = username;
     this.address = address;
     this.phoneNumber = phoneNumber;
     this.email = email;
   }
 
-  public static UserProfile from(User user) {
-    return UserProfile.builder().username(user.getUsername()).address(user.getAddress())
+  public static SessionUserInfo from(User user) {
+    return SessionUserInfo.builder().username(user.getUsername()).address(user.getAddress())
         .phoneNumber(user.getPhoneNumber()).email(user.getEmail()).build();
   }
 
