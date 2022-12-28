@@ -4,7 +4,6 @@ import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.user.exception.UnauthorizedException;
 import com.heybys.optimusamicus.user.service.AuthService;
-import com.heybys.optimusamicus.user.service.model.AuthConst;
 import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.RegisterUserInfo;
 import com.heybys.optimusamicus.user.service.model.SessionUserInfo;
@@ -16,12 +15,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Slf4j
 @RestController
@@ -70,16 +67,6 @@ public class AuthController {
     try {
       authService.logout();
       return ResponseEntity.ok(CommonResponse.success());
-    } catch (Exception e) {
-      throw new IllegalArgumentException(e);
-    }
-  }
-
-  @GetMapping("/session-user-info")
-  public ResponseEntity<CommonResponse> getSessionUserInfo(
-      @SessionAttribute(name = AuthConst.USER_INFO, required = false) SessionUserInfo userInfo) {
-    try {
-      return ResponseEntity.ok(CommonResponse.success(userInfo));
     } catch (Exception e) {
       throw new IllegalArgumentException(e);
     }
