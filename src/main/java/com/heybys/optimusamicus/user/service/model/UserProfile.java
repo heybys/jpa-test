@@ -31,6 +31,6 @@ public class UserProfile implements Serializable {
   }
 
   public void addTo(HttpSession session) {
-    session.setAttribute("userProfile", this);
+    session.setAttribute(AuthConst.USER_INFO, this);
   }
 }

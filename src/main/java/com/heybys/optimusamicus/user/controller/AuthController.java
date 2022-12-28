@@ -4,6 +4,7 @@ import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
 import com.heybys.optimusamicus.user.exception.UnauthorizedException;
 import com.heybys.optimusamicus.user.service.AuthService;
+import com.heybys.optimusamicus.user.service.model.AuthConst;
 import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.UserProfile;
 import com.heybys.optimusamicus.user.service.model.UserRegisterInfo;
@@ -75,7 +76,7 @@ public class AuthController {
 
   @GetMapping("/profile")
   public ResponseEntity<CommonResponse> getProfile(
-      @SessionAttribute(name = "userProfile", required = false) UserProfile profile) {
+      @SessionAttribute(name = AuthConst.USER_INFO, required = false) UserProfile profile) {
     try {
       return ResponseEntity.ok(CommonResponse.success(profile));
     } catch (Exception e) {
