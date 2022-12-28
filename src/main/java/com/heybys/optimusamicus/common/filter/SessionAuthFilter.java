@@ -27,7 +27,7 @@ public class SessionAuthFilter implements Filter {
     whitelist.put(HttpMethod.GET, new String[]{});
     whitelist.put(
         HttpMethod.POST,
-        new String[]{"/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/auth/logout"});
+        new String[]{"/api/v1/auth/register", "/api/v1/auth/login"});
     whitelist.put(HttpMethod.PUT, new String[]{});
     whitelist.put(HttpMethod.PATCH, new String[]{});
     whitelist.put(HttpMethod.DELETE, new String[]{});
