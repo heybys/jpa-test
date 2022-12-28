@@ -6,7 +6,9 @@ import com.heybys.optimusamicus.user.service.model.UserRegisterInfo;
 
 public interface AuthService {
 
+  void register(Credentials credentials, UserRegisterInfo userRegisterInfo);
+
   UserProfile login(Credentials credentials);
 
-  void register(Credentials credentials, UserRegisterInfo userRegisterInfo);
+  void logout();
 }

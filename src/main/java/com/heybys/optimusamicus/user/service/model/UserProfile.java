@@ -1,19 +1,21 @@
 package com.heybys.optimusamicus.user.service.model;
 
 import com.heybys.optimusamicus.user.domain.entity.User;
+import java.io.Serializable;
+import javax.servlet.http.HttpSession;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class UserProfile {
+public class UserProfile implements Serializable {
 
-  private String username;
+  private final String username;
 
-  private String address;
+  private final String address;
 
-  private String phoneNumber;
+  private final String phoneNumber;
 
-  private String email;
+  private final String email;
 
   @Builder
   public UserProfile(String username, String address, String phoneNumber, String email) {
@@ -26,5 +28,9 @@ public class UserProfile {
   public static UserProfile from(User user) {
     return UserProfile.builder().username(user.getUsername()).address(user.getAddress())
         .phoneNumber(user.getPhoneNumber()).email(user.getEmail()).build();
+  }
+
+  public void addTo(HttpSession session) {
+    session.setAttribute("userProfile", this);
   }
 }

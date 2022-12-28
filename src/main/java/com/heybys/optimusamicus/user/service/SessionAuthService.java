@@ -14,22 +14,6 @@ public class SessionAuthService implements AuthService {
   private final UserRepository userRepository;
 
   @Override
-  public UserProfile login(Credentials credentials) {
-    User user =
-        userRepository
-            .findByUsernameAndPassword(credentials.getUsername(), credentials.getPassword())
-            .orElseThrow(
-                () ->
-                    new IllegalArgumentException(
-                        "There is no user with the username and password."));
-    UserProfile userProfile = UserProfile.from(user);
-
-    HttpServletRequestProvider.getSession().setAttribute("userProfile", userProfile);
-
-    return userProfile;
-  }
-
-  @Override
   public void register(Credentials credentials, UserRegisterInfo userRegisterInfo) {
     User user =
         User.builder()
@@ -41,5 +25,24 @@ public class SessionAuthService implements AuthService {
             .build();
 
     userRepository.save(user);
+  }
+
+  @Override
+  public UserProfile login(Credentials credentials) {
+    User user =
+        userRepository
+            .findByUsernameAndPassword(credentials.getUsername(), credentials.getPassword())
+            .orElseThrow(
+                () ->
+                    new IllegalArgumentException(
+                        "There is no user with the username and password."));
+    UserProfile userProfile = UserProfile.from(user);
+    userProfile.addTo(HttpServletRequestProvider.getSession());
+
+    return userProfile;
+  }
+
+  @Override
+  public void logout() {
   }
 }

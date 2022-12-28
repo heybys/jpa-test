@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,13 +31,19 @@ public class AuthController {
 
   private final AuthService authService;
 
-  @GetMapping("/profile")
-  public ResponseEntity<CommonResponse> getProfile(
-      @SessionAttribute(name = "userProfile", required = false) UserProfile profile) {
+  @PostMapping("/register")
+  public ResponseEntity<CommonResponse> register(
+      HttpServletRequest request, @RequestBody @Valid UserRegisterInfo userRegisterInfo) {
+
     try {
-      return ResponseEntity.ok(CommonResponse.success(profile));
+      String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+      Credentials credentials = Credentials.of(authorization);
+
+      authService.register(credentials, userRegisterInfo);
+
+      return ResponseEntity.ok(CommonResponse.success());
     } catch (Exception e) {
-      throw new IllegalArgumentException(e);
+      throw new UnauthorizedException(e);
     }
   }
 
@@ -55,19 +62,24 @@ public class AuthController {
     }
   }
 
-  @PostMapping("/register")
-  public ResponseEntity<CommonResponse> register(
-      HttpServletRequest request, @RequestBody @Valid UserRegisterInfo userRegisterInfo) {
+  @DeleteMapping("/logout")
+  public ResponseEntity<CommonResponse> logout(HttpServletRequest request) {
 
     try {
-      String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-      Credentials credentials = Credentials.of(authorization);
-
-      authService.register(credentials, userRegisterInfo);
-
+      authService.logout();
       return ResponseEntity.ok(CommonResponse.success());
     } catch (Exception e) {
-      throw new UnauthorizedException(e);
+      throw new IllegalArgumentException(e);
+    }
+  }
+
+  @GetMapping("/profile")
+  public ResponseEntity<CommonResponse> getProfile(
+      @SessionAttribute(name = "userProfile", required = false) UserProfile profile) {
+    try {
+      return ResponseEntity.ok(CommonResponse.success(profile));
+    } catch (Exception e) {
+      throw new IllegalArgumentException(e);
     }
   }
 }
