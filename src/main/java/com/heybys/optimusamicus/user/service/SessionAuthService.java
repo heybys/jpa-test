@@ -5,7 +5,6 @@ import com.heybys.optimusamicus.common.utils.HttpServletResponseProvider;
 import com.heybys.optimusamicus.user.domain.entity.User;
 import com.heybys.optimusamicus.user.domain.repository.UserRepository;
 import com.heybys.optimusamicus.user.service.model.Credentials;
-import com.heybys.optimusamicus.user.service.model.RegisterUserInfo;
 import com.heybys.optimusamicus.user.service.model.SessionUserInfo;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -15,20 +14,6 @@ import lombok.RequiredArgsConstructor;
 public class SessionAuthService implements AuthService {
 
   private final UserRepository userRepository;
-
-  @Override
-  public void register(Credentials credentials, RegisterUserInfo registerUserInfo) {
-    User user =
-        User.builder()
-            .username(credentials.getUsername())
-            .password(credentials.getPassword())
-            .phoneNumber(registerUserInfo.getPhoneNumber())
-            .address(registerUserInfo.getAddress())
-            .email(registerUserInfo.getEmail())
-            .build();
-
-    userRepository.save(user);
-  }
 
   @Override
   public SessionUserInfo login(Credentials credentials) {
