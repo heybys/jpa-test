@@ -26,7 +26,7 @@ public class UserController {
 
   public final UserService userService;
 
-  @PostMapping("/")
+  @PostMapping("")
   public ResponseEntity<CommonResponse> register(
       HttpServletRequest request, @RequestBody @Valid RegisterUserInfo registerUserInfo) {
 
