@@ -8,4 +8,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice(assignableTypes = {})
-public class UserExceptionHandler {}
+public class UserExceptionHandler {
+
+}

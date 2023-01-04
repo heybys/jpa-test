@@ -15,19 +15,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 
-@Slf4j
 @ToString
 @Getter
 @Entity
 @Table(
     name = "user",
     uniqueConstraints = {
-      @UniqueConstraint(
-          name = "UK_username",
-          columnNames = {"username"})
+        @UniqueConstraint(
+            name = "UK_username",
+            columnNames = {"username"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {

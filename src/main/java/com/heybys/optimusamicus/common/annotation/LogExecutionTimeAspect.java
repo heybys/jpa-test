@@ -19,7 +19,8 @@ public class LogExecutionTimeAspect {
   private boolean enableLogging;
 
   @Pointcut("this(org.springframework.data.repository.Repository)")
-  public void inRepository() {}
+  public void inRepository() {
+  }
 
   @Around(
       "@within(com.heybys.optimusamicus.common.annotation.LogExecutionTime) || @annotation(com.heybys.optimusamicus.common.annotation.LogExecutionTime) || inRepository()")
