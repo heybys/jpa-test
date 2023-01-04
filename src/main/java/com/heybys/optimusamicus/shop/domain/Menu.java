@@ -14,10 +14,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.ToString.Exclude;
 
 @ToString
 @Getter
-@Entity
+@Entity(name = "menu")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Menu {
 
@@ -32,7 +33,15 @@ public class Menu {
   @Column(name = "description")
   private String description;
 
+  @Column(name = "shop_id")
+  private Long shopId;
+
   @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "menu_id")
+  @Exclude
   private List<OptionGroup> optionGroups = new ArrayList<>();
+
+  public void add(OptionGroup optionGroup) {
+    this.optionGroups.add(optionGroup);
+  }
 }

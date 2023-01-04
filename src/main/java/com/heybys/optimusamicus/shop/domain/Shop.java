@@ -12,18 +12,18 @@ import lombok.ToString;
 
 @ToString
 @Getter
-@Entity(name = "option")
+@Entity(name = "menu")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Option {
+public class Shop {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "option_id")
+  @Column(name = "shop_id")
   private Long id;
 
   @Column(name = "name")
   private String name;
 
-  @Column(name = "price")
-  private Long price;
+  @Column(name = "open")
+  private boolean open;
 }
