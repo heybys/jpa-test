@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @RequiredArgsConstructor
 @EnableJpaRepositories(basePackages = "com.heybys.optimusamicus.*")
 @EnableTransactionManagement
-public class DefaultDataSourceConfig {
+public class DataSourceConfig {
 
   private final CommonConfigFactory commonConfigFactory;
 
