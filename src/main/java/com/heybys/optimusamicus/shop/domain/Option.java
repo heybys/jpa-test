@@ -12,7 +12,7 @@ import lombok.ToString;
 
 @ToString
 @Getter
-@Entity(name = "option")
+@Entity(name = "options")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Option {
 
