@@ -33,6 +33,9 @@ public class Menu {
   @Column(name = "description")
   private String description;
 
+  @Column(name = "price")
+  private Long price;
+
   @Column(name = "shop_id")
   private Long shopId;
 

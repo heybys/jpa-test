@@ -6,13 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @ToString
 @Getter
-@Entity(name = "menu")
+@Entity(name = "shop")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Shop {
 
@@ -24,6 +25,12 @@ public class Shop {
   @Column(name = "name")
   private String name;
 
-  @Column(name = "open")
-  private boolean open;
+  @Column(name = "open", nullable = false)
+  private boolean open = false;
+
+  @Builder
+  public Shop(String name, boolean open) {
+    this.name = name;
+    this.open = open;
+  }
 }

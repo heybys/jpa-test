@@ -3,6 +3,9 @@ package com.heybys.optimusamicus.common.config;
 import static org.hibernate.cfg.AvailableSettings.DEFAULT_BATCH_FETCH_SIZE;
 import static org.hibernate.cfg.AvailableSettings.FORMAT_SQL;
 import static org.hibernate.cfg.AvailableSettings.HBM2DDL_AUTO;
+import static org.hibernate.cfg.AvailableSettings.HBM2DDL_CHARSET_NAME;
+import static org.hibernate.cfg.AvailableSettings.HBM2DDL_IMPORT_FILES;
+import static org.hibernate.cfg.AvailableSettings.HBM2DDL_IMPORT_FILES_SQL_EXTRACTOR;
 import static org.hibernate.cfg.AvailableSettings.IMPLICIT_NAMING_STRATEGY;
 import static org.hibernate.cfg.AvailableSettings.PHYSICAL_NAMING_STRATEGY;
 import static org.hibernate.cfg.AvailableSettings.STATEMENT_BATCH_SIZE;
@@ -39,17 +42,26 @@ public class CommonConfigFactory {
   @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
   private Integer jdbcBatchSize;
 
+  @Value("${spring.jpa.properties.hibernate.hbm2ddl.import_files}")
+  private String importFiles;
+
+  @Value("${spring.jpa.properties.hibernate.hbm2ddl.import_files_sql_extractor}")
+  private String importFilesSqlExtractor;
+
+  @Value("${spring.jpa.properties.hibernate.hbm2ddl.charset_name}")
+  private String charsetName;
+
+  @Value("${spring.jpa.hibernate.ddl-auto}")
+  private String ddlAuto;
+
   @Value("${spring.jpa.hibernate.naming.implicit-strategy}")
   private String namingImplicitStrategy;
 
   @Value("${spring.jpa.hibernate.naming.physical-strategy}")
   private String namingPhysicalStrategy;
 
-  @Value("${spring.jpa.hibernate.ddl-auto}")
-  private String ddlAuto;
-
   @Value("${spring.jpa.hibernate.use-new-id-generator-mappings}")
-  private String useNewIdGeneratorMappings;
+  private Boolean useNewIdGeneratorMappings;
 
   public LocalContainerEntityManagerFactoryBean createEntityManagerFactoryBean() {
 
@@ -66,9 +78,12 @@ public class CommonConfigFactory {
     properties.put(FORMAT_SQL, formatSql);
     properties.put(DEFAULT_BATCH_FETCH_SIZE, defaultBatchFetchSize);
     properties.put(STATEMENT_BATCH_SIZE, jdbcBatchSize);
+    properties.put(HBM2DDL_AUTO, ddlAuto);
+    properties.put(HBM2DDL_IMPORT_FILES, importFiles);
+    properties.put(HBM2DDL_IMPORT_FILES_SQL_EXTRACTOR, importFilesSqlExtractor);
+    properties.put(HBM2DDL_CHARSET_NAME, charsetName);
     properties.put(IMPLICIT_NAMING_STRATEGY, namingImplicitStrategy);
     properties.put(PHYSICAL_NAMING_STRATEGY, namingPhysicalStrategy);
-    properties.put(HBM2DDL_AUTO, ddlAuto);
     properties.put(USE_NEW_ID_GENERATOR_MAPPINGS, useNewIdGeneratorMappings);
     em.setJpaProperties(properties);
 

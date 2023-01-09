@@ -30,6 +30,9 @@ public class OptionGroup {
   @Column(name = "name")
   private String name;
 
+  @Column(name = "exclusive")
+  private boolean exclusive;
+
   @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "option_group_id")
   @Exclude
