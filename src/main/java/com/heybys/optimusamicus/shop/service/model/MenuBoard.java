@@ -1,6 +1,7 @@
 package com.heybys.optimusamicus.shop.service.model;
 
 import com.heybys.optimusamicus.shop.domain.Menu;
+import com.heybys.optimusamicus.shop.domain.OptionGroup;
 import com.heybys.optimusamicus.shop.domain.Shop;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,8 @@ public class MenuBoard {
     private Long menuId;
     private String menuName;
     private String menuDescription;
+    private Long menuPrice;
+    private List<OptionGroupItem> menuOptionGroupItems;
 
     public static MenuItem of(Menu menu) {
       return new MenuItem(menu);
@@ -44,6 +47,28 @@ public class MenuBoard {
       this.menuId = menu.getId();
       this.menuName = menu.getName();
       this.menuDescription = menu.getDescription();
+      this.menuPrice = menu.getPrice();
+      this.menuOptionGroupItems = convertWith(menu.getOptionGroups());
+    }
+
+    private List<OptionGroupItem> convertWith(List<OptionGroup> optionGroups) {
+      return optionGroups.stream().map(OptionGroupItem::of).collect(Collectors.toList());
+    }
+  }
+
+  @Data
+  public static class OptionGroupItem {
+
+    private Long optionGroupId;
+    private String optionGroupName;
+
+    public static OptionGroupItem of(OptionGroup optionGroup) {
+      return new OptionGroupItem(optionGroup);
+    }
+
+    public OptionGroupItem(OptionGroup optionGroup) {
+      this.optionGroupId = optionGroup.getId();
+      this.optionGroupName = optionGroup.getName();
     }
   }
 }
