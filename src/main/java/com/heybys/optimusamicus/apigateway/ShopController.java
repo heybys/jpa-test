@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.shop.controller;
+package com.heybys.optimusamicus.apigateway;
 
 import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;

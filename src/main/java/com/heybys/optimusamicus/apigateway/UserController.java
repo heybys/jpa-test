@@ -1,8 +1,8 @@
-package com.heybys.optimusamicus.user.controller;
+package com.heybys.optimusamicus.apigateway;
 
+import com.heybys.optimusamicus.apigateway.exception.UnauthorizedException;
 import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.user.exception.UnauthorizedException;
 import com.heybys.optimusamicus.user.service.UserService;
 import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.RegisterUserInfo;

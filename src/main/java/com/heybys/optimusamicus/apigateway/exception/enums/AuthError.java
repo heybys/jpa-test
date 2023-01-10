@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.user.exception.enums;
+package com.heybys.optimusamicus.apigateway.exception.enums;
 
 public enum AuthError {
   UNAUTHORIZED("UNAUTHORIZED", "Unauthorized");
