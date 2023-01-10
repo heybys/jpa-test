@@ -1,7 +1,7 @@
 package com.heybys.optimusamicus.common.filter;
 
 import com.heybys.optimusamicus.common.exception.InvalidParameterException;
-import com.heybys.optimusamicus.user.domain.repository.UserRepository;
+import com.heybys.optimusamicus.user.domain.UserRepository;
 import com.heybys.optimusamicus.user.service.AuthService;
 import com.heybys.optimusamicus.user.service.SessionAuthService;
 import javax.servlet.Filter;

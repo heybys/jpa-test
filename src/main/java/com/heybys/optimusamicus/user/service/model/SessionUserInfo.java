@@ -1,6 +1,6 @@
 package com.heybys.optimusamicus.user.service.model;
 
-import com.heybys.optimusamicus.user.domain.entity.User;
+import com.heybys.optimusamicus.user.domain.User;
 import java.io.Serializable;
 import javax.servlet.http.HttpSession;
 import lombok.Builder;

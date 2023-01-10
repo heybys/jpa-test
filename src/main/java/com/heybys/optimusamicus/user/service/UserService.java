@@ -1,7 +1,7 @@
 package com.heybys.optimusamicus.user.service;
 
-import com.heybys.optimusamicus.user.domain.entity.User;
-import com.heybys.optimusamicus.user.domain.repository.UserRepository;
+import com.heybys.optimusamicus.user.domain.User;
+import com.heybys.optimusamicus.user.domain.UserRepository;
 import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.RegisterUserInfo;
 import lombok.RequiredArgsConstructor;

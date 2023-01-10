@@ -2,8 +2,8 @@ package com.heybys.optimusamicus.user.service;
 
 import com.heybys.optimusamicus.common.utils.HttpServletRequestProvider;
 import com.heybys.optimusamicus.common.utils.HttpServletResponseProvider;
-import com.heybys.optimusamicus.user.domain.entity.User;
-import com.heybys.optimusamicus.user.domain.repository.UserRepository;
+import com.heybys.optimusamicus.user.domain.User;
+import com.heybys.optimusamicus.user.domain.UserRepository;
 import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.SessionUserInfo;
 import javax.servlet.http.Cookie;
