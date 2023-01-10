@@ -2,6 +2,7 @@ package com.heybys.optimusamicus.shop.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.ToString.Exclude;
+import org.hibernate.Hibernate;
 
 @ToString
 @Getter
@@ -46,5 +48,22 @@ public class Menu {
 
   public void add(OptionGroup optionGroup) {
     this.optionGroups.add(optionGroup);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    Menu menu = (Menu) o;
+    return id != null && Objects.equals(id, menu.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }

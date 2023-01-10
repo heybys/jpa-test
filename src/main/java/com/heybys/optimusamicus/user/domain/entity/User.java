@@ -70,7 +70,7 @@ public class User extends BaseEntity {
       return false;
     }
     User user = (User) o;
-    return getId() != null && Objects.equals(getId(), user.getId());
+    return id != null && Objects.equals(id, user.id);
   }
 
   @Override

@@ -1,5 +1,6 @@
 package com.heybys.optimusamicus.shop.domain;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 
 @ToString
 @Getter
@@ -32,5 +34,22 @@ public class Shop {
   public Shop(String name, boolean open) {
     this.name = name;
     this.open = open;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+      return false;
+    }
+    Shop shop = (Shop) o;
+    return id != null && Objects.equals(id, shop.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
   }
 }
