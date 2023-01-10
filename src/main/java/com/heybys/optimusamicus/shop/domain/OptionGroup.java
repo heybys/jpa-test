@@ -40,10 +40,6 @@ public class OptionGroup {
   @Exclude
   private List<Option> options = new ArrayList<>();
 
-  public void add(Option option) {
-    this.options.add(option);
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

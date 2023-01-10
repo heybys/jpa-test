@@ -46,10 +46,6 @@ public class Menu {
   @Exclude
   private List<OptionGroup> optionGroups = new ArrayList<>();
 
-  public void add(OptionGroup optionGroup) {
-    this.optionGroups.add(optionGroup);
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
