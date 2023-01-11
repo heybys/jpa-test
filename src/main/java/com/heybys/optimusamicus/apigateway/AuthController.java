@@ -14,19 +14,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @LogExecutionTime
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/auth")
 @RestController
 public class AuthController {
 
   private final AuthService authService;
 
-  @PostMapping("/login")
+  @PostMapping("/api/v1/login")
   public ResponseEntity<CommonResponse> login(HttpServletRequest request) {
 
     try {
@@ -42,7 +40,7 @@ public class AuthController {
     }
   }
 
-  @DeleteMapping("/logout")
+  @DeleteMapping("/api/v1/logout")
   public ResponseEntity<CommonResponse> logout(HttpServletRequest request) {
 
     try {
