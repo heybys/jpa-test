@@ -38,3 +38,8 @@ VALUES (1, '뼈', 0, 1),
        (11, '사이다 1.5L', 2500, 5),
        (12, '제로콜라 1.25L', 3000, 5),
        (13, '제로사이다 1.5L', 3000, 5);
+
+INSERT INTO master.user (user_id, created_at, created_by, modified_at, modified_by, address, email,
+                         password, phone_number, username)
+VALUES (1, '2023-01-14 21:19:21', null, '2023-01-14 21:19:21', null, 'Seoul City', null, 'admin',
+        '01049051923', 'admin');
