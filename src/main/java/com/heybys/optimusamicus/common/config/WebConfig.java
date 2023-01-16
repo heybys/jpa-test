@@ -1,11 +1,7 @@
 package com.heybys.optimusamicus.common.config;
 
 import com.heybys.optimusamicus.common.filter.AuthFactory;
-import com.heybys.optimusamicus.user.service.AuthService;
-import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -30,20 +26,5 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     // not set yet.
-  }
-
-  @Bean
-  public FilterRegistrationBean<Filter> authFilter() {
-    Filter authFilter = authFactory.getFilter();
-
-    FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-    filterFilterRegistrationBean.setFilter(authFilter);
-    filterFilterRegistrationBean.addUrlPatterns("/*");
-    return filterFilterRegistrationBean;
-  }
-
-  @Bean
-  public AuthService authService() {
-    return authFactory.getService();
   }
 }
