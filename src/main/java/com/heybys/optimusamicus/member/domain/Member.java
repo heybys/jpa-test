@@ -82,4 +82,8 @@ public class Member extends BaseEntity {
   public int hashCode() {
     return getClass().hashCode();
   }
+
+  public void encodePassword() {
+    this.password = "{noop}" + this.password;
+  }
 }

@@ -34,6 +34,7 @@ public class MemberService implements UserDetailsService {
             .address(registerUserInfo.getAddress())
             .email(registerUserInfo.getEmail())
             .build();
+    member.encodePassword();
 
     memberRepository.save(member);
   }
