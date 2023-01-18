@@ -1,7 +1,7 @@
 package com.heybys.optimusamicus.common.config;
 
 import com.heybys.optimusamicus.common.filter.AuthFactory;
-import com.heybys.optimusamicus.user.service.AuthService;
+import com.heybys.optimusamicus.member.service.AuthService;
 import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
