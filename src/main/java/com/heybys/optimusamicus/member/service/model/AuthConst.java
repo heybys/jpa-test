@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.user.service.model;
+package com.heybys.optimusamicus.member.service.model;
 
 import lombok.experimental.UtilityClass;
 

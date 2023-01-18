@@ -1,9 +1,9 @@
-package com.heybys.optimusamicus.user.service;
+package com.heybys.optimusamicus.member.service;
 
-import com.heybys.optimusamicus.user.domain.Member;
-import com.heybys.optimusamicus.user.domain.UserRepository;
-import com.heybys.optimusamicus.user.service.model.Credentials;
-import com.heybys.optimusamicus.user.service.model.RegisterUserInfo;
+import com.heybys.optimusamicus.member.domain.Member;
+import com.heybys.optimusamicus.member.domain.MemberRepository;
+import com.heybys.optimusamicus.member.service.model.Credentials;
+import com.heybys.optimusamicus.member.service.model.RegisterUserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UserService implements UserDetailsService {
+public class MemberService implements UserDetailsService {
 
-  private final UserRepository userRepository;
+  private final MemberRepository memberRepository;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Member member = userRepository.findByUsername(username).orElseThrow();
+    Member member = memberRepository.findByUsername(username).orElseThrow();
 
     return null;
   }
@@ -33,6 +33,6 @@ public class UserService implements UserDetailsService {
             .email(registerUserInfo.getEmail())
             .build();
 
-    userRepository.save(member);
+    memberRepository.save(member);
   }
 }

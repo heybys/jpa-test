@@ -3,9 +3,9 @@ package com.heybys.optimusamicus.apigateway;
 import com.heybys.optimusamicus.apigateway.exception.UnauthorizedException;
 import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
-import com.heybys.optimusamicus.user.service.UserService;
-import com.heybys.optimusamicus.user.service.model.Credentials;
-import com.heybys.optimusamicus.user.service.model.RegisterUserInfo;
+import com.heybys.optimusamicus.member.service.MemberService;
+import com.heybys.optimusamicus.member.service.model.Credentials;
+import com.heybys.optimusamicus.member.service.model.RegisterUserInfo;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @LogExecutionTime
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/user")
-public class UserController {
+@RequestMapping("/api/v1/member")
+public class MemberController {
 
-  public final UserService userService;
+  public final MemberService memberService;
 
   @PostMapping("")
   public ResponseEntity<CommonResponse> register(
@@ -34,7 +34,7 @@ public class UserController {
       String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
       Credentials credentials = Credentials.of(authorization);
 
-      userService.register(credentials, registerUserInfo);
+      memberService.register(credentials, registerUserInfo);
 
       return ResponseEntity.ok(CommonResponse.success());
     } catch (Exception e) {

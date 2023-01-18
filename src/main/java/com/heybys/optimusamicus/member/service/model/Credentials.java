@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.user.service.model;
+package com.heybys.optimusamicus.member.service.model;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

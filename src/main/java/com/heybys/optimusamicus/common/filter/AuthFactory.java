@@ -1,9 +1,9 @@
 package com.heybys.optimusamicus.common.filter;
 
 import com.heybys.optimusamicus.common.exception.InvalidParameterException;
-import com.heybys.optimusamicus.user.domain.UserRepository;
-import com.heybys.optimusamicus.user.service.AuthService;
-import com.heybys.optimusamicus.user.service.SessionAuthService;
+import com.heybys.optimusamicus.member.domain.MemberRepository;
+import com.heybys.optimusamicus.member.service.AuthService;
+import com.heybys.optimusamicus.member.service.SessionAuthService;
 import javax.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class AuthFactory {
     OAUTH
   }
 
-  private final UserRepository userRepository;
+  private final MemberRepository memberRepository;
 
   private static final AuthType authType = AuthType.SESSION;
 
@@ -38,7 +38,7 @@ public class AuthFactory {
   public AuthService getService() {
     switch (authType) {
       case SESSION:
-        return new SessionAuthService(userRepository);
+        return new SessionAuthService(memberRepository);
       case JWT:
         throw new InvalidParameterException("The JWT authentication service is not implemented.");
       case OAUTH:

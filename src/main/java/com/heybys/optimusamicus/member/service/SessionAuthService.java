@@ -1,11 +1,11 @@
-package com.heybys.optimusamicus.user.service;
+package com.heybys.optimusamicus.member.service;
 
 import com.heybys.optimusamicus.common.utils.HttpServletRequestProvider;
 import com.heybys.optimusamicus.common.utils.HttpServletResponseProvider;
-import com.heybys.optimusamicus.user.domain.Member;
-import com.heybys.optimusamicus.user.domain.UserRepository;
-import com.heybys.optimusamicus.user.service.model.Credentials;
-import com.heybys.optimusamicus.user.service.model.SessionUserInfo;
+import com.heybys.optimusamicus.member.domain.Member;
+import com.heybys.optimusamicus.member.domain.MemberRepository;
+import com.heybys.optimusamicus.member.service.model.Credentials;
+import com.heybys.optimusamicus.member.service.model.SessionUserInfo;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SessionAuthService implements AuthService {
 
-  private final UserRepository userRepository;
+  private final MemberRepository memberRepository;
 
   @Override
   public SessionUserInfo login(Credentials credentials) {
     Member member =
-        userRepository
+        memberRepository
             .findByUsernameAndPassword(credentials.getUsername(), credentials.getPassword())
             .orElseThrow(
                 () ->

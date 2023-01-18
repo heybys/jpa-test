@@ -1,7 +1,7 @@
 package com.heybys.optimusamicus.common.filter;
 
-import com.heybys.optimusamicus.user.service.model.AuthConst;
-import com.heybys.optimusamicus.user.service.model.SessionUserInfo;
+import com.heybys.optimusamicus.member.service.model.AuthConst;
+import com.heybys.optimusamicus.member.service.model.SessionUserInfo;
 import java.io.IOException;
 import java.util.EnumMap;
 import javax.servlet.Filter;

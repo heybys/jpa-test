@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.user.domain;
+package com.heybys.optimusamicus.member.domain;
 
 import com.heybys.optimusamicus.common.entity.BaseEntity;
 import java.util.Objects;

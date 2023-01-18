@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.user.service.model;
+package com.heybys.optimusamicus.member.service.model;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
