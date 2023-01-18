@@ -19,7 +19,7 @@ public class ApplicationConfig {
     return authFactory.getService();
   }
 
-  @Bean
+  // @Bean
   public FilterRegistrationBean<Filter> authFilter() {
     Filter authFilter = authFactory.getFilter();
 
