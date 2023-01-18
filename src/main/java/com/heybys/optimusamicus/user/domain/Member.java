@@ -21,18 +21,18 @@ import org.hibernate.Hibernate;
 @Getter
 @Entity
 @Table(
-    name = "user",
+    name = "member",
     uniqueConstraints = {
         @UniqueConstraint(
             name = "UK_username",
             columnNames = {"username"})
     })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends BaseEntity {
+public class Member extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "user_id")
+  @Column(name = "member_id")
   private Long id;
 
   @NotNull
@@ -53,7 +53,8 @@ public class User extends BaseEntity {
   private String email;
 
   @Builder
-  public User(String username, String password, String phoneNumber, String address, String email) {
+  public Member(String username, String password, String phoneNumber, String address,
+      String email) {
     this.username = username;
     this.password = password;
     this.phoneNumber = phoneNumber;
@@ -69,8 +70,8 @@ public class User extends BaseEntity {
     if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
       return false;
     }
-    User user = (User) o;
-    return id != null && Objects.equals(id, user.id);
+    Member member = (Member) o;
+    return id != null && Objects.equals(id, member.id);
   }
 
   @Override

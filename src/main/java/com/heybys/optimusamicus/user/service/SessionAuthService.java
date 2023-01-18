@@ -2,7 +2,7 @@ package com.heybys.optimusamicus.user.service;
 
 import com.heybys.optimusamicus.common.utils.HttpServletRequestProvider;
 import com.heybys.optimusamicus.common.utils.HttpServletResponseProvider;
-import com.heybys.optimusamicus.user.domain.User;
+import com.heybys.optimusamicus.user.domain.Member;
 import com.heybys.optimusamicus.user.domain.UserRepository;
 import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.SessionUserInfo;
@@ -17,14 +17,14 @@ public class SessionAuthService implements AuthService {
 
   @Override
   public SessionUserInfo login(Credentials credentials) {
-    User user =
+    Member member =
         userRepository
             .findByUsernameAndPassword(credentials.getUsername(), credentials.getPassword())
             .orElseThrow(
                 () ->
                     new IllegalArgumentException(
                         "There is no user with the username and password."));
-    SessionUserInfo sessionUserInfo = SessionUserInfo.from(user);
+    SessionUserInfo sessionUserInfo = SessionUserInfo.from(member);
     sessionUserInfo.addTo(HttpServletRequestProvider.getSession());
 
     return sessionUserInfo;

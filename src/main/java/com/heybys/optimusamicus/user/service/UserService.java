@@ -1,6 +1,6 @@
 package com.heybys.optimusamicus.user.service;
 
-import com.heybys.optimusamicus.user.domain.User;
+import com.heybys.optimusamicus.user.domain.Member;
 import com.heybys.optimusamicus.user.domain.UserRepository;
 import com.heybys.optimusamicus.user.service.model.Credentials;
 import com.heybys.optimusamicus.user.service.model.RegisterUserInfo;
@@ -18,14 +18,14 @@ public class UserService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findByUsername(username).orElseThrow();
+    Member member = userRepository.findByUsername(username).orElseThrow();
 
     return null;
   }
 
   public void register(Credentials credentials, RegisterUserInfo registerUserInfo) {
-    User user =
-        User.builder()
+    Member member =
+        Member.builder()
             .username(credentials.getUsername())
             .password(credentials.getPassword())
             .phoneNumber(registerUserInfo.getPhoneNumber())
@@ -33,6 +33,6 @@ public class UserService implements UserDetailsService {
             .email(registerUserInfo.getEmail())
             .build();
 
-    userRepository.save(user);
+    userRepository.save(member);
   }
 }

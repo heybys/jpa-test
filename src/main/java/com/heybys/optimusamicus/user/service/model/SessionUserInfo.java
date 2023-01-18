@@ -1,6 +1,6 @@
 package com.heybys.optimusamicus.user.service.model;
 
-import com.heybys.optimusamicus.user.domain.User;
+import com.heybys.optimusamicus.user.domain.Member;
 import java.io.Serializable;
 import javax.servlet.http.HttpSession;
 import lombok.Builder;
@@ -25,9 +25,9 @@ public class SessionUserInfo implements Serializable {
     this.email = email;
   }
 
-  public static SessionUserInfo from(User user) {
-    return SessionUserInfo.builder().username(user.getUsername()).address(user.getAddress())
-        .phoneNumber(user.getPhoneNumber()).email(user.getEmail()).build();
+  public static SessionUserInfo from(Member member) {
+    return SessionUserInfo.builder().username(member.getUsername()).address(member.getAddress())
+        .phoneNumber(member.getPhoneNumber()).email(member.getEmail()).build();
   }
 
   public void addTo(HttpSession session) {
