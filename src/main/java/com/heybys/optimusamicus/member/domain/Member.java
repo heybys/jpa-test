@@ -43,6 +43,10 @@ public class Member extends BaseEntity {
   @Column(name = "password")
   private String password;
 
+  @NotNull
+  @Column(name = "role")
+  private String role;
+
   @Column(name = "phone_number")
   private String phoneNumber;
 

@@ -5,6 +5,7 @@ import com.heybys.optimusamicus.member.domain.MemberRepository;
 import com.heybys.optimusamicus.member.service.model.Credentials;
 import com.heybys.optimusamicus.member.service.model.RegisterUserInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +21,8 @@ public class MemberService implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     Member member = memberRepository.findByUsername(username).orElseThrow();
 
-    return null;
+    return User.builder().username(member.getUsername()).password(member.getPassword())
+        .roles(member.getRole()).build();
   }
 
   public void register(Credentials credentials, RegisterUserInfo registerUserInfo) {
