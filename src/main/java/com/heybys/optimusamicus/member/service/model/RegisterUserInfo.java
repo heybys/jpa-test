@@ -1,5 +1,6 @@
 package com.heybys.optimusamicus.member.service.model;
 
+import com.heybys.optimusamicus.member.domain.Member;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import lombok.Data;
@@ -18,4 +19,14 @@ public class RegisterUserInfo {
 
   @Pattern(regexp = "^(\\S+)@(\\S+)\\.(\\S+)$|null", message = "Invalid email format")
   private String email;
+
+  public Member toMemberWith(Credentials credentials) {
+    return Member.builder()
+        .username(credentials.getUsername())
+        .password(credentials.getPassword())
+        .address(this.address)
+        .phoneNumber(this.phoneNumber)
+        .email(this.email)
+        .build();
+  }
 }

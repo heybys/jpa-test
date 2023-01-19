@@ -34,7 +34,9 @@ public class MemberController {
     try {
       String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
       Credentials credentials = Credentials.of(authorization);
+
       Member member = registerUserInfo.toMemberWith(credentials);
+
       return ResponseEntity.ok(CommonResponse.success(memberService.register(member)));
     } catch (Exception e) {
       throw new UnauthorizedException(e);

@@ -16,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.Hibernate;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ToString
 @Getter
@@ -85,7 +84,7 @@ public class Member extends BaseEntity {
     return getClass().hashCode();
   }
 
-  public void encodePassword(PasswordEncoder passwordEncoder) {
-    this.password = passwordEncoder.encode(this.password);
+  public void encodePassword() {
+    // not yet
   }
 }
