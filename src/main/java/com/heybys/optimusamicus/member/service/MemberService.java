@@ -2,13 +2,12 @@ package com.heybys.optimusamicus.member.service;
 
 import com.heybys.optimusamicus.member.domain.Member;
 import com.heybys.optimusamicus.member.domain.MemberRepository;
-import com.heybys.optimusamicus.member.service.model.Credentials;
-import com.heybys.optimusamicus.member.service.model.RegisterUserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -16,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class MemberService implements UserDetailsService {
 
   private final MemberRepository memberRepository;
+
+  private final PasswordEncoder passwordEncoder;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -25,17 +26,8 @@ public class MemberService implements UserDetailsService {
         .roles(member.getRole()).build();
   }
 
-  public void register(Credentials credentials, RegisterUserInfo registerUserInfo) {
-    Member member =
-        Member.builder()
-            .username(credentials.getUsername())
-            .password(credentials.getPassword())
-            .phoneNumber(registerUserInfo.getPhoneNumber())
-            .address(registerUserInfo.getAddress())
-            .email(registerUserInfo.getEmail())
-            .build();
-    member.encodePassword();
-
-    memberRepository.save(member);
+  public Member register(Member member) {
+    member.encodePassword(passwordEncoder);
+    return memberRepository.save(member);
   }
 }

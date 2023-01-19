@@ -3,6 +3,7 @@ package com.heybys.optimusamicus.apigateway;
 import com.heybys.optimusamicus.apigateway.exception.UnauthorizedException;
 import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;
+import com.heybys.optimusamicus.member.domain.Member;
 import com.heybys.optimusamicus.member.service.MemberService;
 import com.heybys.optimusamicus.member.service.model.Credentials;
 import com.heybys.optimusamicus.member.service.model.RegisterUserInfo;
@@ -33,10 +34,8 @@ public class MemberController {
     try {
       String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
       Credentials credentials = Credentials.of(authorization);
-
-      memberService.register(credentials, registerUserInfo);
-
-      return ResponseEntity.ok(CommonResponse.success());
+      Member member = registerUserInfo.toMemberWith(credentials);
+      return ResponseEntity.ok(CommonResponse.success(memberService.register(member)));
     } catch (Exception e) {
       throw new UnauthorizedException(e);
     }
