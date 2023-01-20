@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.common.entity;
+package com.heybys.optimusamicus.common.domain;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

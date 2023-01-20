@@ -1,6 +1,6 @@
 package com.heybys.optimusamicus.member.domain;
 
-import com.heybys.optimusamicus.common.entity.BaseEntity;
+import com.heybys.optimusamicus.common.domain.BaseEntity;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
