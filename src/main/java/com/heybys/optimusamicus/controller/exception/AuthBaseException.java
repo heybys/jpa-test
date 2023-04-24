@@ -1,6 +1,6 @@
-package com.heybys.optimusamicus.apigateway.exception;
+package com.heybys.optimusamicus.controller.exception;
 
-import com.heybys.optimusamicus.apigateway.exception.enums.AuthError;
+import com.heybys.optimusamicus.controller.exception.enums.AuthError;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.apigateway.exception.handler;
+package com.heybys.optimusamicus.controller.exception.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;

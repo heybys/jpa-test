@@ -1,8 +1,8 @@
-package com.heybys.optimusamicus.apigateway.exception.handler;
+package com.heybys.optimusamicus.controller.exception.handler;
 
-import com.heybys.optimusamicus.apigateway.AuthController;
-import com.heybys.optimusamicus.apigateway.exception.UnauthorizedException;
 import com.heybys.optimusamicus.common.model.CommonResponse;
+import com.heybys.optimusamicus.controller.AuthController;
+import com.heybys.optimusamicus.controller.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

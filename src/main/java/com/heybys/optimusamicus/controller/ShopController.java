@@ -1,4 +1,4 @@
-package com.heybys.optimusamicus.apigateway;
+package com.heybys.optimusamicus.controller;
 
 import com.heybys.optimusamicus.common.annotation.LogExecutionTime;
 import com.heybys.optimusamicus.common.model.CommonResponse;

@@ -1,6 +1,6 @@
-package com.heybys.optimusamicus.apigateway.exception;
+package com.heybys.optimusamicus.controller.exception;
 
-import com.heybys.optimusamicus.apigateway.exception.enums.AuthError;
+import com.heybys.optimusamicus.controller.exception.enums.AuthError;
 
 public class UnauthorizedException extends AuthBaseException {
 
