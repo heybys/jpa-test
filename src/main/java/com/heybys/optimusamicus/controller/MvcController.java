@@ -41,7 +41,7 @@ public class MvcController {
   @GetMapping("/dashboard")
   public String dashboard(Model model, Principal principal) {
     model.addAttribute("message", "Hi, " + principal.getName());
-    memberService.dashboard();
+    // memberService.dashboard();
     return "dashboard";
   }
 

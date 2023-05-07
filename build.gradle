@@ -4,6 +4,7 @@ plugins {
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id 'java'
     id "com.diffplug.spotless" version "6.9.1"
+    id "org.flywaydb.flyway" version "9.17.0"
 }
 
 group = 'com.heybys'
@@ -28,10 +29,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // DB
-    implementation 'mysql:mysql-connector-java:8.0.30'
-    // implementation 'software.aws.rds:aws-mysql-jdbc:1.1.1'
+    implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'com.querydsl:querydsl-jpa:5.0.0'
     implementation 'com.querydsl:querydsl-apt:5.0.0'
+    implementation 'org.flywaydb:flyway-core:7.7.3'
 
     // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
